@@ -509,6 +509,17 @@ return $output;
   }
 
 
+    public function mp_report_menu(){
+        global $USER, $CFG;
+        $output = '<div class="validators">
+                   <ul class="list-unstyled ml-1">
+                     <li><a href="'.$CFG->wwroot.'/local/mp_report/index.php"><span class="flaticon-checklist"></span>Submit H&S Report</a></li>
+                  </ul>
+                </div>';
+
+        return $output;
+
+    }
 
 
 
@@ -677,7 +688,7 @@ return $output;
             if(isset($value->imgsrc) && !empty($value->imgsrc)){
               $ccnMenuItemIcon = '<img class="iconsmall" src="'.$value->imgsrc.'" alt=""/>';
             }
-            
+
             $ccn_nav_items .= '<a class="dropdown-item" href="'. $value->url .'"> '. $ccnMenuItemIcon . $value->title .'</a>';
 
 
