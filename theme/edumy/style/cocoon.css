@@ -5402,7 +5402,8 @@ header.header-nav.menu_style_home_seven .ace-responsive-menu>li.last {
 }
 /*== Inner Pages Breadcrumb ==*/
 .inner_page_breadcrumb {
-  background-image: url([[setting:heading_bg]]);
+  /*background-image: url([[setting:heading_bg]]);*/ /*BM commented-out*/
+  background-image: url([[cocoon:edumy]]/images/background/inner-pagebg.jpg); /*BM added*/
   background-repeat: no-repeat;
   height: 400px;
   margin-top: -1px;
