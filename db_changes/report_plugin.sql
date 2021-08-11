@@ -616,6 +616,18 @@ ALTER TABLE `mdl_standing_table`
   MODIFY `id` bigint(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=137;
 COMMIT;
 
+--
+-- Add extra columns to course table
+--
+ALTER TABLE `mdl_course` ADD `coursetype` INT NULL AFTER `cacherev`, ADD `client` VARCHAR(256) NULL AFTER `coursetype`, ADD `duedate` BIGINT NULL AFTER `client`;
+
+--
+-- Add column manager_id to user table
+--
+ALTER TABLE `mdl_user` ADD `manager_id` INT NULL DEFAULT NULL COMMENT 'manager Id of user' AFTER `alternatename`; 
+
+
+
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
