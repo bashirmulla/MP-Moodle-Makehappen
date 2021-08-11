@@ -76,29 +76,11 @@ class mp_report_list extends moodleform {
 }
 
 
-class home_page extends moodleform {
+class accident_page extends moodleform {
 
 
     public function definition() {
-
-        $mform = $this->_form;
-
-        //if(!is_manager() && !is_admin()) {
-            $buttonarray = array();
-            $buttonarray[] = $mform->createElement('button', 'save', "+ ".get_string('accident', 'local_mp_report'), array("id" => "accident_link"));
-            $buttonarray[] = $mform->createElement('button', 'save', "+ ".get_string('incident', 'local_mp_report'), array("id" => "incident_link"));
-
-
-            $mform->addGroup($buttonarray, 'linkar', '', array(' '), false);
-            $mform->closeHeaderBefore('linkar');
-        //}
-
-        if(is_manager() || is_admin() || is_senior_manager() || is_complieance()) {
-            $this->accident_report_list();
-            $this->incident_report_list();
-        }
-
-
+        $this->accident_report_list();
     }
 
     public function accident_report_list() {
@@ -108,8 +90,16 @@ class home_page extends moodleform {
         $html   = "";
         $mform  = $this->_form;
 
-        $mform->addElement('html','<h6>'.get_string('accident', 'local_mp_report')."s</h6><hr>");
-
+        $mform->addElement('html','
+            <div class="row">
+                <div class="col-sm-10">
+                    <h4 class="ccnMdlHeading">'.get_string('accident', 'local_mp_report')."s</h4>
+                 </div>
+                 <div class='col-sm-2'>     
+                     <a class='btn btn-dark' href='/local/mp_report/index.php?cmd=form1'><i class='fa fa-plus-circle'> </i> Add Accident</a>
+                 </div>
+             </div>    
+            <hr>");
         $submitter_to_manager = 'Yes';
 
 
@@ -139,7 +129,14 @@ class home_page extends moodleform {
 
 
     }
+}
 
+class incident_page extends moodleform {
+
+
+    public function definition() {
+        $this->incident_report_list();
+    }
     public function incident_report_list() {
         global $USER, $CFG,$DB;
 
@@ -148,7 +145,16 @@ class home_page extends moodleform {
         $mform  = $this->_form;
         $dropdown = get_dropdown_data(2,'report_category');
 
-        $mform->addElement('html','<h6>'.get_string('incident', 'local_mp_report')."s</h6><hr>");
+        $mform->addElement('html','
+            <div class="row">
+                <div class="col-sm-10">
+                    <h4 class="ccnMdlHeading">'.get_string('incident', 'local_mp_report')."s</h4>
+                 </div>
+                 <div class='col-sm-2'>     
+                     <a class='btn btn-dark' href='/local/mp_report/index.php?cmd=form2'><i class='fa fa-plus-circle'> </i> Add Incident</a>
+                 </div>
+             </div>    
+            <hr>");
 
         $submitter_to_manager = 'Yes';
 
@@ -178,5 +184,50 @@ class home_page extends moodleform {
 
 
     }
+
+}
+
+
+class home_page extends moodleform {
+
+
+    public function definition() {
+
+        $mform = $this->_form;
+
+        $html = '<div class="row justify-content-center" style="text-align: center !important;">
+                
+                <div class="col-sm-6 col-md-6 col-lg-4 col-lg-5th-1">
+					<a href="/local/mp_report/index.php?cmd=accpage" data-ccn-c="color3" data-ccn-co="bg" class="icon_hvr_img_box ccn-color-cat-boxes" style="background:rgba(0, 97, 255, 0.6);">
+						<div class="overlay">
+							<div class="icon ccn_icon_2 color-white"><span data-ccn="icon3" class="ccn-flaticon-id-card-3"></span></div>
+							<div class="details">
+								<h5 class="color-white">Accident Report</h5><p class="color-white">Over 1 reports</p>
+							</div>
+						</div>
+					</a>
+				</div>
+                <div class="col-sm-6 col-md-6 col-lg-4 col-lg-5th-1">
+					<a href="/local/mp_report/index.php?cmd=incpage" data-ccn-c="color4" data-ccn-co="bg" class="icon_hvr_img_box ccn-color-cat-boxes" style="background:rgba(241, 67, 45, 0.6);">
+						<div class="overlay">
+							<div class="icon ccn_icon_2 color-white"><span data-ccn="icon4" class="ccn-flaticon-id-card-4"></span></div>
+							<div class="details">
+								<h5 class="color-white">Incident Report</h5><p class="color-white">Over 0 incidents</p>
+							</div>
+						</div>
+					</a>
+				</div>
+                
+             
+          </div>';
+
+      $mform->addElement('html',$html);
+
+
+    }
+
+
+
+
 
 }

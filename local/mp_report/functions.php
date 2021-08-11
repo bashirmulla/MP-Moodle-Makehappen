@@ -53,6 +53,39 @@ function home_page(){
 
 }
 
+function accident_page(){
+    global $CFG,$OUTPUT,$homeurl,$successurl;
+
+    //$form = new mp_report_list(null, array());
+
+    $form = new accident_page(null, array());
+
+    if ($form->is_cancelled()) {
+        redirect($homeurl);
+    }
+    $form->get_data();
+    $form->display();
+
+
+}
+
+function incident_page(){
+    global $CFG,$OUTPUT,$homeurl,$successurl;
+
+    //$form = new mp_report_list(null, array());
+
+    $form = new incident_page(null, array());
+
+    if ($form->is_cancelled()) {
+        redirect($homeurl);
+    }
+    $form->get_data();
+    $form->display();
+
+
+}
+
+
 function gdpr_page(){
     global $DB,$CFG;
     die("GDPR script already executed");

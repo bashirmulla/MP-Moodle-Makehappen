@@ -138,11 +138,12 @@ $cmd = get_request('cmd');
 
 
 switch ($cmd){
-     case 'list'      : home_page();            break;
-     //case 'gdpr'      : gdpr_page();            break;
+     case 'home'      : home_page();            break;
+     case 'accpage'   : accident_page();        break;
+     case 'incpage'   : incident_page();        break;
      case 'form1'     : accident_form();        break;
      case 'form2'     : incident_form();        break;
-     case 'acc_edit'  : accident_form();        bsdareak;
+     case 'acc_edit'  : accident_form();        break;
      case 'inc_edit'  : incident_form();        break;
      default          : home_page();            break;
 

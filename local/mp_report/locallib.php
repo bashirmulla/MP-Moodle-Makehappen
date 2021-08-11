@@ -261,7 +261,7 @@ function get_com_manager_list(){
     $sql = "SELECT u.* ,CONCAT(u.firstname, ' ', u.lastname) AS name
               FROM {user} u LEFT JOIN {role_assignments} ra ON (u.id = ra.userid)
               LEFT JOIN {role} r ON (ra.roleid=r.id)
-             WHERE   r.shortname='seniormanager' ORDER BY name ASC";
+             WHERE   r.shortname='manager' ORDER BY name ASC";
 
     $data = $DB->get_records_sql($sql);
 
