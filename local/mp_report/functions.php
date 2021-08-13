@@ -889,8 +889,6 @@ function create_accident($dataobject){
 
         $dataobject['submitter_to_manager'] = 'Yes';
 
-        $company                              = company::get_company_byuserid($dataobject['user_id']);
-
 
         $id = api_save_data($dataobject,$tableName);
 
