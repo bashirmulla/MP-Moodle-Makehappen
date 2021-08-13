@@ -3301,7 +3301,7 @@ header.header-nav.menu_style_home_seven .ace-responsive-menu>li.last {
   position: relative;
   -ms-text-align-last: auto;
   text-align: left;
-  width: 210px;
+  width: 230px; /*BM chanegd*/
 }
 .app_grid .apple_btn {
   width: 230px;
