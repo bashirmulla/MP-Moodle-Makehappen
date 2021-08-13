@@ -240,6 +240,28 @@ function useredit_update_interests($user, $interests) {
             context_user::instance($user->id), $interests);
 }
 
+
+function get_manager_list(){
+    global $DB,$USER;
+
+    $arr =  array("" => "Select");
+
+    $sql = "SELECT u.id ,CONCAT(u.firstname, ' ', u.lastname) AS name
+              FROM {user} u LEFT JOIN {role_assignments} ra ON (u.id = ra.userid)
+             WHERE ra.contextid=1 and ra.roleid IN(1) ORDER BY u.id";
+
+    $data = $DB->get_records_sql($sql);
+
+    if(!empty($data)){
+        foreach ($data as $value){
+            $arr[$value->id] = $value->name;
+
+        }
+    }
+
+    return $arr;
+}
+
 /**
  * Powerful function that is used by edit and editadvanced to add common form elements/rules/etc.
  *
@@ -303,6 +325,15 @@ function useredit_shared_definition(&$mform, $editoroptions, $filemanageroptions
     $mform->addElement('text', 'moodlenetprofile', get_string('moodlenetprofile', 'user'));
     $mform->setType('moodlenetprofile', PARAM_NOTAGS);
     $mform->addHelpButton('moodlenetprofile', 'moodlenetprofile', 'user');
+
+    //Custom Code: Bash & SAM -
+
+    $mform->addElement('select', 'manager_id', "Line Manager", get_manager_list(),array('style' =>'width:200px !important'));
+    $mform->setType('manager_id', PARAM_INT);
+    //$mform->addRule('manager', 'required', 'required', null, 'client');
+
+    // End
+
 
     $mform->addElement('text', 'city', get_string('city'), 'maxlength="120" size="21"');
     $mform->setType('city', PARAM_TEXT);

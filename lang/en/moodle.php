@@ -2306,3 +2306,11 @@ $string['deprecatedeventname'] = '{$a} (no longer in use)';
 // Deprecated since Moodle 3.9.
 $string['participantscount'] = 'Number of participants: {$a}';
 $string['userfilterplaceholder'] = 'Search keyword or select filter';
+
+/*Custom Code: Added by SAM & Bash*/
+$string['courseType']        = 'Course Type';
+$string['client']            = 'Client';
+$string['dueDate']           = 'Due Date';
+$string['send_notification'] = 'Send notification when start date is reached?';
+
+/*Custom Code: END*/

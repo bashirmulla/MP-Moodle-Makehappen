@@ -54,6 +54,28 @@ $renderer = $PAGE->get_renderer('format_topics');
 if (!empty($displaysection)) {
     $renderer->print_single_section_page($course, null, null, null, null, $displaysection);
 } else {
+    /*Custom code: Added by BASH & SAM */
+    $options = get_courses_category();
+
+    $catlist = get_category_list_with_sortname();
+
+    $idnumber = !empty($course->idnumber) ? $course->idnumber : $catlist[$course->category]."-".$course->id."-".date("y");
+    echo html_writer::label("<b>Course ID Number:</b> &nbsp;","Course");
+    echo html_writer::span($idnumber);
+    echo "<br>";
+
+    echo html_writer::label("<b>Course Type:</b> &nbsp;","Course");
+    echo html_writer::span( $course->coursetype ? @$options[$course->coursetype] : "");
+    echo "<br>";
+
+    echo html_writer::label("<b>Client:</b> &nbsp;","Course");
+    echo html_writer::span($course->client);
+    echo "<br>";
+
+    echo html_writer::label("<b>Due date:</b> &nbsp;","Course");
+    echo html_writer::span(date("d-M-Y",$course->duedate ? $course->duedate : ""));
+    echo "<br>";
+    /*Custom code: END */
     $renderer->print_multiple_section_page($course, null, null, null, null);
 }
 

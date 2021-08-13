@@ -10775,3 +10775,50 @@ function site_is_public() {
 
     return $ispublic;
 }
+
+/* BM added Notification */
+function custom_send_mail($sender_email_id,$subject,$title,$body)
+{
+    $mail = get_mailer();   // This will get the moodle mailer configuration.
+
+    $mail->To = $sender_email_id;
+}
+/*Custom code: Added by BASH & SAM */
+function get_courses_category()
+{
+    return $options = array(
+        '' => '--SELECT--',
+        '1' => 'Induction',
+        '2' => 'Regular Reading',
+        '3' => 'Physical Toolbox Talks',
+        '4' => 'Online Toolbox Talks',
+        '5' => 'Other'
+    );
+}
+
+function get_table_max_id($tablename)
+{
+    global $DB;
+    $resutl =  $DB->get_record_sql("SELECT MAX(id) as max_id FROM {".$tablename."}") ;
+
+    return $resutl->max_id +1;
+
+
+}
+
+function get_category_list_with_sortname()
+{
+    global $DB;
+    $retArr = array();
+    $result = $DB->get_records("course_categories");
+
+    if(!empty($result)){
+        foreach ($result as $ret)
+        {
+            $retArr[$ret->id] = $ret->idnumber;
+        }
+    }
+
+    return $retArr;
+}
+/*Custom code: END */

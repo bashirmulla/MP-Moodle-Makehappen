@@ -152,6 +152,40 @@ class course_edit_form extends moodleform {
         $mform->addElement('date_time_selector', 'enddate', get_string('enddate'), array('optional' => true));
         $mform->addHelpButton('enddate', 'enddate');
 
+
+        /*Custom code: Added by BASH & SAM */
+
+        $option = array("No" =>"No","Yes" => "Yes");
+        $mform->addElement('select', 'send_notification', get_string('send_notification'), $option);
+        $mform->setType('send_notification', PARAM_TEXT);
+        $mform->addRule('send_notification', null, 'required',null,'client');
+
+
+        $catlist = get_category_list_with_sortname();
+
+        $mform->addElement('hidden','catArr',json_encode($catlist),"id=catArr");
+        $mform->addElement('hidden','catYear',date("y"),"id=catYear");
+        $mform->addElement('hidden','course_id',$course->id ? $course->id : get_table_max_id('course'),"id=course_id");
+        $mform->addElement('text','idnumber', get_string('idnumbercourse'),'maxlength="100"  size="10"');
+        $mform->addHelpButton('idnumber', 'idnumbercourse');
+        $mform->setType('idnumber', PARAM_RAW);
+        $mform->setDefault('idnumber', $category->idnumber."-".$course->id ? $course->id : get_table_max_id('course')."-".date("y"));
+
+        $options = get_courses_category();
+        $mform->addElement('select', 'coursetype', get_string('courseType'), $options);
+        $mform->setType('coursetype', PARAM_INT);
+        $mform->addRule('coursetype', null, 'required',null,'client');
+
+        $mform->addElement('text', 'client', get_string('client'), array('size'=>'40'));
+        $mform->setType('client', PARAM_TEXT);
+        $mform->addRule('client', null, 'required', null, 'client');
+
+        $mform->addElement('date_selector', 'duedate', get_string('dueDate'));
+        $mform->setType('duedate', PARAM_TEXT);
+        $mform->addRule('duedate', null, 'required', null, 'client');
+        /*Custom code: End */
+
+
         if (!empty($CFG->enablecourserelativedates)) {
             $attributes = [
                 'aria-describedby' => 'relativedatesmode_warning'
