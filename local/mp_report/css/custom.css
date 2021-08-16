@@ -29,3 +29,7 @@ legend.scheduler-border {
     margin: 0px;
     font-size: 12px !important;
 }
+
+#fgroup_id_buttonar > div > fieldset{
+    width: 300px !important;
+}
