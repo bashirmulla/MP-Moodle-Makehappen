@@ -92,11 +92,14 @@ class accident_page extends moodleform {
 
         $mform->addElement('html','
             <div class="row">
-                <div class="col-sm-10">
+                <div class="col-sm-8">
                     <h4 class="ccnMdlHeading">'.get_string('accident', 'local_mp_report')."s</h4>
                  </div>
                  <div class='col-sm-2'>     
-                     <a class='btn btn-dark' href='/local/mp_report/index.php?cmd=form1'><i class='fa fa-plus-circle'> </i> Add Accident</a>
+                     <a class='btn btn-dark' style='background-color: #8a8a0f; border-color: #8a8a0f !important; ' href='/local/mp_report/index.php'><i class='fa fa-backward'> </i> Back Home</a>
+                 </div>
+                 <div class='col-sm-2'>     
+                     <a class='btn btn-dark' style='background-color: #2441e7; border-color: #2441e7 !important;' href='/local/mp_report/index.php?cmd=form1'><i class='fa fa-plus-circle'> </i> Add Accident</a>
                  </div>
              </div>    
             <hr>");
@@ -147,11 +150,14 @@ class incident_page extends moodleform {
 
         $mform->addElement('html','
             <div class="row">
-                <div class="col-sm-10">
+                <div class="col-sm-8">
                     <h4 class="ccnMdlHeading">'.get_string('incident', 'local_mp_report')."s</h4>
                  </div>
+                <div class='col-sm-2'>     
+                     <a class='btn btn-dark' style='background-color: #8a8a0f; border-color: #8a8a0f !important;' href='/local/mp_report/index.php'><i class='fa fa-backward'> </i> Back Home</a>
+                 </div>
                  <div class='col-sm-2'>     
-                     <a class='btn btn-dark' href='/local/mp_report/index.php?cmd=form2'><i class='fa fa-plus-circle'> </i> Add Incident</a>
+                     <a class='btn btn-dark' style='background-color: #2441e7; border-color: #2441e7 !important;' href='/local/mp_report/index.php?cmd=form2'><i class='fa fa-plus-circle'> </i> Add Incident</a>
                  </div>
              </div>    
             <hr>");
