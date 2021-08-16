@@ -604,8 +604,8 @@ function accident_pdf($acc_id) {
     $file_name = str_replace(" ","-", $file_name);
 
     $pdf = new pdf();
-    $PDF_HEADER_LOGO       = '/theme/klass/pix/eeg-logo.png'; //any image file. check correct path.
-    $PDF_HEADER_LOGO_WIDTH = "30px";
+    $PDF_HEADER_LOGO       = '/local/mp_report/images/mh_logo_sm.png'; //any image file. check correct path.
+    $PDF_HEADER_LOGO_WIDTH = "60%";
     $PDF_HEADER_TITLE      = "";
     $PDF_HEADER_STRING     = "";
 
@@ -765,8 +765,8 @@ function incident_pdf($inc_id) {
     $file_name = str_replace(" ","-", $file_name);
 
     $pdf = new pdf();
-    $PDF_HEADER_LOGO       = '/theme/klass/pix/eeg-logo.png'; //any image file. check correct path.
-    $PDF_HEADER_LOGO_WIDTH = "30px";
+    $PDF_HEADER_LOGO       = '/local/mp_report/images/mh_logo_sm.png'; //any image file. check correct path.
+    $PDF_HEADER_LOGO_WIDTH = "60%";
     $PDF_HEADER_TITLE      = "";
     $PDF_HEADER_STRING     = "";
 
@@ -1396,8 +1396,8 @@ function accident_full_pdf($acc_id) {
     $pdf = new pdf();
 
 
-    $PDF_HEADER_LOGO       = '/theme/klass/pix/eeg-logo.png'; //any image file. check correct path.
-    $PDF_HEADER_LOGO_WIDTH = "30px";
+    $PDF_HEADER_LOGO       = '/local/mp_report/images/mh_logo_sm.png'; //any image file. check correct path.
+    $PDF_HEADER_LOGO_WIDTH = "60%";
     $PDF_HEADER_TITLE      = "";
     $PDF_HEADER_STRING     = "";
 
@@ -1667,8 +1667,8 @@ function incident_full_pdf($inc_id) {
 
     $pdf = new pdf();
 
-    $PDF_HEADER_LOGO       = '/theme/klass/pix/eeg-logo.png'; //any image file. check correct path.
-    $PDF_HEADER_LOGO_WIDTH = "30px";
+    $PDF_HEADER_LOGO       = '/local/mp_report/images/mh_logo_sm.png'; //any image file. check correct path.
+    $PDF_HEADER_LOGO_WIDTH = "60%";
     $PDF_HEADER_TITLE      = "";
     $PDF_HEADER_STRING     = "";
 
