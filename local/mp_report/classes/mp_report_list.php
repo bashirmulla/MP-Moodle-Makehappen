@@ -95,10 +95,9 @@ class accident_page extends moodleform {
                 <div class="col-sm-8">
                     <h4 class="ccnMdlHeading">'.get_string('accident', 'local_mp_report')."s</h4>
                  </div>
-                 <div class='col-sm-2'>     
-                     <a class='btn btn-dark' style='background-color: #8a8a0f; border-color: #8a8a0f !important; ' href='/local/mp_report/index.php'><i class='fa fa-backward'> </i> Back Home</a>
-                 </div>
-                 <div class='col-sm-2'>     
+                  <div class='col-sm-4' style='text-align: right !important;'>  
+                     <a class='btn btn-dark' style='background-color: #fcc42c; border-color: #fcc42c !important; ' href='/local/mp_report/index.php'><i class='fa fa-backward'> </i> Back </a>
+                    
                      <a class='btn btn-dark' style='background-color: #2441e7; border-color: #2441e7 !important;' href='/local/mp_report/index.php?cmd=form1'><i class='fa fa-plus-circle'> </i> Add Accident</a>
                  </div>
              </div>    
@@ -149,14 +148,13 @@ class incident_page extends moodleform {
         $dropdown = get_dropdown_data(2,'report_category');
 
         $mform->addElement('html','
-            <div class="row">
+            <div class="row" >
                 <div class="col-sm-8">
                     <h4 class="ccnMdlHeading">'.get_string('incident', 'local_mp_report')."s</h4>
                  </div>
-                <div class='col-sm-2'>     
-                     <a class='btn btn-dark' style='background-color: #8a8a0f; border-color: #8a8a0f !important;' href='/local/mp_report/index.php'><i class='fa fa-backward'> </i> Back Home</a>
-                 </div>
-                 <div class='col-sm-2'>     
+                <div class='col-sm-4' style='text-align: right !important;'>     
+                     <a class='btn btn-dark' style='background-color: #fcc42c; border-color: #fcc42c !important;' href='/local/mp_report/index.php'><i class='fa fa-backward'> </i> Back </a>
+                
                      <a class='btn btn-dark' style='background-color: #2441e7; border-color: #2441e7 !important;' href='/local/mp_report/index.php?cmd=form2'><i class='fa fa-plus-circle'> </i> Add Incident</a>
                  </div>
              </div>    
