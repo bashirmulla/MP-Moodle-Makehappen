@@ -1,0 +1,50 @@
+<IfModule mod_rewrite.c>
+    <IfModule mod_negotiation.c>
+        Options -MultiViews -Indexes
+    </IfModule>
+
+    # X-XSS-Protection
+    <IfModule mod_headers.c>
+        Header set X-XSS-Protection "1; mode=block"
+        Header set Strict-Transport-Security "max-age=31536000; includeSubDomains;"
+
+    </IfModule>
+
+
+    RewriteEngine On
+
+    # Handle Authorization Header
+    RewriteCond %{HTTP:Authorization} .
+    RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
+
+    # Redirect Trailing Slashes If Not A Folder...
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteCond %{REQUEST_URI} (.+)/$
+    RewriteRule ^ %1 [L,R=301]
+
+    # Handle Front Controller...
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteCond %{REQUEST_FILENAME} !-f
+
+        DirectoryIndex index.php index.html index.htm
+        php_value memory_limit 40M
+        php_flag magic_quotes_gpc 1
+        php_flag magic_quotes_runtime 0
+        php_flag file_uploads 1
+        php_flag session.auto_start 0
+        php_flag session.bug_compat_warn 0
+        php_flag session.cookie_httponly on
+    php_flag session.cookie_secure on
+
+        <IfDefine APACHE2>
+                AcceptPathInfo on
+        </IfDefine>
+
+# ==================================================================
+# Prevent .git access
+# ==================================================================
+
+RedirectMatch 404 /\.git
+
+# ==================================================================
+
