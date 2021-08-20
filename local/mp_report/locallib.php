@@ -253,7 +253,7 @@ function is_complieance($user_id=null){
 
 
 
-function get_com_manager_list(){
+function _Back_get_com_manager_list(){
     global $DB,$USER;
 
     $arr =  array();
@@ -276,7 +276,7 @@ function get_com_manager_list(){
     return $arr;
 }
 
-function get_hs_manager_list(){
+function get_com_manager_list(){
     global $DB,$USER;
     $arr =  array();
 

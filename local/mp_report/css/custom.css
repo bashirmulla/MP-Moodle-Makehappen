@@ -33,3 +33,20 @@ legend.scheduler-border {
 #fgroup_id_buttonar > div > fieldset{
     width: 300px !important;
 }
+
+@media screen and (max-width: 640px) {
+  .c0 {
+      display: none !important;
+  }
+  .ccnMdlHeading{
+      display: none !important;
+  }
+  .dataTables_length{
+      display: none !important;
+  }
+  .col-sm-6{
+      width: 100%;
+  }
+  #report_headding{}
+
+}

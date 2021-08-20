@@ -383,13 +383,20 @@ class incident_report_form extends moodleform {
         }
 
         if( is_senior_manager() || is_complieance() || is_admin() || is_manager()) {
-            $pdfbutton = '<a style="float:right;" href="index.php?cmd=inc_pdf&id='.$_REQUEST['id'].'&download=1&catID='.$reportData->report_category.'&uid='.$reportData->user_id.'&d='.$reportData->i_date.'" class="btn btn-primary">Export Initial Report as PDF</a>';
-
-            $pdfbutton2 = '<a style="float:right;margin-right:3px;" href="index.php?cmd=inc_full_pdf&id='.$_REQUEST['id'].'&download=1&catID='.$reportData->report_category.'&uid='.$reportData->user_id.'&d='.$reportData->i_date.'" class="btn btn-primary">Export Full Report as PDF</a>';
+            $pdfbuttons ='<div class="row" >
+                <div class="col-sm-6">
+                    
+                 </div>
+                <div class="col-sm-6" style="text-align: right !important;">     
+                     <a class="btn btn-dark" style="background-color: #fcc42c; border-color: #fcc42c !important;" href="index.php?cmd=inc_pdf&id='.$_REQUEST['id'].'&download=1&catID='.$reportData->report_category.'&uid='.$reportData->user_id.'&d='.$reportData->i_date.'"><i class="fa fa-check-circle"> </i> Export Initial Report as PDF </a>
+                
+                     <a class="btn btn-dark" style="background-color: #2441e7; border-color: #2441e7 !important;" href="index.php?cmd=inc_full_pdf&id='.$_REQUEST['id'].'&download=1&catID='.$reportData->report_category.'&uid='.$reportData->user_id.'&d='.$reportData->i_date.'"><i class="fa fa-plus-circle"> </i> Export Full Report as PDF</a>
+                 </div>
+             </div>    
+            <hr>';
 
         }
-        $mform->addElement('html', $pdfbutton);
-        $mform->addElement('html', $pdfbutton2);
+        $mform->addElement('html', $pdfbuttons);
 
         $mform->addFormRule('incidentVaidations');
     }
@@ -438,13 +445,19 @@ class incident_report_form extends moodleform {
         }
 
         if( is_senior_manager() || is_complieance() || is_admin()) {
-            $pdfbutton = '<a style="float:right;" href="index.php?cmd=inc_pdf&id='.$_REQUEST['id'].'&download=1&catID='.$reportData->report_category.'&uid='.$reportData->user_id.'&d='.$reportData->i_date.'" class="btn btn-primary">Export Initial Report as PDF</a>';
-
-            $pdfbutton2 = '<a style="float:right;margin-right:3px;" href="index.php?cmd=inc_full_pdf&id='.$_REQUEST['id'].'&download=1&catID='.$reportData->report_category.'&uid='.$reportData->user_id.'&d='.$reportData->i_date.'" class="btn btn-primary">Export Full Report as PDF</a>';
-
+            $pdfbuttons ='<div class="row" >
+                <div class="col-sm-6">
+                   
+                 </div>
+                <div class="col-sm-6" style="text-align: right !important;">     
+                     <a class="btn btn-dark" style="background-color: #fcc42c; border-color: #fcc42c !important;" href="index.php?cmd=inc_pdf&id='.$_REQUEST['id'].'&download=1&catID='.$reportData->report_category.'&uid='.$reportData->user_id.'&d='.$reportData->i_date.'"><i class="fa fa-check-circle"> </i> Export Initial Report as PDF </a>
+                
+                     <a class="btn btn-dark" style="background-color: #2441e7; border-color: #2441e7 !important;" href="index.php?cmd=inc_full_pdf&id='.$_REQUEST['id'].'&download=1&catID='.$reportData->report_category.'&uid='.$reportData->user_id.'&d='.$reportData->i_date.'"><i class="fa fa-plus-circle"> </i> Export Full Report as PDF</a>
+                 </div>
+             </div>    
+            <hr>';
         }
-        $mform->addElement('html', $pdfbutton);
-        $mform->addElement('html', $pdfbutton2);
+        $mform->addElement('html', $pdfbuttons);
 
         $mform->addFormRule('incidentVaidations');
     }
@@ -466,11 +479,18 @@ class incident_report_form extends moodleform {
             }
 
             if( is_senior_manager() || is_complieance() || is_admin() || is_manager()) {
-                $heading .= '<a style="float:right;" href="index.php?cmd=inc_pdf&id='.$_REQUEST['id'].'&download=1&catID='.$reportData->report_category.'&uid='.$reportData->user_id.'&d='.$reportData->i_date.'" class="btn btn-primary">Export Initial Report as PDF</a>';
-
-                $heading .= '<a style="float:right;margin-right:3px;" href="index.php?cmd=inc_full_pdf&id='.$_REQUEST['id'].'&download=1&catID='.$reportData->report_category.'&uid='.$reportData->user_id.'&d='.$reportData->i_date.'" class="btn btn-primary">Export Full Report as PDF</a>';
+                $heading ='<div class="row" >
+                <div class="col-sm-6">
+                    <h3 id="report_headding">'.get_string('incident', 'local_mp_report').'</h3>
+                 </div>
+                <div class="col-sm-6" style="text-align: right !important;">     
+                     <a class="btn btn-dark" style="background-color: #fcc42c; border-color: #fcc42c !important;" href="index.php?cmd=inc_pdf&id='.$_REQUEST['id'].'&download=1&catID='.$reportData->report_category.'&uid='.$reportData->user_id.'&d='.$reportData->i_date.'"><i class="fa fa-check-circle"> </i> Export Initial Report as PDF </a>
+                
+                     <a class="btn btn-dark" style="background-color: #2441e7; border-color: #2441e7 !important;" href="index.php?cmd=inc_full_pdf&id='.$_REQUEST['id'].'&download=1&catID='.$reportData->report_category.'&uid='.$reportData->user_id.'&d='.$reportData->i_date.'"><i class="fa fa-plus-circle"> </i> Export Full Report as PDF</a>
+                 </div>
+             </div>    
+            <hr>';
             }
-            $heading .= '</h3><hr>';
 
             $mform->addElement('html', $heading);
             $this->userPartView($reportData);
