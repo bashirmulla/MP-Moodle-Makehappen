@@ -33,3 +33,4 @@ training_matrix_certificates/
 config.php
 local/training_matrix/certificates_all
 accident_riddor_files/
+.idea/
