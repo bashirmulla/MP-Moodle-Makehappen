@@ -66,38 +66,47 @@ if(is_admin() || is_complieance() || is_senior_manager()) {
     echo $html = '<div class="row justify-content-center" style="text-align: center !important;">
                 
                 <div class="col-sm-6 col-md-6 col-lg-4 col-lg-5th-1">
-					<a href="/local/mp_report/index.php?cmd=accpage" data-ccn-c="color3" data-ccn-co="bg" class="icon_hvr_img_box ccn-color-cat-boxes" style="background:rgba(0, 97, 255, 0.6);">
+					<a href="/local/trend_analysis_report/accident_report.php" data-ccn-c="color3" data-ccn-co="bg" class="icon_hvr_img_box ccn-color-cat-boxes" style="background:rgba(0, 97, 255, 0.6);">
 						<div class="overlay">
 							<div class="icon ccn_icon_2 color-white"><span data-ccn="icon3" class="ccn-flaticon-add-1"></span></div>
 							<div class="details">
-								<h5 class="color-white">Accident Report</h5><p class="color-white">Over 1 reports</p>
+								<h5 class="color-white">Accident Reports</h5><p class="color-white"></p>
 							</div>
 						</div>
 					</a>
 				</div>
                 <div class="col-sm-6 col-md-6 col-lg-4 col-lg-5th-1">
-					<a href="/local/mp_report/index.php?cmd=incpage" data-ccn-c="color4" data-ccn-co="bg" class="icon_hvr_img_box ccn-color-cat-boxes" style="background:rgba(241, 67, 45, 0.6);">
+					<a href="/local/trend_analysis_report/incident_near_miss_hazard_report.php" data-ccn-c="color4" data-ccn-co="bg" class="icon_hvr_img_box ccn-color-cat-boxes" style="background:rgba(241, 67, 45, 0.6);">
 						<div class="overlay">
 							<div class="icon ccn_icon_2 color-white"><span data-ccn="icon4" class="flaticon-checklist"></span></div>
 							<div class="details">
-								<h5 class="color-white">Incident Report</h5><p class="color-white">Over 0 incidents</p>
+								<h5 class="color-white">Incident Report</h5><p class="color-white"></p>
 							</div>
 						</div>
 					</a>
 				</div>
 				
 				<div class="col-sm-6 col-md-6 col-lg-4 col-lg-5th-1">
-					<a href="/local/trend_analysis_report/assign.php" data-ccn-c="color1" data-ccn-co="bg" class="icon_hvr_img_box ccn-color-cat-boxes" style="background:rgba(234, 38, 227, 0.6);">
+					<a href="/local/trend_analysis_report/accident_incident_near_miss_hazard_analysis.php" data-ccn-c="color1" data-ccn-co="bg" class="icon_hvr_img_box ccn-color-cat-boxes" style="background:rgba(234, 38, 227, 0.6);">
 						<div class="overlay">
 							<div class="icon ccn_icon_2 color-white"><span data-ccn="icon3" class="flaticon-add-contact"></span></div>
 							<div class="details">
-								<h5 class="color-white">Manage Managers</h5><p class="color-white">Over 0 manager</p>
+								<h5 class="color-white">H&S Analysis</h5><p class="color-white"></p>
 							</div>
 						</div>
 					</a>
 				</div>
                 
-             
+                <div class="col-sm-6 col-md-6 col-lg-4 col-lg-5th-1">
+					<a href="/local/trend_analysis_report/monthly_trends.php" data-ccn-c="color1" data-ccn-co="bg" class="icon_hvr_img_box ccn-color-cat-boxes" style="background:#e35a9a;">
+						<div class="overlay">
+							<div class="icon ccn_icon_2 color-white"><span data-ccn="icon3" class="flaticon-book"></span></div>
+							<div class="details">
+								<h5 class="color-white">Monthly Analysis</h5><p class="color-white"></p>
+							</div>
+						</div>
+					</a>
+				</div>
           </div>';
 }
 else{
