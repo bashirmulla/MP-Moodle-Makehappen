@@ -80,7 +80,7 @@ if(is_admin() || is_complieance() || is_senior_manager()) {
 						<div class="overlay">
 							<div class="icon ccn_icon_2 color-white"><span data-ccn="icon4" class="flaticon-checklist"></span></div>
 							<div class="details">
-								<h5 class="color-white">Incident Report</h5><p class="color-white"></p>
+								<h5 class="color-white">Incident Reports</h5><p class="color-white"></p>
 							</div>
 						</div>
 					</a>
