@@ -44,7 +44,7 @@ $string['incident_table']   = 'incident_report';
 $string['assign_manager']   = 'Manage Managers';
 
 //Report - Ipsum Group Scorecard
-$string['ipsum_group_scorecard_dashboard']    = 'Ipsum Group Scorecard Dashboard';
+$string['ipsum_group_scorecard_dashboard']    = 'Makehappen Scorecard Dashboard';
 $string['accidents_incidents_chart']    = 'Accidents and Incidents chart';
 $string['number_of_site_audit']    = 'Number of Site Audits';
 $string['audit_recommendation']    = 'Audit Recommendations';

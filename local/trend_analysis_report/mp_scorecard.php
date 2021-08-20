@@ -81,7 +81,7 @@ for($i=$min;$i<=$max;$i++)
 {
     $active = '';
     if($i==$cur_year) {$active = ' active ';}
-    echo html_writer::tag('a', $i, array('class'=>'dropdown-item'.$active,'href'=>'ipsum_group_scorecard_dashboard.php?cur_year='.$i));
+    echo html_writer::tag('a', $i, array('class'=>'dropdown-item'.$active,'href'=>'mp_scorecard.php?cur_year='.$i));
 }
 echo html_writer:: end_tag('div');
 echo html_writer:: end_tag('div');

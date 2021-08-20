@@ -26,7 +26,6 @@ $pluginname = 'trend_analysis_report';
 
 require(__DIR__ . '/../../config.php');
 require_once($CFG->libdir . '/adminlib.php');
-require_once($CFG->libdir . '/coursecatlib.php');
 require_once($CFG->libdir . '/csvlib.class.php');
 require_once($CFG->dirroot.'/local/'.$pluginname.'/target_form.php');
 require_once($CFG->dirroot.'/local/trend_analysis_report/locallib.php');  // Include our function library.

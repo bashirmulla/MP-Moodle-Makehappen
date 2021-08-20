@@ -514,6 +514,7 @@ return $output;
         $output = '<div class="validators">
                    <ul class="list-unstyled ml-1">
                      <li><a href="'.$CFG->wwroot.'/local/mp_report/index.php"><span class="flaticon-checklist"></span>Submit H&S Report</a></li>
+                     <li><a href="'.$CFG->wwroot.'/local/trend_analysis_report/index.php"><span class="flaticon-creative-idea"></span>Trend Analysis</a></li>
                   </ul>
                 </div>';
 
