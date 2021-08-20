@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<XMLDB PATH="local/trend_analysis_report/db" VERSION="20101203" COMMENT="XMLDB file for Moodle local/trend_analysis_report"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:noNamespaceSchemaLocation="../../../lib/xmldb/xmldb.xsd"
+>
+  <TABLES>
+
+
+  </TABLES>
+
+</XMLDB>
