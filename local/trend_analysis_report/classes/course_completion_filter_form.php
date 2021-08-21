@@ -43,6 +43,14 @@ class course_completion_filter_form extends moodleform {
         $mform->_maxFileSize = 90000000;
 
         $mform->_formname = "search_courses_filter_form";
+        $html ='<div class="row" >
+                <div class="col-sm-6"> </div>
+                <div class="col-sm-6" style="text-align: right !important;">     
+                     <a class="btn btn-dark" onclick="history.back()" style="background-color: #fcc42c; border-color: #fcc42c !important; font-weight: bold"><i class="fa fa-step-backward"> </i> Back </a>
+                </div>
+             </div>';
+
+        $mform->addElement('html',$html);
 
         $mform->addElement('html', html_writer:: start_tag('fieldset',array('class'=>'scheduler-border')));
         $mform->addElement('html', html_writer:: tag('legend','Filters',array('class'=>'scheduler-border')));

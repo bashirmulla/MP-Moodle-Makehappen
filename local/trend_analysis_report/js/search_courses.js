@@ -19,7 +19,7 @@ function pull_data() {
     $.ajax({
         type: "POST",
         url: "/local/trend_analysis_report/search_courses_data.php",
-        data: $("#mform1").serialize(),
+        data: $(".mform").serialize(),
         success: function(data){
             $('#ajax_content').html(data);
             jQuery.noConflict();

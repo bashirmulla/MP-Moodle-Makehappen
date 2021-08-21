@@ -25,15 +25,8 @@ $filterData = get_requests();
 
 if(!is_number($filterData['year'])) $filterData['year'] = date("Y");
 
-echo html_writer:: start_tag('div',array('class'=>'form-row'));
-echo html_writer:: div('','col-md-9 form-group-ele');
-echo html_writer:: start_tag('div',array('class'=>'form-group col-md-3 form-group-ele','style'=>'text-align:right;'));
-echo html_writer:: tag('button','<i class="fa fa-download"></i> &nbsp;&nbsp;Download PDF',array('type'=>'button','id'=>'dwn_calm_scorecard_total_pdf','class'=>'btn btn-primary','style' =>"margin-right:10px"));
-echo html_writer:: end_tag('div');
-echo html_writer:: end_tag('div');
 
 echo html_writer:: start_tag('div',array('class'=>'table-responsive'));
-echo "<hr></br>";
 $target_year_data = $DB->get_records_sql(" SELECT * FROM mdl_report_target WHERE year= ?",$filterData);
 //echo '<pre>';
 //print_r($target_year_data);

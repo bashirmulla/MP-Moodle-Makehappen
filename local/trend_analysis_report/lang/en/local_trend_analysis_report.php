@@ -49,7 +49,7 @@ $string['accidents_incidents_chart']    = 'Accidents and Incidents chart';
 $string['number_of_site_audit']    = 'Number of Site Audits';
 $string['audit_recommendation']    = 'Audit Recommendations';
 
-$string['calm_scorecard_total']    = 'CALM Scorecard Total';
+$string['calm_scorecard_total']    = 'Scorecard Total';
 
 
 //Report - Monthly Trends

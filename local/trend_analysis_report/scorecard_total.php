@@ -67,6 +67,9 @@ echo html_writer:: start_tag('div',array('class'=>'card mb-4'));
 echo html_writer:: start_tag('div',array('class'=>'card-body'));
 echo html_writer::empty_tag('input',array('type'=>'hidden','id'=>'default_year','value'=>$cur_year));
 echo html_writer:: start_tag('div',array('class'=>'dropdown show md-4 float-right'));
+echo $html ='<a class="btn btn-dark" onclick="history.back()" style="background-color: #fcc42c; border-color: #fcc42c !important; font-weight: bold"><i class="fa fa-step-backward"> </i> Back </a>';
+echo $html ='<a class="btn btn-dark" id="dwn_calm_scorecard_total_pdf"  style="background-color: #e35a9a; border-color: #e35a9a !important; font-weight: bold"><i class="fa fa-download"></i> &nbsp;&nbsp;Download PDF</a>';
+
 echo html_writer::tag('button', $cur_year, array('href'=>'#','class'=>'btn btn-secondary btn-lg dropdown-toggle',
     'type'=>'button','id'=>'dropdownMenuButton','data-toggle'=>'dropdown','aria-haspopup'=>'true','aria-expanded'=>'false'));
 

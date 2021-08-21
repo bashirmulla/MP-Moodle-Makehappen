@@ -9,7 +9,7 @@ function pull_data() {
     $.ajax({
         type: "POST",
         url: "/local/trend_analysis_report/accident_report_data.php",
-        data: $("#mform1").serialize(),
+        data: $(".mform").serialize(),
         success: function(data){
 
 

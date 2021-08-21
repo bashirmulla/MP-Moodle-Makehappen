@@ -10,7 +10,7 @@ function pull_data() {
         type: "POST",
         dataType : 'html',
         url: "/local/trend_analysis_report/toolbox_talks_by_category_data.php",
-        data: $("#mform1").serialize(),
+        data: $(".mform").serialize(),
         success: function(data){
             console.log(data);
             $('#ajax_content').html(data);

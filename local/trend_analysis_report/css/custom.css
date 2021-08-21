@@ -22,3 +22,7 @@ legend.scheduler-border {
 .form-group-ele {
     margin-bottom: 1.25rem;
 }
+
+.breadcrumb_widgets{
+    margin-bottom: 3px !important;
+}

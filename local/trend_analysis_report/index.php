@@ -124,7 +124,7 @@ if(is_admin() || is_complieance() || is_senior_manager()) {
 					</a>
 				</div>
                 <div class="col-sm-6 col-md-6 col-lg-4 col-lg-5th-1">
-					<a href="/local/trend_analysis_report/incident_near_miss_hazard_report.php" data-ccn-c="color4" data-ccn-co="bg" class="icon_hvr_img_box ccn-color-cat-boxes" style="background-color: #6f42c1;">
+					<a href="/local/trend_analysis_report/scorecard_total.php" data-ccn-c="color4" data-ccn-co="bg" class="icon_hvr_img_box ccn-color-cat-boxes" style="background-color: #6f42c1;">
 						<div class="overlay">
 							<div class="icon ccn_icon_2 color-white"><span data-ccn="icon4" class="ccn-flaticon-calculator"></span></div>
 							<div class="details">
@@ -156,6 +156,17 @@ if(is_admin() || is_complieance() || is_senior_manager()) {
 							<div class="icon ccn_icon_2 color-white"><span data-ccn="icon4" class="flaticon-award"></span></div>
 							<div class="details">
 								<h5 class="color-white">Add Monthly Terget</h5><p class="color-white"></p>
+							</div>
+						</div>
+					</a>
+				</div>
+				
+				<div class="col-sm-6 col-md-6 col-lg-4 col-lg-5th-1">
+					<a href="/local/trend_analysis_report/email_notification_on_high_h_s_report.php" data-ccn-c="color4" data-ccn-co="bg" class="icon_hvr_img_box ccn-color-cat-boxes" style="background: rgba(241, 67, 45, 0.6);">
+						<div class="overlay">
+							<div class="icon ccn_icon_2 color-white"><span data-ccn="icon4" class="flaticon-settings"></span></div>
+							<div class="details">
+								<h5 class="color-white">Email Notification Setting</h5><p class="color-white"></p>
 							</div>
 						</div>
 					</a>

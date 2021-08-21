@@ -12,7 +12,7 @@ function pull_data() {
         type: "POST",
         dataType : 'html',
         url: "/local/trend_analysis_report/accident_incident_near_miss_hazard_analysis_data.php",
-        data: $("#mform1").serialize(),
+        data: $(".mform").serialize(),
         success: function(data){
             $('#ajax_content').html(data);
         }

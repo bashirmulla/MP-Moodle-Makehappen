@@ -36,6 +36,15 @@ class manager_assign_form extends moodleform {
 
         $mform->_formname = "manager_assign_form";
 
+        $html ='<div class="row" >
+                <div class="col-sm-6"> </div>
+                <div class="col-sm-6" style="text-align: right !important;">     
+                     <a class="btn btn-dark" onclick="history.back()" style="background-color: #fcc42c; border-color: #fcc42c !important; font-weight: bold"><i class="fa fa-step-backward"> </i> Back </a>
+                </div>
+             </div>';
+
+        $mform->addElement('html',$html);
+
         $mform->addElement('html', html_writer:: start_tag('fieldset',array('class'=>'scheduler-border')));
         //start row
         $mform->addElement('html', html_writer:: start_tag('div',array('class'=>'form-row')));

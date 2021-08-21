@@ -48,7 +48,14 @@ class incident_near_miss_hazard_list extends moodleform {
         $mform->_formname = "accident_report_list";
 
         $dropdown = get_dropdown_data(2);
+        $html ='<div class="row" >
+                <div class="col-sm-6"> </div>
+                <div class="col-sm-6" style="text-align: right !important;">     
+                     <a class="btn btn-dark" onclick="history.back()" style="background-color: #fcc42c; border-color: #fcc42c !important; font-weight: bold"><i class="fa fa-step-backward"> </i> Back </a>
+                </div>
+             </div>';
 
+        $mform->addElement('html',$html);
         $mform->addElement('html', html_writer:: start_tag('fieldset',array('class'=>'scheduler-border')));
         $mform->addElement('html', html_writer:: tag('legend','Filters',array('class'=>'scheduler-border')));
 
