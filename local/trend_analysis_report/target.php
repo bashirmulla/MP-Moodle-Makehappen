@@ -33,8 +33,8 @@ require_once($CFG->dirroot.'/local/trend_analysis_report/locallib.php');  // Inc
 $returnurl = new moodle_url('/local/trend_analysis_report/target.php');
 
 
-$title   = get_string('pluginname', 'local_'.$pluginname);
-$heading = get_string('heading', 'local_'.$pluginname);
+$title   = get_string('add_monthly_target', 'local_'.$pluginname);
+$heading = get_string('add_monthly_target', 'local_'.$pluginname);
 $url     = new moodle_url('/local/'.$pluginname.'/index.php');
 
 require_login();
