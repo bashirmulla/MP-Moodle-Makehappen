@@ -43,8 +43,8 @@ echo '<script src="'.$CFG->wwwroot.'/local/'.$pluginname.'/highcharts/code/highc
 
 // Heading ==========================================================.
 
-$title   = get_string('pluginname', 'local_'.$pluginname);
-$heading = get_string('heading', 'local_'.$pluginname);
+$title   = get_string('trend_analysis_reporting', 'local_'.$pluginname);
+$heading = get_string('trend_analysis_reporting', 'local_'.$pluginname);
 $url     = new moodle_url('/local/'.$pluginname.'/index.php');
 
 

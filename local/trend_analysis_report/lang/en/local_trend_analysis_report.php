@@ -37,6 +37,7 @@ $string['month']         = 'Month';
 $string['save']          = 'Save';
 $string['add_monthly_actual'] = 'Add Monthly Actual';
 $string['add_monthly_target'] = 'Add Monthly Target';
+$string['trend_analysis_reporting'] = 'Trend Analysis Reporting';
 
 //Report - Accident Incident
 $string['accident']    = 'Accident Reports';

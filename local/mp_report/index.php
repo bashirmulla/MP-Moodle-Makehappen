@@ -50,8 +50,8 @@ require_login();
 
 // Heading ==========================================================.
 
-$title   = get_string('pluginname', 'local_'.$pluginname);
-$heading = get_string('heading', 'local_'.$pluginname);
+$title   = get_string('h&s_reporting', 'local_'.$pluginname);
+$heading = get_string('h&s_reporting', 'local_'.$pluginname);
 $url     = new moodle_url('/local/'.$pluginname.'/index.php');
 
 
