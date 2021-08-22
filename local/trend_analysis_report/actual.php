@@ -88,7 +88,14 @@ if (empty($importid)) {
     } else {
 
         echo $OUTPUT->header();
-        echo $OUTPUT->heading_with_help(get_string('uploadactual', 'local_trend_analysis_report'), 'uploadactual', 'local_trend_analysis_report');
+
+        echo $html ='<div class="row" >
+                       <div class="col-sm-6"> Upload Actual </div>
+                       <div class="col-sm-6" style="text-align: right !important;">     
+                          <a class="btn btn-dark" onclick="history.back()" style="background-color: #fcc42c; border-color: #fcc42c !important; font-weight: bold"><i class="fa fa-step-backward"> </i> Back </a>
+                       </div>
+                     </div>';
+
         $mform1->display();
         echo $OUTPUT->footer();
         die();

@@ -33,8 +33,8 @@ require_once($CFG->libdir.'/adminlib.php');
 require_once($CFG->dirroot.'/local/'.$pluginname.'/locallib.php');  // Include our function library.
 require_once($CFG->dirroot.'/local/'.$pluginname.'/functions.php');  // Include our function library.
 
-$PAGE->requires->css(new moodle_url($CFG->wwwroot.'/local/trend_analysis_report/css/calm_scorecard_total.css'));
-$PAGE->requires->js(new moodle_url($CFG->wwwroot.'/local/trend_analysis_report/js/calm_scorecard_total.js'));
+$PAGE->requires->css(new moodle_url($CFG->wwwroot.'/local/trend_analysis_report/css/scorecard_total.css'));
+$PAGE->requires->js(new moodle_url($CFG->wwwroot.'/local/trend_analysis_report/js/scorecard_total.js'));
 
 require_login();
 // Heading ==========================================================.
@@ -80,7 +80,7 @@ for($i=$min;$i<=$max;$i++)
 {
     $active = '';
     if($i==$cur_year) {$active = ' active ';}
-    echo html_writer::tag('a', $i, array('class'=>'dropdown-item'.$active,'href'=>'#'));
+    echo html_writer::tag('a', $i, array('class'=>'dropdown-item'.$active));
 }
 echo html_writer:: end_tag('div');
 echo html_writer:: end_tag('div');

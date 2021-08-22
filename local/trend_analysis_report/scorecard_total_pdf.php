@@ -14,7 +14,7 @@ require_login();
 if (isset($SESSION->pdf_html_data)) {
     $pdf_html = $SESSION->pdf_html_data;
 //    echo $pdf_html;
-    $pdf_file = 'calm_scorecard_total.pdf';
+    $pdf_file = 'scorecard_total.pdf';
     $pdf_file = str_replace(" ","-", $pdf_file);
 
     $pdf = new pdf('L');

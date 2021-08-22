@@ -169,7 +169,9 @@ class course_edit_form extends moodleform {
         $mform->addElement('text','idnumber', get_string('idnumbercourse'),'maxlength="100"  size="10"');
         $mform->addHelpButton('idnumber', 'idnumbercourse');
         $mform->setType('idnumber', PARAM_RAW);
-        $mform->setDefault('idnumber', $category->idnumber."-".$course->id ? $course->id : get_table_max_id('course')."-".date("y"));
+        if($course->id) $cid = $course->id;
+        else            $cid = get_table_max_id('course');
+        $mform->setDefault('idnumber', $category->id."-".$cid."-".date("y"));
 
         $options = get_courses_category();
         $mform->addElement('select', 'coursetype', get_string('courseType'), $options);
@@ -206,13 +208,7 @@ class course_edit_form extends moodleform {
             $mform->addHelpButton('relativedatesmodegroup', 'relativedatesmode');
         }
 
-        $mform->addElement('text','idnumber', get_string('idnumbercourse'),'maxlength="100"  size="10"');
-        $mform->addHelpButton('idnumber', 'idnumbercourse');
-        $mform->setType('idnumber', PARAM_RAW);
-        if (!empty($course->id) and !has_capability('moodle/course:changeidnumber', $coursecontext)) {
-            $mform->hardFreeze('idnumber');
-            $mform->setConstants('idnumber', $course->idnumber);
-        }
+
 
         // Description.
         $mform->addElement('header', 'descriptionhdr', get_string('description'));

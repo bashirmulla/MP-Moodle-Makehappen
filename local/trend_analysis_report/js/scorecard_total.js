@@ -13,14 +13,14 @@ if(year=='') year = $('#default_year').val();
     $.ajax({
         type: "POST",
         dataType : 'html',
-        url: "/local/trend_analysis_report/calm_scorecard_total_data.php",
+        url: "/local/trend_analysis_report/scorecard_total_data.php",
         data: {year:year},
         success: function(data){
             $('#ajax_content').html(data);
             $('#dwn_calm_scorecard_total_pdf').on("click", function (e) {
                 window.onbeforeunload = null;
                 e.preventDefault();
-                document.location.href = '/local/trend_analysis_report/calm_scorecard_total_pdf.php';
+                document.location.href = '/local/trend_analysis_report/scorecard_total_pdf.php';
             });
         }
 

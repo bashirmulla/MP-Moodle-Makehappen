@@ -3293,5 +3293,5 @@ elseif (($Q1_numa_actual+$Q2_numa_actual+$Q3_numa_actual+$Q4_numa_actual)>($Q1_s
 </table>
 <?php
 echo html_writer:: end_tag('div');
-require_once('calm_scorecard_total_pdf_data.php');
+require_once('scorecard_total_pdf_data.php');
 ?>
