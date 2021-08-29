@@ -649,8 +649,10 @@ class accident_report_form extends moodleform {
                 <div class="col-sm-6">
                     <h3 id="report_headding">'.get_string('accident', 'local_mp_report').'</h3>
                  </div>
-                <div class="col-sm-6" style="text-align: right !important;">     
-                     <a class="btn btn-dark" style="background-color: #fcc42c; border-color: #fcc42c !important;" href="index.php?cmd=acc_pdf&id='.$_REQUEST['id'].'&download=1&uid='.$reportData->user_id.'&d='.$reportData->accident_date.'"><i class="fa fa-check-circle"> </i> Export Initial Report as PDF </a>
+                <div class="col-sm-6" style="text-align: right !important;">    
+                     <a class="btn btn-dark" style="background-color: #fcc42c; border-color: #fcc42c !important;" onclick="history.back()"><i class="fa fa-backward"> </i> Back</a>
+                 
+                     <a class="btn btn-dark" style="background-color: #0a4e8a ; border-color: #0a4e8a !important;" href="index.php?cmd=acc_pdf&id='.$_REQUEST['id'].'&download=1&uid='.$reportData->user_id.'&d='.$reportData->accident_date.'"><i class="fa fa-check-circle"> </i> Export Initial Report as PDF </a>
                 
                      <a class="btn btn-dark" style="background-color: #2441e7; border-color: #2441e7 !important;" href="index.php?cmd=acc_full_pdf&id='.$_REQUEST['id'].'&download=1&uid='.$reportData->user_id.'&d='.$reportData->accident_date.'"><i class="fa fa-plus-circle"> </i> Export Full Report as PDF</a>
                  </div>

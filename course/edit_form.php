@@ -166,7 +166,7 @@ class course_edit_form extends moodleform {
         $mform->addElement('hidden','catArr',json_encode($catlist),"id=catArr");
         $mform->addElement('hidden','catYear',date("y"),"id=catYear");
         $mform->addElement('hidden','course_id',$course->id ? $course->id : get_table_max_id('course'),"id=course_id");
-        $mform->addElement('text','idnumber', get_string('idnumbercourse'),'maxlength="100"  size="10"');
+        $mform->addElement('text','idnumber', get_string('idnumbercourse'),array("readonly" => "readonly","style" => "background-color:#CCC;"));
         $mform->addHelpButton('idnumber', 'idnumbercourse');
         $mform->setType('idnumber', PARAM_RAW);
         if($course->id) $cid = $course->id;

@@ -29,17 +29,9 @@ $pluginname = 'trend_analysis_report';
 
 // Include config.php.
 require_once(__DIR__.'/../../config.php');
-require_once($CFG->libdir.'/adminlib.php');
 require_once($CFG->dirroot.'/local/'.$pluginname.'/locallib.php');  // Include our function library.
-require_once($CFG->dirroot.'/local/'.$pluginname.'/functions.php');  // Include our function library.
-
 
 require_login();
-
-echo '<script src="'.$CFG->wwwroot.'/local/'.$pluginname.'/highcharts/code/highcharts.js"></script>
-<script src="'.$CFG->wwwroot.'/local/'.$pluginname.'/highcharts/code/highcharts-3d.js"></script>
-<script src="'.$CFG->wwwroot.'/local/'.$pluginname.'/highcharts/code/modules/exporting.js"></script>
-<script src="'.$CFG->wwwroot.'/local/'.$pluginname.'/highcharts/code/modules/export-data.js"></script>';
 
 // Heading ==========================================================.
 
@@ -179,3 +171,4 @@ if(is_admin() || is_complieance() || is_senior_manager()) {
 else{
     echo "You are not autorized to view this page";
 }
+echo $OUTPUT->footer();

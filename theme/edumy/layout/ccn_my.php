@@ -15,3 +15,17 @@ if ($ccnDashLayout == 1) {
   include($CFG->dirroot . '/theme/edumy/ccn/ccn_themehandler_context.php');
   echo $OUTPUT->render_from_template('theme_edumy/ccn_my', $templatecontext);
 }
+
+
+$admins    = explode(",",$CFG->siteadmins);
+$hidemenu  = true;
+if(in_array($USER->id,$admins)) {
+    $hidemenu = false;
+
+}
+
+if($hidemenu) {
+    echo '<script language="JavaScript">
+    $("#ccnSettingsMenuContainer").hide();
+</script>';
+}
