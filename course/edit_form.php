@@ -4,7 +4,7 @@ defined('MOODLE_INTERNAL') || die;
 
 require_once($CFG->libdir.'/formslib.php');
 require_once($CFG->libdir.'/completionlib.php');
-
+$PAGE->requires->js(new moodle_url($CFG->wwwroot.'/course/custom.js'));
 /**
  * The form for handling editing a course.
  */
@@ -77,7 +77,7 @@ class course_edit_form extends moodleform {
         if (empty($course->id)) {
             if (has_capability('moodle/course:create', $categorycontext)) {
                 $displaylist = core_course_category::make_categories_list('moodle/course:create');
-                $mform->addElement('autocomplete', 'category', get_string('coursecategory'), $displaylist);
+                $mform->addElement('select', 'category', get_string('coursecategory'), $displaylist);
                 $mform->addHelpButton('category', 'coursecategory');
                 $mform->setDefault('category', $category->id);
             } else {
@@ -93,7 +93,7 @@ class course_edit_form extends moodleform {
                     $displaylist[$course->category] = core_course_category::get($course->category, MUST_EXIST, true)
                         ->get_formatted_name();
                 }
-                $mform->addElement('autocomplete', 'category', get_string('coursecategory'), $displaylist);
+                $mform->addElement('select', 'category', get_string('coursecategory'), $displaylist);
                 $mform->addHelpButton('category', 'coursecategory');
             } else {
                 //keep current
@@ -160,8 +160,10 @@ class course_edit_form extends moodleform {
         $mform->setType('send_notification', PARAM_TEXT);
         $mform->addRule('send_notification', null, 'required',null,'client');
 
-
-        $catlist = get_category_list_with_sortname();
+        foreach ($displaylist as $key=>$item){
+            $temp = explode(" ",$item);
+            $catlist[$key] = substr(strtoupper($temp[0]),0,5);
+        }
 
         $mform->addElement('hidden','catArr',json_encode($catlist),"id=catArr");
         $mform->addElement('hidden','catYear',date("y"),"id=catYear");
@@ -171,7 +173,7 @@ class course_edit_form extends moodleform {
         $mform->setType('idnumber', PARAM_RAW);
         if($course->id) $cid = $course->id;
         else            $cid = get_table_max_id('course');
-        $mform->setDefault('idnumber', $category->id."-".$cid."-".date("y"));
+        $mform->setDefault('idnumber', $catlist[$category->id]."-".$cid."-".date("y"));
 
         $options = get_courses_category();
         $mform->addElement('select', 'coursetype', get_string('courseType'), $options);
