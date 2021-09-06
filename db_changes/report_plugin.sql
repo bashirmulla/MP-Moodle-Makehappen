@@ -624,10 +624,27 @@ ALTER TABLE `mdl_course` ADD `coursetype` INT NULL AFTER `cacherev`, ADD `client
 --
 -- Add column manager_id to user table
 --
-ALTER TABLE `mdl_user` ADD `manager_id` INT NULL DEFAULT NULL COMMENT 'manager Id of user' AFTER `alternatename`; 
+ALTER TABLE `mdl_user` ADD `manager_id` INT NULL DEFAULT NULL COMMENT 'manager Id of user' AFTER `alternatename`;
 
 
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+
+
+ALTER TABLE `mdl_course` ADD `send_notification` ENUM('Yes','No') NOT NULL DEFAULT 'No' AFTER `duedate`;
+ALTER TABLE `mdl_course` ADD `cron_executed` ENUM('Yes','No') NOT NULL DEFAULT 'No' AFTER `send_notification`;
+
+
+-- This is the Trigger
+
+CREATE TRIGGER `course_table_update` BEFORE UPDATE ON `mdl_course`
+ FOR EACH ROW BEGIN
+           IF NEW.startdate > OLD.startdate THEN
+               SET NEW.cron_executed = 'No';
+           END IF;
+           IF NEW.send_notification='No' THEN
+               SET NEW.cron_executed = 'No';
+           END IF;
+END
