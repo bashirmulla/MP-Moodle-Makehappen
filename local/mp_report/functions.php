@@ -236,8 +236,8 @@ function accident_form(){
                 $report_title = "Accident Report";
                 $subject = "Notification of Accident Report";
                 $message = "A new accident report has been submitted. Please see the attached report.";
-                send_email_to_manager($dataobject->user_manager,"EEG", $subject, $message, pdfs_email_attachment().$pdf_file, $pdf_file,$report_title);
-                send_mp_report_email("EEG", $subject, $message, pdfs_email_attachment() . $pdf_file, $pdf_file,$report_title);
+                send_email_to_manager($dataobject->user_manager,"Makehappen", $subject, $message, pdfs_email_attachment().$pdf_file, $pdf_file,$report_title);
+                send_mp_report_email("Makehappen", $subject, $message, pdfs_email_attachment() . $pdf_file, $pdf_file,$report_title);
 
             }
 
@@ -320,14 +320,14 @@ function incident_form(){
 
                 switch($dataobject -> report_category) {
                     case 29:
-                        $subject = "Notification of Near Miss Report from EEG";
-                        $message = "A new Near Miss report has been submitted by EEG. Please see the attached report. Send all replies to: iw.compliance@ipsumutilities.com ";
+                        $subject = "Notification of Near Miss Report from Makehappen";
+                        $message = "A new Near Miss report has been submitted by Makehappen. Please see the attached report. Send all replies to: iw.compliance@ipsumutilities.com ";
                         $send_to_client =1;
                         $report_title = "Near Miss Report";
                         break;
                     case 30:
-                        $subject = "Notification of Hazard Report from EEG";
-                        $message = "A new Hazard report has been submitted by EEG. Please see the attached report. Send all replies to: iw.compliance@ipsumutilities.com ";
+                        $subject = "Notification of Hazard Report from Makehappen";
+                        $message = "A new Hazard report has been submitted by Makehappen. Please see the attached report. Send all replies to: iw.compliance@ipsumutilities.com ";
                         $send_to_client =1;
                         $report_title = "Hazard Report";
                         break;
@@ -342,11 +342,11 @@ function incident_form(){
                         $report_title = $dropdown['report_category'][$dataobject -> report_category]." Report";
                 }
 
-                send_email_to_manager($dataobject->manager,"EEG", $subject, $message, pdfs_email_attachment().$pdf_file, $pdf_file,$report_title);
+                send_email_to_manager($dataobject->manager,"Makehappen", $subject, $message, pdfs_email_attachment().$pdf_file, $pdf_file,$report_title);
                 if($send_to_client==1) {
-                    send_email_to_client($dataobject->contact, "EEG", $subject, $message, pdfs_email_attachment() . $pdf_file, $pdf_file,$report_title);
+                    send_email_to_client($dataobject->contact, "Makehappen", $subject, $message, pdfs_email_attachment() . $pdf_file, $pdf_file,$report_title);
                 }
-                send_mp_report_email("EEG", $subject, $message, pdfs_email_attachment().$pdf_file, $pdf_file,$report_title);
+                send_mp_report_email("Makehappen", $subject, $message, pdfs_email_attachment().$pdf_file, $pdf_file,$report_title);
 
 
 
@@ -908,8 +908,8 @@ function create_accident($dataobject){
             $report_title = "Accident Report";
             $subject = "Notification of Accident Report";
             $message = "A new accident report has been submitted. Please see the attached report.";
-            send_email_to_manager($dataobject['user_manager'],"EEG", $subject, $message, pdfs_email_attachment().$pdf_file, $pdf_file,$report_title);
-            send_mp_report_email("EEG", $subject, $message, pdfs_email_attachment() . $pdf_file, $pdf_file,$report_title);
+            send_email_to_manager($dataobject['user_manager'],"Makehappen", $subject, $message, pdfs_email_attachment().$pdf_file, $pdf_file,$report_title);
+            send_mp_report_email("Makehappen", $subject, $message, pdfs_email_attachment() . $pdf_file, $pdf_file,$report_title);
 
             return array("id" => $id);
         }
@@ -972,14 +972,14 @@ function create_incident($dataobject){
 
             switch($dataobject['report_category']) {
                 case 29:
-                    $subject = "Notification of Near Miss Report from EEG";
-                    $message = "A new Near Miss report has been submitted by EEG. Please see the attached report.";
+                    $subject = "Notification of Near Miss Report from Makehappen";
+                    $message = "A new Near Miss report has been submitted by Makehappen. Please see the attached report.";
                     $send_to_client =1;
                     $report_title = "Near Miss Report";
                     break;
                 case 30:
-                    $subject = "Notification of Hazard Report from EEG";
-                    $message = "A new Hazard report has been submitted by EEG. Please see the attached report.";
+                    $subject = "Notification of Hazard Report from Makehappen";
+                    $message = "A new Hazard report has been submitted by Makehappen. Please see the attached report.";
                     $send_to_client =1;
                     $report_title = "Hazard Report";
                     break;
@@ -990,11 +990,11 @@ function create_incident($dataobject){
                     break;
             }
 
-            send_email_to_manager($dataobject['manager'],"EEG", $subject, $message, pdfs_email_attachment().$pdf_file, $pdf_file,$report_title);
+            send_email_to_manager($dataobject['manager'],"Makehappen", $subject, $message, pdfs_email_attachment().$pdf_file, $pdf_file,$report_title);
             if($send_to_client==1) {
-                send_email_to_client($dataobject['contact'], "EEG", $subject, $message, pdfs_email_attachment() . $pdf_file, $pdf_file,$report_title);
+                send_email_to_client($dataobject['contact'], "Makehappen", $subject, $message, pdfs_email_attachment() . $pdf_file, $pdf_file,$report_title);
             }
-            send_mp_report_email("EEG", $subject, $message, pdfs_email_attachment().$pdf_file, $pdf_file,$report_title);
+            send_mp_report_email("Makehappen", $subject, $message, pdfs_email_attachment().$pdf_file, $pdf_file,$report_title);
 
 
             return array("id" =>$id);

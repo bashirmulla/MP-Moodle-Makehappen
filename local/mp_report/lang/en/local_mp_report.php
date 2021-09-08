@@ -141,7 +141,7 @@ $string['report_priority']       = 'Report Priority';
 $string['emailed_to']            = 'Emailed to';
 $string['contact_details']       = 'Contact Details';
 $string['meeting_date']          = 'Meeting Date';
-$string['added_to_rvt_calm_system'] = 'Added to Relevant EEG System';
+$string['added_to_rvt_calm_system'] = 'Added to Relevant Makehappen System';
 
 $string['reviewer']                = 'Reviewer';
 $string['change_required']         = 'Changes required?';

@@ -18,7 +18,7 @@
  * Sample plugin
  *
  * @package    local_mp_report
- * @copyright  2018 EEG
+ * @copyright  2018 Makehappen
  * @author     MP
  */
 
@@ -718,7 +718,7 @@ function new_training_eamil($user,$course)
     global $CFG;
     $form = new \stdClass;
     $form->email        = "notify@www.makehappengroup.co.uk";
-    $form->firstname    = "EEG";
+    $form->firstname    = "Makehappen";
     $form->lastname     = "";
     $form->maildisplay  = true;
     $form->mailformat   = 1;
@@ -752,7 +752,7 @@ function physical_toolbox_talk_notification_email($user,$course)
     global $CFG,$USER,$DB;
     $form = new \stdClass;
     $form->email        = "notify@www.makehappengroup.co.uk";
-    $form->firstname    = "EEG";
+    $form->firstname    = "Makehappen";
     $form->lastname     = "";
     $form->maildisplay  = true;
     $form->mailformat   = 1;
@@ -795,7 +795,7 @@ function training_course_due_completion_email($user,$course)
     global $CFG,$USER,$DB;
     $form = new \stdClass;
     $form->email        = "notify@www.makehappengroup.co.uk";
-    $form->firstname    = "EEG";
+    $form->firstname    = "Makehappen";
     $form->lastname     = "";
     $form->maildisplay  = true;
     $form->mailformat   = 1;
@@ -835,7 +835,7 @@ function training_course_due_completion_email_to_manager($manager,$course,$userA
     global $CFG,$USER,$DB;
     $form = new \stdClass;
     $form->email        = "notify@www.makehappengroup.co.uk";
-    $form->firstname    = "EEG";
+    $form->firstname    = "Makehappen";
     $form->lastname     = "";
     $form->maildisplay  = true;
     $form->mailformat   = 1;
@@ -890,7 +890,7 @@ function get_accident_report_list()
     global $DB, $CFG;
     $form               = new \stdClass;
     $form->email        = "notify@www.makehappengroup.co.uk";
-    $form->firstname    = "EEG";
+    $form->firstname    = "Makehappen";
     $form->lastname     = "";
     $form->maildisplay  = true;
     $form->mailformat   = 1;
@@ -1165,7 +1165,7 @@ function get_incident_report_list()
     global $DB, $CFG;
     $form               = new \stdClass;
     $form->email        = "notify@www.makehappengroup.co.uk";
-    $form->firstname    = "EEG";
+    $form->firstname    = "Makehappen";
     $form->lastname     = "";
     $form->maildisplay  = true;
     $form->mailformat   = 1;
