@@ -25,7 +25,6 @@
 defined('MOODLE_INTERNAL') || die;
 //$pluginname = 'mp_report';
 require_once($CFG->libdir.'/formslib.php');
-require_once($CFG->libdir.'/coursecatlib.php');
 
 $PAGE->requires->css(new moodle_url($CFG->wwwroot.'/local/trend_analysis_report/js/datatables/datatables.min.css'));
 $PAGE->requires->js(new moodle_url($CFG->wwwroot.'/local/trend_analysis_report/js/datatables/datatables-1.10.18/js/jquery.dataTables.min.js'),true);
@@ -87,7 +86,7 @@ class search_courses_filter_form extends moodleform {
         if (!empty($filterData['category'])){
             $selected_category = $filterData['category'];
         }
-        $displaylist = \coursecat::make_categories_list('moodle/course:create');
+        $displaylist = \core_course_category::make_categories_list('moodle/course:create');
         $mform->addElement('html', html_writer:: start_tag('div',array('class'=>'form-group col-lg-3 form-group-ele')));
         $mform->addElement('html', html_writer:: tag('label2','Category/Subcategory',array('for'=>'category','class'=>'col-md-12')));
         $mform->addElement('html', html_writer::select($displaylist, 'category_subcategory[]', $selected_category, array(),array('class'=>'form-control','multiple'=>'')));

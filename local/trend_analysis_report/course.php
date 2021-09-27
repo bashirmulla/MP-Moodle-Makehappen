@@ -61,7 +61,7 @@ if(is_admin() || is_complieance() || is_senior_manager()) {
                 <div class="col-sm-6 col-md-6 col-lg-4 col-lg-5th-1">
 					<a href="/local/trend_analysis_report/search_courses.php" data-ccn-c="color3" data-ccn-co="bg" class="icon_hvr_img_box ccn-color-cat-boxes" style="background:rgba(0, 97, 255, 0.6);">
 						<div class="overlay">
-							<div class="icon ccn_icon_2 color-white"><span data-ccn="icon3" class="ccn-flaticon-add-1"></span></div>
+							<div class="icon ccn_icon_2 color-white"><span data-ccn="icon3" class="flaticon-review"></span></div>
 							<div class="details">
 								<h5 class="color-white">Search Courses</h5><p class="color-white"></p>
 							</div>
@@ -82,7 +82,7 @@ if(is_admin() || is_complieance() || is_senior_manager()) {
 				<div class="col-sm-6 col-md-6 col-lg-4 col-lg-5th-1">
 					<a href="/local/trend_analysis_report/overdue_courses.php" data-ccn-c="color1" data-ccn-co="bg" class="icon_hvr_img_box ccn-color-cat-boxes" style="background:rgba(234, 38, 227, 0.6);">
 						<div class="overlay">
-							<div class="icon ccn_icon_2 color-white"><span data-ccn="icon3" class="flaticon-add-contact"></span></div>
+							<div class="icon ccn_icon_2 color-white"><span data-ccn="icon3" class="flaticon-clock"></span></div>
 							<div class="details">
 								<h5 class="color-white">Overdue Courses</h5><p class="color-white"></p>
 							</div>
