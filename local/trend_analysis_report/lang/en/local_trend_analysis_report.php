@@ -76,7 +76,7 @@ $string['incidents_by_subcategory'] = 'Incidents by Subcategory';
 $string['search_course']       = 'Search Courses';
 
 //Report - Course completion
-$string['course_completion']       = 'Course completion';
+$string['course_completion']       = 'Course Completion';
 
 //Report - Overdue Courses
 $string['overdue_courses']       = 'Overdue Courses';
