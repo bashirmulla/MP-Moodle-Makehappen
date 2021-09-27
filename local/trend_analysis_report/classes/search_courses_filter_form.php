@@ -27,8 +27,8 @@ defined('MOODLE_INTERNAL') || die;
 require_once($CFG->libdir.'/formslib.php');
 require_once($CFG->libdir.'/coursecatlib.php');
 
-$PAGE->requires->css(new moodle_url($CFG->wwwroot.'/local/mp_report/js/datatables/datatables.min.css'));
-$PAGE->requires->js(new moodle_url($CFG->wwwroot.'/local/mp_report/js/datatables/datatables-1.10.18/js/jquery.dataTables.min.js'),true);
+$PAGE->requires->css(new moodle_url($CFG->wwwroot.'/local/trend_analysis_report/js/datatables/datatables.min.css'));
+$PAGE->requires->js(new moodle_url($CFG->wwwroot.'/local/trend_analysis_report/js/datatables/datatables-1.10.18/js/jquery.dataTables.min.js'),true);
 
 $PAGE->requires->css(new moodle_url($CFG->wwwroot.'/local/trend_analysis_report/css/custom.css'));
 $PAGE->requires->js(new moodle_url($CFG->wwwroot.'/local/trend_analysis_report/js/search_courses.js'));

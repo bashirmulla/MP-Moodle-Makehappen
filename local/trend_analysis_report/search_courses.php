@@ -29,8 +29,10 @@ $pluginname = 'trend_analysis_report';
 
 // Include config.php.
 require_once(__DIR__.'/../../config.php');
+
 require_once($CFG->dirroot.'/local/'.$pluginname.'/locallib.php');  // Include our function library.
-require_once(dirname(__FILE__).'/classes/search_courses_filter_form.php');  // Include form.
+
+require_once($CFG->dirroot.'/local/'.$pluginname.'/classes/search_courses_filter_form.php');  // Include form.
 $PAGE->requires->js(new moodle_url($CFG->wwwroot.'/local/'.$pluginname.'/js/datatables/datatables-1.10.18/js/dateSort.js'));
 
 require_login();
@@ -38,9 +40,9 @@ require_login();
 
 $title   = get_string('search_course', 'local_'.$pluginname);
 $heading = get_string('search_course', 'local_'.$pluginname);
-$url     = new moodle_url('/local/'.$pluginname.'/index.php');
+$url     = new moodle_url('/local/'.$pluginname.'/search_courses.php');
 
-$homeurl    = new moodle_url('/local/mp_report/index.php');
+$homeurl    = new moodle_url('/local/trend_analysis_report/index.php');
 
 if(!is_manager() && !is_admin() && !is_senior_manager() && !is_complieance()) {
     redirect($homeurl,"You are not authorized to view this page",6,'error');

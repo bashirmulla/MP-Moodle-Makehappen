@@ -50,3 +50,12 @@ legend.scheduler-border {
   #report_headding{}
 
 }
+
+.btn:hover{
+    color: #000 !important;
+}
+
+
+.btn:focus{
+    color: #000 !important;
+}
