@@ -516,7 +516,7 @@ return $output;
                      <li><a href="'.$CFG->wwroot.'/local/mp_report/index.php"><span class="flaticon-checklist"></span>H&S Reporting</a></li>
                      <li><a href="'.$CFG->wwroot.'/local/trend_analysis_report/index.php"><span class="flaticon-review"></span>Trend Analysis Reporting</a></li>
                      <li><a href="'.$CFG->wwroot.'/local/trend_analysis_report/course.php"><span class="flaticon-puzzle-1"></span>Course Reporting</a></li>
-                     <li><a href="'.$CFG->wwroot.'/local/training_matrix/index.php"><span class="flaticon-paper-plane"></span>Training Reporting</a></li>
+                     <li><a href="'.$CFG->wwroot.'/local/training_matrix/index.php"><span class="flaticon-paper-plane"></span>Training Matrix</a></li>
                 
                   </ul>
                 </div>';
