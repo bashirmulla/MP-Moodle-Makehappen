@@ -1,0 +1,47 @@
+.expiring{
+    background-color: #ffbf00 !important;
+}
+.expired-notheld{
+    background-color: #ff0000 !important;
+}
+.booked{
+    background-color: #ff1493 !important;
+}
+.awaiting-certificate{
+    background-color: #00bfff !important;
+}
+.no-action-requrired{
+    background-color: #90ee90 !important;
+}
+.training-not-required{
+    background-color: #FFFFFF !important;
+}
+.na{
+    background-color: #d3d3d3 !important;
+}
+
+.upload-certificate{
+    cursor: pointer;
+}
+
+.view-certificate{
+    cursor: pointer;
+}
+
+.btn-circle {
+    width: 25px;
+    height: 25px;
+    padding: 6px 0px;
+    border-radius: 15px;
+    text-align: center;
+    font-size: 12px;
+    line-height: 1.42857;
+}
+
+table.dataTable{
+    width: 100% !important;
+}
+
+.inactive_cell{
+    color: grey !important;
+}
