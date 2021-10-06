@@ -80,14 +80,20 @@ if ($active and confirm_sesskey()) {              // Delete a selected user, aft
 
 echo $OUTPUT->header();
 
-echo html_writer:: start_tag('fieldset',array('class'=>'mform fieldset'));
-echo html_writer:: tag('legend',' Manage Training Groups',array('class'=>'scheduler-border','style'=>'padding-bottom: 0px;margin-bottom: 0px;'));
-echo html_writer:: end_tag('fieldset');
 echo html_writer:: tag('hr','',array());
-echo html_writer:: start_tag('div',array('class'=>'singlebutton'));
+echo html_writer:: start_tag('div',array('class'=>''));
 echo html_writer:: start_tag('form',array('method'=>'get','action'=>'/local/training_matrix/edittraininggroup.php'));
 echo html_writer:: tag('input','',array('type'=>'hidden','name'=>'m','value'=>'6_4'));
-echo html_writer:: tag('button','Add a new group',array('type'=>'submit','class'=>'btn btn-secondary'));
+
+echo $html ='<div class="row" >
+                <div class="col-sm-6"><h4>Manage Training Groups</h4></div>
+                <div class="col-sm-6" style="text-align: right !important;">     
+                     <a class="btn btn-dark" onclick="history.back()" style="background-color: #fcc42c; border-color: #fcc42c !important; font-weight: bold"><i class="fa fa-step-backward"> </i> Back </a>
+                     <a class="btn btn-secondary" onclick="location.href=\'/local/training_matrix/edittraininggroup.php\'" ><i class="fa fa-plus"> </i> Add New Group </a>
+ 
+                </div>
+             </div>';
+
 echo html_writer:: end_tag('form');
 echo html_writer:: end_tag('div');
 echo html_writer:: end_tag('fieldset');

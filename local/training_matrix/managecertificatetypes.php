@@ -109,14 +109,19 @@ if ($action !== false && confirm_sesskey()) {
 
 echo $OUTPUT->header();
 
-echo html_writer:: start_tag('fieldset',array('class'=>'mform fieldset'));
-echo html_writer:: tag('legend',get_string('managecertificatetypes_heading', 'local_'.$pluginname),array('class'=>'scheduler-border','style'=>'padding-bottom: 0px;margin-bottom: 0px;'));
-echo html_writer:: end_tag('fieldset');
+
 echo html_writer:: tag('hr','',array());
-echo html_writer:: start_tag('div',array('class'=>'singlebutton'));
+echo html_writer:: start_tag('div',array('class'=>''));
 echo html_writer:: start_tag('form',array('method'=>'get','action'=>'/local/training_matrix/editcertificatetype.php'));
 echo html_writer:: tag('input','',array('type'=>'hidden','name'=>'m','value'=>'6_3'));
-echo html_writer:: tag('button',get_string('managecertificatetypes_btn_add', 'local_'.$pluginname),array('type'=>'submit','class'=>'btn btn-secondary'));
+echo $html ='<div class="row" >
+                <div class="col-sm-6"><h4>Manage Certificate Types</h4></div>
+                <div class="col-sm-6" style="text-align: right !important;">     
+                     <a class="btn btn-dark" onclick="history.back()" style="background-color: #fcc42c; border-color: #fcc42c !important; font-weight: bold"><i class="fa fa-step-backward"> </i> Back </a>
+                     <a class="btn btn-secondary" onclick="location.href=\'/local/training_matrix/editcertificatetype.php\'" ><i class="fa fa-plus"> </i> Add New Type </a>
+ 
+                </div>
+             </div>';
 echo html_writer:: end_tag('form');
 echo html_writer:: end_tag('div');
 echo html_writer:: end_tag('fieldset');

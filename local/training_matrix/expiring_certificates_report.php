@@ -65,10 +65,15 @@ $PAGE->set_heading($heading);
 
 echo $OUTPUT->header();
 $uploadLink = "";
-
+echo $html ='<div class="row" >
+                <div class="col-sm-6"><h4>Report - Expiring Certificates</h4></div>
+                <div class="col-sm-6" style="text-align: right !important;">     
+                     <a class="btn btn-dark" onclick="history.back()" style="background-color: #fcc42c; border-color: #fcc42c !important; font-weight: bold"><i class="fa fa-step-backward"> </i> Back </a>
+                </div>
+             </div>';
 
 //echo '<div =""></div><><br>';
-echo html_writer:: div('Report - Expiring Certificates','',array('style'=>'color: #c02424'));
+
 echo html_writer:: tag('hr','');
 echo '</br>';
 $sql = "SELECT mc.id,mc.certificate_user_id,mc.certificate_types_id,mc.copy_of_certificate,mc.expiry_date,mc.certificate_status,mc.update_status FROM {managecertificates} mc LEFT JOIN {user} u ON (mc.certificate_user_id = u.id) WHERE u.deleted=0 AND u.suspended=0";

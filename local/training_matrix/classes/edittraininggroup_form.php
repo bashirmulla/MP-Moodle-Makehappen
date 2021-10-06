@@ -17,7 +17,6 @@
 defined('MOODLE_INTERNAL') || die;
 
 require_once($CFG->libdir.'/formslib.php');
-require_once($CFG->libdir.'/coursecatlib.php');
 
 class edittraininggroup_form extends moodleform {
 

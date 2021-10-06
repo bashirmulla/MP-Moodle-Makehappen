@@ -34,6 +34,12 @@ $PAGE->set_context($context);
 $PAGE->set_title($title);
 $PAGE->set_heading($heading);
 echo $OUTPUT->header();
+echo $html ='<div class="row" >
+                <div class="col-sm-6"><h4>Search Qualifications</h4></div>
+                <div class="col-sm-6" style="text-align: right !important;">     
+                     <a class="btn btn-dark" onclick="history.back()" style="background-color: #fcc42c; border-color: #fcc42c !important; font-weight: bold"><i class="fa fa-step-backward"> </i> Back </a>
+                </div>
+             </div>';
 
 $form = new searchqualifications_filter_form(null, array());
 if ($form->is_cancelled()) {

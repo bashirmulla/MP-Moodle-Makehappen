@@ -612,6 +612,9 @@ function get_certificate_types_listing($sortorder='', $dir='ASC',$where=null, $p
     if ($where) {
         $where = " WHERE $where ";
     }
+    else{
+        $where = " WHERE 1 ";
+    }
     return $DB->get_records_sql("SELECT * FROM {certificate_types}  $where $sortorder", null, 0, 0);
 }
 

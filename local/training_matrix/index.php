@@ -106,6 +106,17 @@ if(is_admin() || is_complieance() || is_senior_manager()) {
     echo $html2 = '<h3> Training Admin</h3><hr>
                  <div class="row" style="text-align: left !important;">
                 
+                 <div class="col-sm-6 col-md-6 col-lg-4 col-lg-5th-1">
+					<a href="/local/training_matrix/managecertificates.php" data-ccn-c="color3" data-ccn-co="bg" class="icon_hvr_img_box ccn-color-cat-boxes" style="background-color: forestgreen;">
+						<div class="overlay">
+							<div class="icon ccn_icon_2 color-white"><span data-ccn="icon3" class="flaticon-creative-idea"></span></div>
+							<div class="details">
+								<h5 class="color-white">Manage Certificate</h5><p class="color-red"></p>
+							</div>
+						</div>
+					</a>
+				</div>
+                
                 <div class="col-sm-6 col-md-6 col-lg-4 col-lg-5th-1">
 					<a href="/local/training_matrix/managecertificatetypes.php" data-ccn-c="color3" data-ccn-co="bg" class="icon_hvr_img_box ccn-color-cat-boxes" style="background-color: #0f6674;">
 						<div class="overlay">

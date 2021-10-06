@@ -32,7 +32,7 @@ $confirm      = optional_param('confirm', '', PARAM_ALPHANUM);   //md5 confirmat
 $sort         = optional_param('sort', 'name', PARAM_ALPHANUM);
 $dir          = optional_param('dir', 'ASC', PARAM_ALPHA);
 
-echo $OUTPUT->header();
+echo $OUTPUT->header(get_string('mycertificates_heading', 'local_'.$pluginname));
 echo '<div class="alert alert-info alert-block fade in " role="alert">
     <button type="button" class="close" data-dismiss="alert">×</button>
     <h5 class="alert-heading">Guidance of update a certificate:</h5>Please send any new or renewed certificates to <strong>trainingcerts@makehappen.com</strong> to be added to the system
@@ -121,6 +121,13 @@ foreach ($certificate_types as $certificate_type) {
         $table->data[] = $row;
     }
 }
+
+echo $html ='<div class="row" >
+                <div class="col-sm-6"> </div>
+                <div class="col-sm-6" style="text-align: right !important;">     
+                     <a class="btn btn-dark" onclick="history.back()" style="background-color: #fcc42c; border-color: #fcc42c !important; font-weight: bold"><i class="fa fa-step-backward"> </i> Back </a>
+                </div>
+             </div>';
 
 if (!empty($table)) {
     echo html_writer::start_tag('div', array('class'=>'no-overflow'));
