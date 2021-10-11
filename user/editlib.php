@@ -354,7 +354,7 @@ function useredit_shared_definition(&$mform, $editoroptions, $filemanageroptions
     $mform->setType('moodlenetprofile', PARAM_NOTAGS);
     $mform->addHelpButton('moodlenetprofile', 'moodlenetprofile', 'user');
 
-    //Custom Code: Bash & SAM -
+    //Custom Code: MP codes
 
     $mform->addElement('select', 'manager_id', "Line Manager", get_manager_list(),array('style' =>'width:200px !important'));
     $mform->setType('manager_id', PARAM_INT);
@@ -362,7 +362,7 @@ function useredit_shared_definition(&$mform, $editoroptions, $filemanageroptions
 
     // End
 
-    //Custom Code: Bash & SAM - 15-January-2020
+    //Custom Code: MP Codes
 
 
     $mform->addElement('select', 'training_group_ids', "Training Groups", get_training_group_list("status=1"),array('size' => '8','style' =>'width:200px !important'));
