@@ -171,6 +171,14 @@ if ($userform->is_cancelled()) {
 } else if ($usernew = $userform->get_data()) {
     $usercreated = false;
 
+
+    //Custom Code: MP Codes
+
+    if(!empty($_REQUEST['training_group_ids'])) $usernew->training_group_ids = implode(",",$usernew->training_group_ids);
+    else $usernew->training_group_ids = NULL;
+    //Custom Code: END
+
+
     if (empty($usernew->auth)) {
         // User editing self.
         $authplugin = get_auth_plugin($user->auth);

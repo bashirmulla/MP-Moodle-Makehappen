@@ -150,3 +150,8 @@ ALTER TABLE `mdl_managecertificates_status`
 ALTER TABLE `mdl_training_groups`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 COMMIT;
+
+
+
+
+ ALTER TABLE `mdl_user` ADD `training_group_ids` VARCHAR(100) NULL DEFAULT NULL COMMENT 'Training Group IDs' AFTER `manager_id`;
