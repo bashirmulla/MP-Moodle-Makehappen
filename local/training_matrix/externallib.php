@@ -9,11 +9,45 @@
  * Sample plugin
  *
  * @package    local_training_matrix
- * @copyright  2018 Calm-solutions.com
- * @author     Bash & SAM Harun
+ * @copyright  2019 Fluid Compliance Platform
+ *
  */
 require_once($CFG->libdir . "/externallib.php");
 
 class local_training_matrix_external extends external_api {
+
+// training groups Table API Start
+//
+    public static function get_training_groups_table_parameters() {
+        return new external_function_parameters(
+            array(
+                //if I had any parameters, they would be described here. But I don't have any, so this array is empty.
+            )
+        );
+    }
+
+    public static function get_training_groups_table() {
+        global $USER,$DB;
+        //Parameter validation
+        //REQUIRED
+
+
+        $result = $DB->get_records("training_groups");
+
+        return $result;
+    }
+
+    public static function get_training_groups_table_returns() {
+        return new external_multiple_structure(
+            new external_single_structure(
+                array(
+                    'id' => new external_value(PARAM_INT, 'training_group_table id'),
+                    'training_role_name' => new external_value(PARAM_INT, 'training group name'),
+                )
+            )
+        );
+    }
+// training groups Table API END
+
 
 }
