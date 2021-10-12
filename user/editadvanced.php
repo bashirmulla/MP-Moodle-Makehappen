@@ -178,7 +178,6 @@ if ($userform->is_cancelled()) {
     else $usernew->training_group_ids = NULL;
     //Custom Code: END
 
-
     if (empty($usernew->auth)) {
         // User editing self.
         $authplugin = get_auth_plugin($user->auth);
