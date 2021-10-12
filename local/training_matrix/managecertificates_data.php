@@ -83,14 +83,14 @@ if(count($users)>0){
     $html   .= html_writer:: start_tag('div',array('class'=>'form-row'));
     $html   .= html_writer:: div('','col-md-6 form-group-ele');
     $html   .= html_writer:: start_tag('div',array('class'=>'form-group col-md-6 form-group-ele','style'=>'text-align:right;'));
-    $html   .= html_writer:: tag('button','<i class="fa fa-download"></i> &nbsp;&nbsp;Download CSV',array('type'=>'button','id'=>'dwn_managecertificates_csv','class'=>'btn btn-primary','style' =>"margin-right:10px"));
-    $html   .= html_writer:: tag('button','<i class="fa fa-download"></i> &nbsp;&nbsp;Download PDF',array('type'=>'button','id'=>'dwn_managecertificates_pdf','class'=>'btn btn-primary','style' =>"margin-right:10px"));
+    $html   .= html_writer:: tag('button','<i class="fa fa-download"></i> &nbsp;&nbsp;Download CSV',array('type'=>'button','id'=>'dwn_managecertificates_csv','class'=>'btn btn-primary','style' =>"background-color:GREEN; margin-right:10px"));
+    $html   .= html_writer:: tag('button','<i class="fa fa-download"></i> &nbsp;&nbsp;Download PDF',array('type'=>'button','id'=>'dwn_managecertificates_pdf','class'=>'btn btn-primary','style' =>"background-color:ORANGE; margin-right:10px"));
     $html   .= html_writer:: end_tag('div');
     $html   .= html_writer:: end_tag('div');
 }
 $html   .= html_writer:: start_tag('div',array('class'=>'table-responsive'));
 $table = new html_table();
-$table->attributes['class'] = 'generaltable managecertificates trainingmatrixtbl';
+$table->attributes['class'] = 'fl-table managecertificates trainingmatrixtbl';
 $table->head  = array('ID Number','User Name','All Certificates');
 
 //inactive group certificate types
