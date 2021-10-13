@@ -39,11 +39,8 @@ function pull_data() {
 
             $('.trainingmatrixtbl').DataTable( {
                 deferRender:    true,
-                scrollY:        500,
-                scrollX:        true,
-                scrollCollapse: true,
-                scroller:       true,
-                paging: false
+
+                paging: true
             } );
 
             $("#trainingmatrixtbl").css("width","100% !important");

@@ -45,6 +45,13 @@ class managecertificates_filter_form extends moodleform {
 
         $mform->_formname = "managecertificates_filter_form";
 
+        echo $html ='<div class="row" >
+                <div class="col-sm-6"><h4>Manage Certificate</h4></div>
+                <div class="col-sm-6" style="text-align: right !important;">     
+                     <a class="btn btn-dark" onclick="history.back()" style="background-color: #fcc42c; border-color: #fcc42c !important; font-weight: bold"><i class="fa fa-step-backward"> </i> Back </a>
+                </div>
+             </div>';
+
         $mform->addElement('html', html_writer:: start_tag('fieldset',array('class'=>'scheduler-border')));
         $mform->addElement('html', html_writer:: tag('legend','Filters',array('class'=>'scheduler-border')));
 
@@ -110,10 +117,10 @@ class managecertificates_filter_form extends moodleform {
         $mform->addElement('html',html_writer:: tag('span','N/A',array("class" =>"status_btn", "style" =>"padding:5px")));
 
         $mform->addElement('html',html_writer:: end_tag('div'));
-        
+
         $mform->addElement('html', html_writer:: end_tag('div'));
-        
-        
+
+
         //start row
         $mform->addElement('html', html_writer:: start_tag('div',array('class'=>'form-row')));
 
@@ -121,6 +128,7 @@ class managecertificates_filter_form extends moodleform {
 
         $mform->addElement('html', html_writer:: div('','col-md-5 col-lg-9 form-group-ele'));
         $mform->addElement('html', html_writer:: start_tag('div',array('class'=>'form-group col-md-7 col-lg-3 form-group-ele','style'=>'text-align:center;')));
+      //  $mform->addElement('html', html_writer:: tag('button','Back',array('type'=>'button','id'=>'bmanagecertificates','class'=>'btn btn-primary','style' =>'background-color: #fcc42c; border-color: #fcc42c !important; font-weight: bold; margin-right:5px')));
         $mform->addElement('html', html_writer:: tag('button','Search',array('type'=>'button','id'=>'managecertificates','class'=>'btn btn-primary','style' =>'margin-right:5px')));
         $mform->addElement('html', html_writer::tag('a', 'Reload', array('href'=>$CFG->wwwroot.'/local/training_matrix/managecertificates.php?m=6_2','class'=>'btn btn-secondary')));
         $mform->addElement('html', html_writer:: end_tag('div'));

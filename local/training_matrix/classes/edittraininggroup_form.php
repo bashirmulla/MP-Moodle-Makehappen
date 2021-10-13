@@ -46,11 +46,18 @@ class edittraininggroup_form extends moodleform {
             // Editing an existing category.
             $traininggroup =  get_data(array("id" =>$traininggroupid),'training_groups');
 
-            $strsubmit = 'update group';
+            $strsubmit = 'Update group';
         } else {
 
-            $strsubmit = 'create group';
+            $strsubmit = 'Create group';
         }
+
+        echo $html ='<div class="row" >
+                <div class="col-sm-6"></div>
+                <div class="col-sm-6" style="text-align: right !important;">     
+                     <a class="btn btn-dark" onclick="history.back()" style="background-color: #fcc42c; border-color: #fcc42c !important; font-weight: bold"><i class="fa fa-step-backward"> </i> Back </a>
+                </div>
+             </div><hr>';
 
         $mform->addElement('text', 'training_role_name', 'Training Role Name', array('size' => '30'));
         $mform->addRule('training_role_name', 'Required', 'required', null);

@@ -38,12 +38,18 @@ class editcertificatetype_form extends moodleform {
 //            print_r($certificatetype);
 //            die('dd');
             $sortorder = $certificatetype->sortorder;
-            $strsubmit = 'update Type';
+            $strsubmit = 'Update';
         } else {
             // Making a new category.
-            $strsubmit = 'create Type';
+            $strsubmit = 'Create';
             $sortorder = 0;
         }
+        echo $html ='<div class="row" >
+                <div class="col-sm-6"></div>
+                <div class="col-sm-6" style="text-align: right !important;">     
+                     <a class="btn btn-dark" onclick="history.back()" style="background-color: #fcc42c; border-color: #fcc42c !important; font-weight: bold"><i class="fa fa-step-backward"> </i> Back </a>
+                </div>
+             </div><hr>';
 
         $mform->addElement('text', 'certificate_name', 'Certificate Name', array('size' => '30'));
         $mform->addRule('certificate_name', 'Required', 'required', null);
