@@ -16,39 +16,61 @@ require_once($CFG->libdir . "/externallib.php");
 
 class local_training_matrix_external extends external_api {
 
-// training groups Table API Start
+// training records API Start
 //
-    public static function get_training_groups_table_parameters() {
-        return new external_function_parameters(
-            array(
-                //if I had any parameters, they would be described here. But I don't have any, so this array is empty.
-            )
-        );
+    public static function get_training_records_parameters() {
+        return new external_function_parameters ([
+            'user_id' => new external_value(PARAM_INT, 'The ID of the discussion from which to fetch posts.', VALUE_REQUIRED),
+        ]);
     }
 
-    public static function get_training_groups_table() {
+    public static function get_training_records($user_id) {
         global $USER,$DB;
         //Parameter validation
         //REQUIRED
 
+        $params = self::validate_parameters( self::get_training_records_parameters(), [
+            'user_id' => $user_id,
+        ]);
 
-        $result = $DB->get_records("training_groups");
+        $arr =  array();
 
-        return $result;
+        $sql = "SELECT mc.id AS certificate_id, mc.certificate_user_id, ct.certificate_name, cs.status_name, 
+                    mc.copy_of_certificate, FROM_UNIXTIME(mc.expiry_date, '%D %M %Y'), ct.certificate_expire, ct.number_of_months
+                FROM {managecertificates} mc
+                LEFT JOIN {certificate_types} ct ON (ct.id = mc.certificate_types_id)
+                LEFT JOIN {managecertificates_status} cs ON (cs.id = mc.certificate_status)
+                WHERE mc.certificate_user_id = $user_id";
+
+
+        $data = $DB->get_records_sql($sql);
+
+        if(!empty($data)){
+            foreach ($data as $value){
+                $arr[] = $value;
+            }
+        }
+        return $arr;
+
     }
 
-    public static function get_training_groups_table_returns() {
+    public static function get_training_records_returns() {
         return new external_multiple_structure(
             new external_single_structure(
                 array(
-                    'id' => new external_value(PARAM_INT, 'training_group_table id'),
-                    'training_role_name' => new external_value(PARAM_TEXT, 'training group name'),
-                    'required_certificates' => new external_value(PARAM_TEXT, 'Required certificates'),
+                    'certificate_id' => new external_value(PARAM_INT, 'certificate id'),
+                    'certificate_user_id' => new external_value(PARAM_INT, 'certificate user id'),
+                    'certificate_name' => new external_value(PARAM_TEXT, 'certificate name'),
+                    'status_name' => new external_value(PARAM_TEXT, 'certificate status name'),
+                    'copy_of_certificate' => new external_value(PARAM_TEXT, 'file path of certificate'),
+                    'expiry_date' => new external_value(PARAM_TEXT, 'expiry date of certificate'),
+                    'certificate_expire' => new external_value(PARAM_TEXT, 'certificate to expire'),
+                    'number_of_months' => new external_value(PARAM_INT, 'number of months'),
                 )
             )
         );
     }
-// training groups Table API END
+// training records API END
 
 
 }

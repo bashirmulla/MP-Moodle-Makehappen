@@ -25,7 +25,7 @@
 defined('MOODLE_INTERNAL') || die();
 
 $plugin->component = 'local_training_matrix';  // To check on upgrade, that module sits in correct place
-$plugin->version   = 2021101102;        // The current module version (Date: YYYYMMDDXX)
+$plugin->version   = 2021101303;        // The current module version (Date: YYYYMMDDXX)
 $plugin->requires  = 2013040500;        // Requires Moodle version 2.5.
 $plugin->release   = '1.0.1 (201912200500)';
 $plugin->maturity  = MATURITY_STABLE;
