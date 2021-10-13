@@ -42,7 +42,8 @@ class local_training_matrix_external extends external_api {
             new external_single_structure(
                 array(
                     'id' => new external_value(PARAM_INT, 'training_group_table id'),
-                    'training_role_name' => new external_value(PARAM_INT, 'training group name'),
+                    'training_role_name' => new external_value(PARAM_TEXT, 'training group name'),
+                    'required_certificates' => new external_value(PARAM_TEXT, 'Required certificates'),
                 )
             )
         );
