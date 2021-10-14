@@ -36,7 +36,7 @@ class local_training_matrix_external extends external_api {
         $arr =  array();
 
         $sql = "SELECT mc.id AS certificate_id, mc.certificate_user_id, ct.certificate_name, cs.status_name, 
-                    mc.copy_of_certificate, FROM_UNIXTIME(mc.expiry_date, '%D %M %Y'), ct.certificate_expire, ct.number_of_months
+                    mc.copy_of_certificate, FROM_UNIXTIME(mc.expiry_date, '%D %M %Y') AS expirydate, ct.certificate_expire, ct.number_of_months
                 FROM {managecertificates} mc
                 LEFT JOIN {certificate_types} ct ON (ct.id = mc.certificate_types_id)
                 LEFT JOIN {managecertificates_status} cs ON (cs.id = mc.certificate_status)
@@ -63,7 +63,7 @@ class local_training_matrix_external extends external_api {
                     'certificate_name' => new external_value(PARAM_TEXT, 'certificate name'),
                     'status_name' => new external_value(PARAM_TEXT, 'certificate status name'),
                     'copy_of_certificate' => new external_value(PARAM_TEXT, 'file path of certificate'),
-                    'expiry_date' => new external_value(PARAM_TEXT, 'expiry date of certificate'),
+                    'expirydate' => new external_value(PARAM_TEXT, 'expiry date of certificate'),
                     'certificate_expire' => new external_value(PARAM_TEXT, 'certificate to expire'),
                     'number_of_months' => new external_value(PARAM_INT, 'number of months'),
                 )
