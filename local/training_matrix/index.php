@@ -75,7 +75,7 @@ echo $html1 = '<h3>Certificates</h3><hr>
             
           </div>';
 
-if(is_admin() || is_complieance() || is_senior_manager()) {
+if(is_admin() || is_complieance() || is_senior_manager() || is_training_admin()) {
 
 
     echo $html3 = '<h3> Reports</h3><hr>
