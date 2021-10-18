@@ -65,7 +65,7 @@ echo $html1 = '<h3>Certificates</h3><hr>
                 <div class="col-sm-6 col-md-6 col-lg-4 col-lg-5th-1">
 					<a href="/local/training_matrix/mycertificates.php" data-ccn-c="color3" data-ccn-co="bg" class="icon_hvr_img_box ccn-color-cat-boxes" style="background:rgba(234, 38, 227, 0.6);">
 						<div class="overlay">
-							<div class="icon ccn_icon_2 color-white"><span data-ccn="icon3" class="ccn-flaticon-add-1"></span></div>
+							<div class="icon ccn_icon_2 color-white"><span data-ccn="icon3" class="fa fa-files-o"></span></div>
 							<div class="details">
 								<h5 class="color-white">My Certificates</h5><p class="color-white"></p>
 							</div>
@@ -84,7 +84,7 @@ if(is_admin() || is_complieance() || is_senior_manager()) {
                 <div class="col-sm-6 col-md-6 col-lg-4 col-lg-5th-1">
 					<a href="/local/training_matrix/expiring_certificates_report.php" data-ccn-c="color3" data-ccn-co="bg" class="icon_hvr_img_box ccn-color-cat-boxes" style="background:rgba(241, 67, 45, 0.6);">
 						<div class="overlay">
-							<div class="icon ccn_icon_2 color-white"><span data-ccn="icon3" class="flaticon-account"></span></div>
+							<div class="icon ccn_icon_2 color-white"><span data-ccn="icon3" class="fa fa-file-archive-o"></span></div>
 							<div class="details">
 								<h5 class="color-white">Expiring Certificates</h5><p class="color-white"></p>
 							</div>
@@ -94,7 +94,7 @@ if(is_admin() || is_complieance() || is_senior_manager()) {
                 <div class="col-sm-6 col-md-6 col-lg-4 col-lg-5th-1">
 					<a href="/local/training_matrix/searchqualifications.php" data-ccn-c="color4" data-ccn-co="bg" class="icon_hvr_img_box ccn-color-cat-boxes" style="background-color: #2981db;">
 						<div class="overlay">
-							<div class="icon ccn_icon_2 color-white"><span data-ccn="icon4" class="flaticon-award"></span></div>
+							<div class="icon ccn_icon_2 color-white"><span data-ccn="icon4" class="fa fa-search"></span></div>
 							<div class="details">
 								<h5 class="color-white">Search Qualifications</h5><p class="color-white"></p>
 							</div>
@@ -109,7 +109,7 @@ if(is_admin() || is_complieance() || is_senior_manager()) {
                  <div class="col-sm-6 col-md-6 col-lg-4 col-lg-5th-1">
 					<a href="/local/training_matrix/managecertificates.php" data-ccn-c="color3" data-ccn-co="bg" class="icon_hvr_img_box ccn-color-cat-boxes" style="background-color: forestgreen;">
 						<div class="overlay">
-							<div class="icon ccn_icon_2 color-white"><span data-ccn="icon3" class="flaticon-creative-idea"></span></div>
+							<div class="icon ccn_icon_2 color-white"><span data-ccn="icon3" class="fa fa-folder"></span></div>
 							<div class="details">
 								<h5 class="color-white">Manage Certificate</h5><p class="color-red"></p>
 							</div>
@@ -120,7 +120,7 @@ if(is_admin() || is_complieance() || is_senior_manager()) {
                 <div class="col-sm-6 col-md-6 col-lg-4 col-lg-5th-1">
 					<a href="/local/training_matrix/managecertificatetypes.php" data-ccn-c="color3" data-ccn-co="bg" class="icon_hvr_img_box ccn-color-cat-boxes" style="background-color: #0f6674;">
 						<div class="overlay">
-							<div class="icon ccn_icon_2 color-white"><span data-ccn="icon3" class="ccn-flaticon-database"></span></div>
+							<div class="icon ccn_icon_2 color-white"><span data-ccn="icon3" class="fa fa-plus-circle"></span></div>
 							<div class="details">
 								<h5 class="color-white">Manage Certificate Types</h5><p class="color-white"></p>
 							</div>
@@ -130,7 +130,7 @@ if(is_admin() || is_complieance() || is_senior_manager()) {
                 <div class="col-sm-6 col-md-6 col-lg-4 col-lg-5th-1">
 					<a href="/local/training_matrix/managetraininggroups.php" data-ccn-c="color4" data-ccn-co="bg" class="icon_hvr_img_box ccn-color-cat-boxes" style="background-color: #6f42c1;">
 						<div class="overlay">
-							<div class="icon ccn_icon_2 color-white"><span data-ccn="icon4" class="ccn-flaticon-calculator"></span></div>
+							<div class="icon ccn_icon_2 color-white"><span data-ccn="icon4" class="fa fa-plus-circle"></span></div>
 							<div class="details">
 								<h5 class="color-white">Manage Training Groups</h5><p class="color-white"></p>
 							</div>
