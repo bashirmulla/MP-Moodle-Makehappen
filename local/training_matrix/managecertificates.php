@@ -48,7 +48,7 @@ echo $OUTPUT->footer();
 
 $access = is_training_admin() ? 1 : (is_siteadmin() ? 1 : 0);
 
-echo "<script> var readonly='$access'</script>"
+echo "<script> var readonly='$access' ; </script>"
 
 ?>
 <!--<form autocomplete="off" method="post" accept-charset="utf-8" id="mformCertificate" class="mform" enctype="multipart/form-data">-->
