@@ -262,6 +262,34 @@ function get_manager_list(){
     return $arr;
 }
 
+
+function get_training_group_list($where=null){
+    global $DB,$USER;
+
+    //$arr =  array("" => "Select");
+
+    if($where){
+        $where = " WHERE $where ";
+    }
+    else{
+        $where = " WHERE 1 ";
+    }
+
+    $sql = "SELECT id,training_role_name
+              FROM {training_groups} $where ";
+
+    $data = $DB->get_records_sql($sql);
+
+    if(!empty($data)){
+        foreach ($data as $value){
+            $arr[$value->id] = $value->training_role_name;
+
+        }
+    }
+
+    return $arr;
+}
+
 /**
  * Powerful function that is used by edit and editadvanced to add common form elements/rules/etc.
  *
@@ -326,13 +354,22 @@ function useredit_shared_definition(&$mform, $editoroptions, $filemanageroptions
     $mform->setType('moodlenetprofile', PARAM_NOTAGS);
     $mform->addHelpButton('moodlenetprofile', 'moodlenetprofile', 'user');
 
-    //Custom Code: Bash & SAM -
+    //Custom Code: MP codes
 
     $mform->addElement('select', 'manager_id', "Line Manager", get_manager_list(),array('style' =>'width:200px !important'));
     $mform->setType('manager_id', PARAM_INT);
     //$mform->addRule('manager', 'required', 'required', null, 'client');
 
     // End
+
+    //Custom Code: MP Codes
+
+
+    $mform->addElement('select', 'training_group_ids', "Training Groups", get_training_group_list("status=1"),array('size' => '8','style' =>'width:200px !important'));
+    $mform->setType('training_group_ids', PARAM_TEXT);
+    $mform->getElement('training_group_ids')->setMultiple(true);
+    $mform->getElement('training_group_ids')->setSelected(explode(",",$mform->training_group_ids));
+
 
 
     $mform->addElement('text', 'city', get_string('city'), 'maxlength="120" size="21"');

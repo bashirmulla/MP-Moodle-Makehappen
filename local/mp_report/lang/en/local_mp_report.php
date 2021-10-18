@@ -32,7 +32,7 @@ $string['max_length'] = 'Maximum 2000 characters';
 $string['max500_length'] = 'Maximum 500 characters';
 $string['max_length_help'] = 'Maximum 2000 characters';
 $string['max500_length_help'] = 'Maximum 500 characters';
-$string['h&s_reporting'] = 'H&S Reporting';
+$string['hs_reporting'] = 'H&S Reporting';
 
 // Accident Report Form
 $string['accident']    = 'Accident Report';

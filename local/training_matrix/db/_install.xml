@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<XMLDB PATH="local/training_matrix/db" VERSION="20101203" COMMENT="XMLDB file for Moodle local/training_matrix"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:noNamespaceSchemaLocation="../../../lib/xmldb/xmldb.xsd"
+>
+
+</XMLDB>
