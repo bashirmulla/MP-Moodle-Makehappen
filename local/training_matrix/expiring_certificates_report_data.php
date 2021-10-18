@@ -34,7 +34,7 @@ require_once($CFG->dirroot.'/local/training_matrix/locallib.php');  // Include o
 $query_con_str =" 1=1 ";
 $filterData = get_requests();
 
-$homeurl    = new moodle_url('/local/calm_report/index.php');
+$homeurl    = new moodle_url('/local/training_matrix/index.php');
 
 if(!is_manager() && !is_admin() && !is_senior_manager() && !is_complieance()) {
     echo ("You are not authorized to view this page");

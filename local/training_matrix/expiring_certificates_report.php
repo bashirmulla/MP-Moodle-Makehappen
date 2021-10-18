@@ -35,7 +35,7 @@ require_once($CFG->dirroot.'/local/'.$pluginname.'/functions.php');  // Include 
 
 
 require_login();
-$homeurl    = new moodle_url('/local/calm_report/index.php');
+$homeurl    = new moodle_url('/local/training_matrix/index.php');
 
 if(!is_manager() && !is_admin() && !is_senior_manager() && !is_complieance()) {
     redirect($homeurl,"You are not authorized to view this page",6,'error');

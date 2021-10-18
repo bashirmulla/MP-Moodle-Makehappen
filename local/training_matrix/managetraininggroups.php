@@ -18,7 +18,7 @@ if(!$access){
     redirect($homeurl,"Sorry!!.. You are not authorize to view this page","6",'error');
 }
 
-$homeurl    = new moodle_url('/local/calm_report/index.php');
+$homeurl    = new moodle_url('/local/training_matrix/index.php');
 
 if(!is_manager() && !is_admin() && !is_senior_manager() && !is_complieance() && !is_training_admin() && !is_siteadmin()) {
     redirect($homeurl,"You are not authorized to view this page",6,'error');

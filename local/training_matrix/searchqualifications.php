@@ -15,7 +15,7 @@ $PAGE->requires->css(new moodle_url($CFG->wwwroot.'/local/'.$pluginname.'/js/cho
 $PAGE->requires->js(new moodle_url($CFG->wwwroot.'/local/'.$pluginname.'/js/chosen/chosen.jquery.js'),true);
 
 require_login();
-$homeurl    = new moodle_url('/local/calm_report/index.php');
+$homeurl    = new moodle_url('/local/training_matrix/index.php');
 
 if(!is_manager() && !is_admin() && !is_senior_manager() && !is_complieance() && !is_training_admin() && !is_siteadmin()) {
     redirect($homeurl,"You are not authorized to view this page",6,'error');
