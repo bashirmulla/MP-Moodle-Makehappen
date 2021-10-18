@@ -36,7 +36,7 @@ $filterData = get_requests();
 
 $homeurl    = new moodle_url('/local/training_matrix/index.php');
 
-if(!is_manager() && !is_admin() && !is_senior_manager() && !is_complieance()) {
+if(!is_manager() && !is_admin() && !is_senior_manager() && !is_complieance() && !is_training_admin() && !is_siteadmin()) {
     echo ("You are not authorized to view this page");
 }
 

@@ -37,7 +37,7 @@ require_once($CFG->dirroot.'/local/'.$pluginname.'/functions.php');  // Include 
 require_login();
 $homeurl    = new moodle_url('/local/training_matrix/index.php');
 
-if(!is_manager() && !is_admin() && !is_senior_manager() && !is_complieance()) {
+if(!is_manager() && !is_admin() && !is_senior_manager() && !is_complieance() && !is_training_admin() && !is_siteadmin()) {
     redirect($homeurl,"You are not authorized to view this page",6,'error');
 }
 
