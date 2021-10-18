@@ -35,7 +35,7 @@ class local_training_matrix_external extends external_api {
 
         $arr =  array();
 
-        $sql = "SELECT mc.id AS certificate_id, mc.certificate_user_id, ct.certificate_name, cs.status_name, 
+        $sql = "SELECT mc.id, mc.certificate_user_id, ct.certificate_name, cs.status_name, 
                     mc.copy_of_certificate, FROM_UNIXTIME(mc.expiry_date, '%D %M %Y') AS expirydate, ct.certificate_expire, ct.number_of_months
                 FROM {managecertificates} mc
                 LEFT JOIN {certificate_types} ct ON (ct.id = mc.certificate_types_id)
@@ -58,7 +58,7 @@ class local_training_matrix_external extends external_api {
         return new external_multiple_structure(
             new external_single_structure(
                 array(
-                    'certificate_id' => new external_value(PARAM_INT, 'certificate id'),
+                    'id' => new external_value(PARAM_INT, 'certificate id'),
                     'certificate_user_id' => new external_value(PARAM_INT, 'certificate user id'),
                     'certificate_name' => new external_value(PARAM_TEXT, 'certificate name'),
                     'status_name' => new external_value(PARAM_TEXT, 'certificate status name'),
