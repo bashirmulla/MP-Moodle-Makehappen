@@ -26,7 +26,7 @@ if ($filterData['status']){
 
 
 $sql = "SELECT u.id,training_group_ids,idnumber,CONCAT(u.firstname, ' ', u.lastname) AS name FROM {user} u WHERE $where AND u.deleted = 0 ORDER BY name ASC";
-$result = $DB->get_records_sql($sql,$params);
+$users = $DB->get_records_sql($sql,$params);
 
 //populate csv final data array
 $csvDataArray = array();
@@ -68,8 +68,8 @@ foreach ($certificate_types as $certificate_type) {
     $certificate_types_arr[] = $certificate_types_obj;
 }
 
-if (!empty($result)) {
-    foreach($result as $rec){
+if (!empty($users)) {
+    foreach($users as $rec){
         if(in_array($rec->id,$CFG->not_genuine_user)) continue;
         if(!empty($filterData['status']) && !check_certificates_by_status($rec->id,$filterData['status'])) continue;
 

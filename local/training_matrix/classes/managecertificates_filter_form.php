@@ -129,8 +129,8 @@ class managecertificates_filter_form extends moodleform {
         $mform->addElement('html', html_writer:: div('','col-md-5 col-lg-9 form-group-ele'));
         $mform->addElement('html', html_writer:: start_tag('div',array('class'=>'form-group col-md-7 col-lg-3 form-group-ele','style'=>'text-align:center;')));
       //  $mform->addElement('html', html_writer:: tag('button','Back',array('type'=>'button','id'=>'bmanagecertificates','class'=>'btn btn-primary','style' =>'background-color: #fcc42c; border-color: #fcc42c !important; font-weight: bold; margin-right:5px')));
-        $mform->addElement('html', html_writer:: tag('button','Search',array('type'=>'button','id'=>'managecertificates','class'=>'btn btn-primary','style' =>'margin-right:5px')));
-        $mform->addElement('html', html_writer::tag('a', 'Reload', array('href'=>$CFG->wwwroot.'/local/training_matrix/managecertificates.php?m=6_2','class'=>'btn btn-secondary')));
+        $mform->addElement('html', html_writer:: tag('button','<i class="fa fa-search" ></i> Search',array('type'=>'button','id'=>'managecertificates','class'=>'btn btn-primary','style' =>'margin-right:5px; background-color:#702246')));
+        $mform->addElement('html', html_writer::tag('a', '<i class="fa fa-undo" ></i> Reload', array('href'=>$CFG->wwwroot.'/local/training_matrix/managecertificates.php?m=6_2','class'=>'btn btn-secondary')));
         $mform->addElement('html', html_writer:: end_tag('div'));
 
         $mform->addElement('html', html_writer:: end_tag('div'));
