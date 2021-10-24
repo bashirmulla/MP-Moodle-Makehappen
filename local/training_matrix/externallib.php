@@ -39,8 +39,8 @@ class local_training_matrix_external extends external_api {
                     mc.copy_of_certificate, FROM_UNIXTIME(mc.expiry_date, '%D %M %Y') AS expirydate, ct.certificate_expire, ct.number_of_months
                 FROM {managecertificates} mc
                 LEFT JOIN {certificate_types} ct ON (ct.id = mc.certificate_types_id)
-                LEFT JOIN {managecertificates_status} cs ON (cs.id = mc.certificate_status)
-                WHERE mc.certificate_user_id = $user_id";
+                LEFT JOIN {managecertificates_status} cs ON (cs.id = mc.update_status)
+                WHERE mc.certificate_user_id = $user_id AND cs.status_name <> 'N/A'";
 
 
         $data = $DB->get_records_sql($sql);
