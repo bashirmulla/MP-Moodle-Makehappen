@@ -136,7 +136,7 @@ ALTER TABLE `mdl_certificate_types`
 -- AUTO_INCREMENT for table `mdl_managecertificates`
 --
 ALTER TABLE `mdl_managecertificates`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1162;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
 
 --
 -- AUTO_INCREMENT for table `mdl_managecertificates_status`
