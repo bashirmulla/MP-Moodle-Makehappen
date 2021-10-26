@@ -18,7 +18,7 @@
  * Sample plugin
  *
  * @package    training_matrix
- * @copyright  2020 Calm-solutions.com
+ * @copyright  2020 makehappen.com
  * @author     Bash & SAM Harun & Mahedi
  */
 

@@ -18,7 +18,7 @@
  * Sample plugin
  *
  * @package    local_trend_analysis_report
- * @copyright  2020 Calm-solutions.com
+ * @copyright  2020 makehappen.com
  * @author     Bash & SAM Harun & Mahedi
  */
 

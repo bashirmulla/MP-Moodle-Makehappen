@@ -18,7 +18,7 @@
  * Sample plugin
  *
  * @package    local_training_matrix
- * @copyright  2018 Calm-solutions.com
+ * @copyright  2018 makehappen.com
  * @author     Bash & SAM Harun
  */
 
@@ -468,9 +468,9 @@ function send_training_notification($crd)
 {
     global $DB, $CFG;
     $form               = new \stdClass;
-    $form->email        = "notify@calm-solutions.com";
-    $form->firstname    = "CALM";
-    $form->lastname     = "Solutions";
+    $form->email        = "notify@makehappen.com";
+    $form->firstname    = "MP";
+    $form->lastname     = "";
     $form->maildisplay  = true;
     $form->mailformat   = 2;
     $form->id           = -99;
@@ -505,9 +505,9 @@ function send_training_notification_manager($manager_usercer_arr)
 {
     global $DB, $CFG;
     $form               = new \stdClass;
-    $form->email        = "notify@calm-solutions.com";
-    $form->firstname    = "CALM";
-    $form->lastname     = "Solutions";
+    $form->email        = "notify@makehappen.com";
+    $form->firstname    = "MP";
+    $form->lastname     = "";
     $form->maildisplay  = true;
     $form->mailformat   = 1;
     $form->id           = -99;
@@ -552,9 +552,9 @@ function send_certificate_notification($crt1,$status=null)
 {
     global $DB, $CFG;
     $form               = new \stdClass;
-    $form->email        = "notify@calm-solutions.com";
-    $form->firstname    = "CALM";
-    $form->lastname     = "Solutions";
+    $form->email        = "notify@makehappen.com";
+    $form->firstname    = "MP";
+    $form->lastname     = "";
     $form->maildisplay  = true;
     $form->mailformat   = 1;
     $form->id           = -99;

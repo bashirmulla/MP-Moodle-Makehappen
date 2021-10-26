@@ -18,7 +18,7 @@
  * Sample plugin
  *
  * @package    local_training_matrix
- * @copyright  2018 Calm-solutions.com
+ * @copyright  2018 makehappen.com
  * @author     Bash & SAM Harun
  */
 
