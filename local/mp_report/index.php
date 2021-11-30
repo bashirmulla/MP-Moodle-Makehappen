@@ -38,6 +38,7 @@ require_once($CFG->dirroot.'/local/'.$pluginname.'/functions.php');  // Include 
 require_once(dirname(__FILE__).'/classes/'.$pluginname.'_success.php');  // Include form.
 require_once(dirname(__FILE__).'/classes/accident_report_form.php');  // Include form.
 require_once(dirname(__FILE__).'/classes/incident_report_form.php');  // Include form.
+require_once(dirname(__FILE__).'/classes/new_accident_report_form.php');  // Include form.
 require_once(dirname(__FILE__).'/classes/'.$pluginname.'_list.php');  // Include form.
 $PAGE->requires->css(new moodle_url($CFG->wwwroot.'/local/'.$pluginname.'/js/fancybox/dist/jquery.fancybox.css'));
 $PAGE->requires->js(new moodle_url($CFG->wwwroot.'/local/'.$pluginname.'/js/fancybox/dist/jquery.fancybox.js'));
@@ -138,14 +139,16 @@ $cmd = get_request('cmd');
 
 
 switch ($cmd){
-     case 'home'      : home_page();            break;
-     case 'accpage'   : accident_page();        break;
-     case 'incpage'   : incident_page();        break;
-     case 'form1'     : accident_form();        break;
-     case 'form2'     : incident_form();        break;
-     case 'acc_edit'  : accident_form();        break;
-     case 'inc_edit'  : incident_form();        break;
-     default          : home_page();            break;
+     case 'home'       : home_page();           break;
+     case 'new_accpage': new_accident_page();   break;
+     case 'accpage'    : accident_page();        break;
+     case 'incpage'    : incident_page();        break;
+     case 'form1'      : accident_form();        break;
+     case 'form2'      : incident_form();        break;
+     case 'form3'      : new_accident_form();    break;
+     case 'acc_edit'   : accident_form();        break;
+     case 'inc_edit'   : incident_form();        break;
+     default           : home_page();            break;
 
 }
 

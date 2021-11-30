@@ -53,6 +53,23 @@ function home_page(){
 
 }
 
+
+function new_accident_page(){
+    global $CFG,$OUTPUT,$homeurl,$successurl;
+
+    //$form = new mp_report_list(null, array());
+
+    $form = new new_accident_page(null, array());
+
+    if ($form->is_cancelled()) {
+        redirect($homeurl);
+    }
+    $form->get_data();
+    $form->display();
+
+
+}
+
 function accident_page(){
     global $CFG,$OUTPUT,$homeurl,$successurl;
 
@@ -261,6 +278,80 @@ function accident_form(){
 
 }
 
+function new_accident_form(){
+    global $CFG,$OUTPUT,$homeurl,$successurl, $USER,$DB;
+    $tableName = "New Accident Report";
+
+
+
+
+    $form = new new_accident_report_form(null, array());
+    if ($form->is_cancelled()) {
+        redirect($homeurl);
+    }
+
+    $dataobject  = $form->get_submitted_data();
+
+
+
+    if(!empty($dataobject) && $form->is_validated()){
+
+        
+
+
+
+
+        $dataobject->submitter_to_manager = 'Yes';
+
+        //GDPR implementation
+        $dataobject->witnesses_name         = !empty($dataobject->witnesses_name) ? encrypt($dataobject->witnesses_name) : NULL;
+        $dataobject->witnesses_address      = !empty($dataobject->witnesses_address) ? encrypt($dataobject->witnesses_address) : NULL;;
+        $dataobject->witnesses_phone_number = !empty($dataobject->witnesses_phone_number) ? encrypt($dataobject->witnesses_phone_number) : NULL;
+
+
+        $id = save_data($dataobject,$tableName);
+
+        if(!empty($id) ){
+
+            if(empty($dataobject->id)) {
+                $updateData['id'] = $dataobject->id ? $dataobject->id : $id;
+                $updateData['photo_1'] = uploadFile('photo_1', 'accident', $dataobject->id ? $dataobject->id : $id);
+                $updateData['photo_2'] = uploadFile('photo_2', 'accident', $dataobject->id ? $dataobject->id : $id);
+                $updateData['photo_3'] = uploadFile('photo_3', 'accident', $dataobject->id ? $dataobject->id : $id);
+                $updateData['photo_4'] = uploadFile('photo_4', 'accident', $dataobject->id ? $dataobject->id : $id);
+                $updateData['photo_5'] = uploadFile('photo_5', 'accident', $dataobject->id ? $dataobject->id : $id);
+                $updateData['photo_6'] = uploadFile('photo_6', 'accident', $dataobject->id ? $dataobject->id : $id);
+                $updateData['witnesses_report_diagram'] = uploadFile('witnesses_report_diagram', 'accident', $dataobject->id ? $dataobject->id : $id);
+                update_data($updateData, get_string('accident_table', 'local_mp_report'));
+
+                $pdf_file = accident_pdf($id);
+                $report_title = "Accident Report";
+                $subject = "Notification of Accident Report";
+                $message = "A new accident report has been submitted. Please see the attached report.";
+                send_email_to_manager($dataobject->user_manager,"Makehappen", $subject, $message, pdfs_email_attachment().$pdf_file, $pdf_file,$report_title);
+                send_mp_report_email("Makehappen", $subject, $message, pdfs_email_attachment() . $pdf_file, $pdf_file,$report_title);
+
+            }
+
+
+            //echo $OUTPUT->notification("Data has been saved successfully!!...",'notifysuccess');
+            redirect($homeurl,"Data has been saved successfully!!...","6",'success');
+        }
+        else{
+            //echo $OUTPUT->notification("Sorry!!.. unable to save the data");
+            redirect($homeurl,"Sorry!!.. unable to save the data...","6",'error');
+        }
+
+    }
+    else {
+
+        $data = $form->get_data();
+        $form->set_data($data);
+        $form->display();
+    }
+
+
+}
 
 function incident_form(){
     global $CFG,$OUTPUT,$homeurl,$successurl, $USER;

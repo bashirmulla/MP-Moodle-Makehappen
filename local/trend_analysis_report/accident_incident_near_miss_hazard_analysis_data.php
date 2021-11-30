@@ -31,7 +31,7 @@ require_once(__DIR__ . '/../../config.php');
 require_once($CFG->dirroot.'/local/trend_analysis_report/locallib.php');  // Include our function library.
 require_login();
 
-$homeurl    = new moodle_url('/local/mp_report/index.php');
+$homeurl    = new moodle_url('/local/accident_report/index.php');
 
 if(!is_manager() && !is_admin() && !is_senior_manager() && !is_complieance()) {
     echo ("You are not authorized to view this page");

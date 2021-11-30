@@ -17,7 +17,7 @@
 /**
  * Sample plugin
  *
- * @package    local_mp_report
+ * @package    local_accident_report
  * @copyright  2018 www.makehappengroup.co.uk
  * @author     MP
  */

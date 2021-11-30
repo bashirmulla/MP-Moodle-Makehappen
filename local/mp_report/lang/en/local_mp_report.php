@@ -163,3 +163,32 @@ $string['assign_api']   = 'MP H&S Assign to Mobile App Api'; /* BM added */
 $string['physical_toolbox_talk_notification'] = 'Physical Toolbox Talk Notification';
 $string['physical_toolbox_talk_regular_notification'] = 'Physical Toolbox Talk Regular Notification';
 $string['high_h_and_s_notification']  = 'Email notification on high H&S report volumes';
+
+
+
+
+
+$string['injured_surname']          = 'Surname';
+$string['injured_forename']         = 'Forename';
+$string['home_address']             = 'Home Addres';
+$string['telephone']                = 'Telephone';
+$string['operative_now_at']         = 'Operative Now At';
+$string['time_lost_hours']          = 'Hours';
+$string['time_lost_minutes']        = 'Minutes';
+$string['time_lost_none']           = 'None';
+$string['temporary_address']        = 'Temporary Address';
+$string['employment_status']        = 'Employment Status';
+$string['occupation']               = 'Occupation';
+$string['nature_of_injury']         = 'Nature of Injury';
+$string['part_of_body_affected']    = 'Body Affected';
+$string['occurrence_date']          = 'Occurence Date';
+$string['name_address_of_site']     = 'Name address of site';
+$string['exect_location_on_site']   = 'Exect location on site';
+$string['work_type_of_occurrence']  = 'Type of Work at Occurrence';
+$string['reported_datetime']        = 'Reported Date';
+$string['injured_person_believe']   = 'Person believe';
+$string['witness_name_address']     = 'Witness name & address';
+
+
+
+$string['action_taken_to_prevent']     = 'Action Taken to Prevent';

@@ -17,7 +17,7 @@
 /**
  * Sample plugin
  *
- * @package    local_mp_report
+ * @package    local_accident_report
  * @copyright  2018 www.makehappengroup.co.uk
  * @author     MP
  */
@@ -27,9 +27,9 @@ $pluginname = 'trend_analysis_report';
 require_once($CFG->libdir.'/formslib.php');
 
 
-$PAGE->requires->css(new moodle_url($CFG->wwwroot.'/local/mp_report/js/datatables/datatables.min.css'));
-$PAGE->requires->js(new moodle_url($CFG->wwwroot.'/local/mp_report/js/datatables/datatables-1.10.18/js/jquery.dataTables.min.js'),true);
-$PAGE->requires->js(new moodle_url($CFG->wwwroot.'/local/mp_report/js/datatables/datatables-1.10.18/js/dateSort.js'));
+$PAGE->requires->css(new moodle_url($CFG->wwwroot.'/local/accident_report/js/datatables/datatables.min.css'));
+$PAGE->requires->js(new moodle_url($CFG->wwwroot.'/local/accident_report/js/datatables/datatables-1.10.18/js/jquery.dataTables.min.js'),true);
+$PAGE->requires->js(new moodle_url($CFG->wwwroot.'/local/accident_report/js/datatables/datatables-1.10.18/js/dateSort.js'));
 $PAGE->requires->css(new moodle_url($CFG->wwwroot.'/local/'.$pluginname.'/css/custom.css'));
 $PAGE->requires->js(new moodle_url($CFG->wwwroot.'/local/'.$pluginname.'/js/incident_near_miss_hazard_report.js'));
 

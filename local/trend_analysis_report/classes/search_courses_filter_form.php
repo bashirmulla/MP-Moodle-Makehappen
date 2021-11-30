@@ -17,13 +17,13 @@
 /**
  * Sample plugin
  *
- * @package    local_mp_report
+ * @package    local_accident_report
  * @copyright  2018 www.makehappengroup.co.uk
  * @author     MP
  */
 
 defined('MOODLE_INTERNAL') || die;
-//$pluginname = 'mp_report';
+//$pluginname = 'accident_report';
 require_once($CFG->libdir.'/formslib.php');
 
 $PAGE->requires->css(new moodle_url($CFG->wwwroot.'/local/trend_analysis_report/js/datatables/datatables.min.css'));

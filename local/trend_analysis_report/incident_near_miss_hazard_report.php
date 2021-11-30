@@ -35,7 +35,7 @@ require_once($CFG->dirroot.'/local/'.$pluginname.'/functions.php');  // Include 
 require_once(dirname(__FILE__).'/classes/incident_near_miss_hazard_list.php');  // Include form.
 
 require_login();
-$homeurl    = new moodle_url('/local/mp_report/index.php');
+$homeurl    = new moodle_url('/local/accident_report/index.php');
 
 if(!is_manager() && !is_admin() && !is_senior_manager() && !is_complieance()) {
     redirect($homeurl,"You are not authorized to view this page",6,'error');

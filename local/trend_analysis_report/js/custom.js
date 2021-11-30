@@ -3,13 +3,13 @@ require(["jquery"],function($) {
     $('#accident_link').on('click', function(e) {
         window.onbeforeunload = null;
         e.preventDefault();
-        window.location = '/local/mp_report/index.php?cmd=form1';
+        window.location = '/local/accident_report/index.php?cmd=form1';
     });
 
     $('#incident_link').on('click', function(e) {
         window.onbeforeunload = null;
         e.preventDefault();
-        window.location = '/local/mp_report/index.php?cmd=form2';
+        window.location = '/local/accident_report/index.php?cmd=form2';
     });
 
     $('#add').on('click', function() {

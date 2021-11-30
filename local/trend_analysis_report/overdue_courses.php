@@ -41,7 +41,7 @@ $title   = get_string('overdue_courses', 'local_'.$pluginname);
 $heading = get_string('overdue_courses', 'local_'.$pluginname);
 $url     = new moodle_url('/local/'.$pluginname.'/index.php');
 
-$homeurl    = new moodle_url('/local/mp_report/index.php');
+$homeurl    = new moodle_url('/local/accident_report/index.php');
 
 if(!is_manager() && !is_admin() && !is_senior_manager() && !is_complieance()) {
     redirect($homeurl,"You are not authorized to view this page",6,'error');

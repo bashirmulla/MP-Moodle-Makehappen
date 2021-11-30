@@ -33,7 +33,7 @@ require_once($CFG->dirroot.'/local/trend_analysis_report/locallib.php');  // Inc
 define('PREFERRED_RENDERER_TARGET', RENDERER_TARGET_GENERAL);
 require_login();
 
-$homeurl    = new moodle_url('/local/mp_report/index.php');
+$homeurl    = new moodle_url('/local/accident_report/index.php');
 
 if(!is_manager() && !is_admin() && !is_senior_manager() && !is_complieance()) {
     echo ("You are not authorized to view this page");
@@ -159,7 +159,7 @@ foreach($result as $rec) {
     else if ($rec->report_to_client=='57') $report_to_client='No';
     else $report_to_client='N/A';
 
-    $report_url = new moodle_url($CFG->wwwroot.'/local/mp_report/index.php?cmd=inc_edit&id='.$rec->id);
+    $report_url = new moodle_url($CFG->wwwroot.'/local/accident_report/index.php?cmd=inc_edit&id='.$rec->id);
     $link = "<a target='new' href='".$report_url."'>View</a>";
 
     $table->data[] = new html_table_row(array( date("d/m/Y",$rec->i_date),$rec->id,$manager,$submitter,$status,@$contract_list['contract'][$rec->contact],@$report_category_list['report_category'][$category_id],$classification_list['classification'][$rec->classification],$categorisation_list['categorisation'][$rec->categorisation],$report_to_client,$link));

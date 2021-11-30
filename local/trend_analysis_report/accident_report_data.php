@@ -40,7 +40,7 @@ $query_con_str =" 1=1 ";
 $filterData = get_requests();
 
 require_login();
-$homeurl    = new moodle_url('/local/mp_report/index.php');
+$homeurl    = new moodle_url('/local/accident_report/index.php');
 
 if(!is_manager() && !is_admin() && !is_senior_manager() && !is_complieance()) {
     echo ("You are not authorized to view this page");
@@ -167,7 +167,7 @@ foreach($result as $rec) {
     else if ($rec->s_mgt_rpt_2508_completed=='3') $riddor_reportable ='N/A';
     else                                          $riddor_reportable ='';
 
-    $report_url = new moodle_url($CFG->wwwroot.'/local/mp_report/index.php?cmd=acc_edit&id='.$rec->id);
+    $report_url = new moodle_url($CFG->wwwroot.'/local/accident_report/index.php?cmd=acc_edit&id='.$rec->id);
     $link = "<a target='new' href='".$report_url."'>View</a>";
 
     $table->data[] = new html_table_row(array( date("d/m/Y",$rec->accident_date),$rec->id,$manager,$submitter,$status,$contract_list['contract'][$rec->user_contract],$accident_category_list['category'][$rec->accident_category],$riddor_reportable,$riddor_classification_list['riddor_classification'][$rec->s_mgt_rpt_riddor_event_clf],$riddor_subcategory_list['RIDDOR_subcategory'][$rec->riddor_subcategory],$rec->accident_treatment,$rec->minor_injuries,$rec->lost_time,$rec->lost_time_days,$link));

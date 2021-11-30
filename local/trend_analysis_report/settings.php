@@ -25,27 +25,27 @@
 defined('MOODLE_INTERNAL') || die;
 
 /*
-if (has_capability('local/mp_report:view', context_system::instance())) {
+if (has_capability('local/accident_report:view', context_system::instance())) {
 
     $ADMIN->add('root', new admin_category('local_trend_analysis_report', new lang_string('pluginname', 'local_trend_analysis_report')));
 
     $ADMIN->add(
-        'mp_report',
+        'accident_report',
         new admin_externalpage(
-            'mp_report_index',
+            'accident_report_index',
             new lang_string('pluginname', 'local_trend_analysis_report'),
-            new moodle_url('/local/mp_report/index.php'),
-            'local/mp_report:view'
+            new moodle_url('/local/accident_report/index.php'),
+            'local/accident_report:view'
         )
     );
 
     $ADMIN->add(
-        'mp_report',
+        'accident_report',
         new admin_externalpage(
-            'mp_report_admin',
+            'accident_report_admin',
             new lang_string('settings', 'local_trend_analysis_report'),
-            new moodle_url('/local/mp_report/settings.php'),
-            'local/mp_report:view'
+            new moodle_url('/local/accident_report/settings.php'),
+            'local/accident_report:view'
         )
     );
 
@@ -53,7 +53,7 @@ if (has_capability('local/mp_report:view', context_system::instance())) {
 
 */
 
-//die(has_capability('local/mp_report:add', $PAGE->context,NULL, false));
+//die(has_capability('local/accident_report:add', $PAGE->context,NULL, false));
 if ($hassiteconfig OR has_capability('local/trend_analysis_report:view', $PAGE->context,$USER->id, false)) {
 
     $section = 'reports';
