@@ -164,7 +164,11 @@ class accident_report_form extends moodleform {
         $mform->addElement('html', '</fieldset>');
 
         $mform->addElement('html', '<fieldset class="scheduler-border"><legend class="scheduler-border">ACTION TAKEN TO PREVENT RE-OCCURRENCE </legend><br><br>');
-       
+        
+        $mform->addElement('textarea', 'action_taken_to_prevent', get_string('action_taken_to_prevent', 'local_accident_report'), 'wrap="virtual" rows="3" cols="40"');
+        $mform->setType('action_taken_to_prevent', PARAM_TEXT);
+        $mform->addRule('action_taken_to_prevent', get_string('required'), 'required','','client');
+
         $mform->addElement('html', '</fieldset>');
 
 

@@ -62,6 +62,8 @@ $string['witness_name_address']     = 'Witness name & address';
 
 
 
+$string['action_taken_to_prevent']     = 'Action Taken to Prevent';
+
 
 
 $string['accident_table']   = 'accident_report';
