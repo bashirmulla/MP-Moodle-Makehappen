@@ -513,7 +513,7 @@ return $output;
         global $USER, $CFG;
         $output = '<div class="validators">
                    <ul class="list-unstyled ml-1">
-                     <li><a href="'.$CFG->wwroot.'/local/mp_report/index.php"><span class="fa fa-bar-chart-o"></span>H&S Reporting</a></li>
+                     <li><a href="'.$CFG->wwroot.'/local/accident_report/index.php"><span class="fa fa-bar-chart-o"></span>Accident Reporting</a></li>
                      <li><a href="'.$CFG->wwroot.'/local/trend_analysis_report/index.php"><span class="fa fa-file-excel-o"></span>Trend Analysis</a></li>
                      <li><a href="'.$CFG->wwroot.'/local/trend_analysis_report/course.php"><span class="fa fa-area-chart"></span>Course Reporting</a></li>
                      <li><a href="'.$CFG->wwroot.'/local/training_matrix/index.php"><span class="fa fa-map-signs"></span>Training Matrix</a></li>
