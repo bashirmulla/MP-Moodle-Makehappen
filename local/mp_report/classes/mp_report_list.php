@@ -86,7 +86,8 @@ class new_accident_page extends moodleform {
     public function accident_report_list() {
         global $USER, $CFG,$DB;
 
-        $tableName  = get_string('accident_table','local_mp_report');
+         $tableName  = get_string('new_accident_table','local_mp_report');
+        
         $html   = "";
         $mform  = $this->_form;
 
@@ -112,15 +113,15 @@ class new_accident_page extends moodleform {
         $table->width = '100%';
 
 
-        $table->head  = array("Report Number","Date of Accident","Reporter","Location","Action");
+        $table->head  = array("Report Number","Date of Accident","Reporter","Injured Person","Action");
         $table->align = array( 'left','left','left','left','center');
         $table->size  = array( '20%','20%',"25%","25%","10%");
 
         $count=0;
         foreach($result as $rec) {
             $editDeleteLink = "<a href='index.php?cmd=acc_edit&id=$rec->id'>Edit</a>";
-            $reporter = get_userInfo(array("id" => $rec->user_id));
-            $table->data[] = new html_table_row(array( $rec->id,date("d/m/Y",$rec->accident_date),$reporter->firstname." ".$reporter->lastname,$rec->accident_place,$editDeleteLink));
+            $reporter = get_userInfo(array("id" => $rec->created_by));
+            $table->data[] = new html_table_row(array( $rec->id,date("d/m/Y",$rec->occurrence_date),$reporter->firstname." ".$reporter->lastname,$rec->injured_surname,$editDeleteLink));
         }
         $html .= html_writer::table($table);
         $html .= "<hr></br>";

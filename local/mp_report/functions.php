@@ -280,7 +280,7 @@ function accident_form(){
 
 function new_accident_form(){
     global $CFG,$OUTPUT,$homeurl,$successurl, $USER,$DB;
-    $tableName = "New Accident Report";
+    $tableName  = get_string('new_accident_table','local_mp_report');
 
 
 
@@ -292,44 +292,28 @@ function new_accident_form(){
 
     $dataobject  = $form->get_submitted_data();
 
-
-
     if(!empty($dataobject) && $form->is_validated()){
-
-        
-
-
-
 
         $dataobject->submitter_to_manager = 'Yes';
 
         //GDPR implementation
-        $dataobject->witnesses_name         = !empty($dataobject->witnesses_name) ? encrypt($dataobject->witnesses_name) : NULL;
-        $dataobject->witnesses_address      = !empty($dataobject->witnesses_address) ? encrypt($dataobject->witnesses_address) : NULL;;
-        $dataobject->witnesses_phone_number = !empty($dataobject->witnesses_phone_number) ? encrypt($dataobject->witnesses_phone_number) : NULL;
-
+        $dataobject->witness_name_address  = !empty($dataobject->witness_name_address) ? encrypt($dataobject->witness_name_address) : NULL;
+        $dataobject->created_by            = $USER->id;
+        $dataobject->created_date          = date('Y-m-d');   
+        $dataobject->updated_date          = date('Y-m-d');    
 
         $id = save_data($dataobject,$tableName);
 
         if(!empty($id) ){
 
             if(empty($dataobject->id)) {
-                $updateData['id'] = $dataobject->id ? $dataobject->id : $id;
-                $updateData['photo_1'] = uploadFile('photo_1', 'accident', $dataobject->id ? $dataobject->id : $id);
-                $updateData['photo_2'] = uploadFile('photo_2', 'accident', $dataobject->id ? $dataobject->id : $id);
-                $updateData['photo_3'] = uploadFile('photo_3', 'accident', $dataobject->id ? $dataobject->id : $id);
-                $updateData['photo_4'] = uploadFile('photo_4', 'accident', $dataobject->id ? $dataobject->id : $id);
-                $updateData['photo_5'] = uploadFile('photo_5', 'accident', $dataobject->id ? $dataobject->id : $id);
-                $updateData['photo_6'] = uploadFile('photo_6', 'accident', $dataobject->id ? $dataobject->id : $id);
-                $updateData['witnesses_report_diagram'] = uploadFile('witnesses_report_diagram', 'accident', $dataobject->id ? $dataobject->id : $id);
-                update_data($updateData, get_string('accident_table', 'local_mp_report'));
-
-                $pdf_file = accident_pdf($id);
+              
+                $pdf_file = new_accident_pdf($id);
                 $report_title = "Accident Report";
                 $subject = "Notification of Accident Report";
                 $message = "A new accident report has been submitted. Please see the attached report.";
-                send_email_to_manager($dataobject->user_manager,"Makehappen", $subject, $message, pdfs_email_attachment().$pdf_file, $pdf_file,$report_title);
-                send_mp_report_email("Makehappen", $subject, $message, pdfs_email_attachment() . $pdf_file, $pdf_file,$report_title);
+                //send_email_to_manager($dataobject->user_manager,"Makehappen", $subject, $message, pdfs_email_attachment().$pdf_file, $pdf_file,$report_title);
+                //send_mp_report_email("Makehappen", $subject, $message, pdfs_email_attachment() . $pdf_file, $pdf_file,$report_title);
 
             }
 
@@ -504,6 +488,215 @@ function export_pdf($report_type,$filename) {
     }
 
 }
+
+function new_accident_pdf($acc_id) {
+
+    global $homeurl,$DB, $CFG;
+
+    $photo_path = $CFG->dataroot."/filedir/upload";
+    $tableName  = get_string('new_accident_table','local_mp_report');
+    $select['id']  = $acc_id;
+    $data = $DB->get_record($tableName, $select);
+    $user = get_userInfo( array("id" => $data -> user_id ));
+
+    $manager            = get_userInfo( array("id" => $data -> user_manager ));
+    $dropdown           = get_new_dropdown_data(1);
+    $employment_status  = $dropdown['employment_status'];
+    $operative_at_now   = $dropdown['operative_at_now'];
+
+
+    ob_start();
+    ?>
+    <style type="text/css">
+        table { border-collapse: }
+        td, th { font-family:Arial, Helvetica, sans-serif; font-size:7pt; line-height:12pt; padding: 8px; }
+        th { text-align:right; }
+
+        table.data-table td, table.data-table th { font-size:7pt; border:.5px solid #333; margin-top:10px; }
+
+        table.data-table tr th { background-color:#f6f6f6; }
+
+        .section-hd { font-weight:bold; border-bottom:.5px solid #333; }
+
+    </style>
+
+    <div style="font-size:10pt; text-align:center;">
+        Accident Report
+    </div>
+    <table width="100%">
+        <tr>
+            <td colspan="2" style="padding-bottom:15px;">
+                <table width="100%" style="border-bottom:.5px solid #333; padding-bottom:2px;">
+                    <tr>
+                        <td align="left"><strong><?= $user -> firstname?> <?= $user -> lastname?></strong></td>
+                        <td align="right"><strong><?= date("d-M-Y G:i:s", $data -> accident_date)?></strong></td>
+                    </tr>
+                </table>
+            </td>
+
+        </tr>
+        <tr>
+            <td colspan="2">
+                <div class="section-hd">User Details</div>
+                <table width="100%" class="data-table">
+
+                    <tr class="even">
+                        <th width="15%">Occupation</th>
+                        <td width="35%"><?= $data -> user_occupation?></td>
+                        <th width="15%">Postcode</th>
+                        <td width="35%"><?= $data -> user_postcode?></td>
+
+                    </tr>
+                    <tr>
+                        <th>Contract</th>
+                        <td><?= @$contracts[$data -> user_contract];?></td>
+                        <th>Manager</th>
+                        <td><?= $manager -> firstname?> <?= $manager -> lastname?></td>
+                    </tr>
+                    <tr>
+                        <th>Address</th>
+                        <td colspan="3"><?= $data -> user_address?></td>
+                    </tr>
+                </table>
+                <div class="section-hd">About the Person who had the accident</div>
+                <table width="100%" class="data-table">
+                    <tr>
+                        <th width="15%">Name</th>
+                        <td width="35%"><?= $data -> victim_name?></td>
+                        <th width="15%">Occupation</th>
+                        <td width="35%"><?= $data -> victim_occupation?></td>
+
+                    </tr>
+                    <tr>
+                        <th>Postcode</th>
+                        <td><?= $data -> victim_postcode?></td>
+                        <th>Address</th>
+                        <td><?= $data -> victim_address?></td>
+                    </tr>
+                </table>
+            </td>
+
+        </tr>
+
+        <tr>
+            <td colspan="2">
+                <div class="section-hd">About the accident</div>
+                <table width="100%" class="data-table">
+                    <tr>
+                        <th width="15%">Category</th>
+                        <td width="35%"><?= @$categories[$data -> accident_category]?></td>
+                        <th width="15%">Medical Treatment over first aid?</th>
+                        <td width="35%"><?= $data -> accident_treatment?></td>
+                    </tr>
+                    <tr>
+                        <th>Minor Injuries?</th>
+                        <td><?= $data -> minor_injuries?></td>
+                        <th>Date and Time of accident</th>
+                        <td><?= date("d-M-Y G:i:s", $data -> accident_date)?> </td>
+
+                    </tr>
+                    <tr>
+                        <th>Where did it happen</th>
+                        <td><?= $data -> accident_place?></td>
+                        <th>How did it happen and why</th>
+                        <td><?= $data -> accident_reason?></td>
+                    </tr>
+                    <tr>
+                        <th>Details of any injury suffered or treatment given</th>
+                        <td colspan="3"><?= $data -> accident_detail?></td>
+
+                    </tr>
+
+                </table>
+                <div class="section-hd">Accident Witness Report</div>
+                <?php if($data -> accident_witnesses > 0) {?>
+                    <table width="100%" class="data-table" >
+                        <tr>
+                            <th width="15%">Name of Witness </th>
+                            <td width="35%"><?= decrypt($data -> witnesses_name)?></td>
+                            <th width="15%">Home/Work Address </th>
+                            <td width="35%"><?= decrypt($data -> witnesses_address)?></td>
+
+                        </tr>
+                        <tr>
+                            <th> Telephone Number </th>
+                            <td><?= decrypt($data -> witnesses_phone_number)?></td>
+                            <th> Date of witness report </th>
+                            <td><?= date("d-M-Y", $data -> witnesses_report_date)?></td>
+                        </tr>
+                        <tr>
+                            <th colspan="4" style="text-align: left">Detail & Describe the occurrence and how it happened. Be specific, who? What? Why?, Where?, when?, how?. What Injuries to persons or damage to property occurred? </th>
+                        </tr>
+                        <tr>
+                            <td colspan="4">
+                                <?= $data -> witnesses_report_details?>
+                            </td>
+                        </tr>
+
+                    </table>
+                <?php } ?>
+            </td>
+
+        </tr>
+        <tr>
+            <td colspan="2">
+                <div class="section-hd">Photos</div><br />
+                <table width="100%" style="margin-top:20px;">
+                    <tr>
+                        <?php
+                        $c = 0;
+                        for($i=1; $i<=6; $i++){
+                        $photo = 'photo_'.$i;
+                        if(!empty($data -> $photo) && file_exists( $photo_path."/".$data -> $photo )) {
+                        $c++;?>
+                        <td width="30%"><img src="<?= $photo_path."/".$data -> $photo;?>" width="130px"/></td>
+                        <?php
+                        if($i == 3) { ?></tr><tr> <?php }
+                        }
+                        else{
+                            ?><td width="30%"></td> <?php
+                        }
+                        }
+                        if($c == 0) { ?>
+                            <span style="color:#F00"></span>
+                        <?php }?>
+                    </tr>
+
+                </table>
+            </td>
+        </tr>
+
+    </table>
+
+    <?php
+
+    $html = ob_get_contents();
+    ob_clean();
+
+    require_once($CFG->libdir.'/pdflib.php');
+
+    $file_name = $user -> firstname ."-". $user -> lastname .'-'. $data -> id . '.pdf';
+    $file_name = str_replace(" ","-", $file_name);
+
+    $pdf = new pdf();
+    $PDF_HEADER_LOGO       = '/local/mp_report/images/mh_logo_sm.png'; //any image file. check correct path.
+    $PDF_HEADER_LOGO_WIDTH = "60%";
+    $PDF_HEADER_TITLE      = "";
+    $PDF_HEADER_STRING     = "";
+
+    $pdf->SetMargins(15, 20, 15);
+    $pdf->SetHeaderMargin(1);
+    $pdf->SetFooterMargin(0);
+    $pdf->SetHeaderData($PDF_HEADER_LOGO, $PDF_HEADER_LOGO_WIDTH, $PDF_HEADER_TITLE, $PDF_HEADER_STRING);
+
+
+    $pdf -> AddPage();
+    $pdf -> WriteHTML($html);
+    $pdf -> Output( pdfs_path() . $file_name, 'F' );
+
+    return $file_name;
+}
+
 
 function accident_pdf($acc_id) {
 

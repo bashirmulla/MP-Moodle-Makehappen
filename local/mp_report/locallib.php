@@ -191,6 +191,29 @@ function get_dropdown_data($report_id,$dropdown_name=null){
 
 }
 
+function get_new_dropdown_data($report_id,$dropdown_name=null){
+    global $DB, $USER;
+    $query     = array('field_status'=>1);
+    $dropdown  = array();
+    $tableName = 'new_standing_table';
+
+    if(!empty($report_id))   $query['report_id']       = $report_id;
+    if(!empty($dropdown_name)) $query['dropdown_name'] = $dropdown_name;
+
+    $result = $DB->get_records($tableName, $query);
+
+    if(!empty($result)){
+        foreach ($result as $data){
+
+            $dropdown[$data->dropdown_name][$data->id] = $data->field_value;
+        }
+    }
+
+    return $dropdown;
+
+
+}
+
 function is_admin(){
     global $CFG, $USER;
 

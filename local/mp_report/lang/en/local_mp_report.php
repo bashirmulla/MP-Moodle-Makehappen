@@ -152,8 +152,12 @@ $string['report_closed']              = 'Report closed?';
 
 
 
-$string['accident_table']   = 'accident_report';
-$string['incident_table']   = 'incident_report';
+
+$string['new_accident_table']   = 'accident_incident_report';
+$string['accident_table']       = 'accident_report';
+$string['incident_table']       = 'incident_report';
+
+
 $string['savebutton']   = 'Save';
 $string['submitbtn']    = 'Submit';
 $string['backbutton']   = 'Back';

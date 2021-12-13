@@ -39,7 +39,7 @@ class new_accident_report_form extends moodleform {
 
         $mform = $this->_form;
         $mform->_maxFileSize = 90000000;
-        $dropdown = get_dropdown_data(1);
+        $dropdown = get_new_dropdown_data(1);
 
         $mform->addElement('html', '<fieldset class="scheduler-border"><legend class="scheduler-border">THE INJURED / INVOLVED PERSON</legend>');
 
@@ -62,24 +62,24 @@ class new_accident_report_form extends moodleform {
         $mform->addRule('telephone', get_string('required'), 'required','','client');
 
 
-        $mform->addElement('select', 'operative_now_at', get_string('operative_now_at', 'local_mp_report'), createDropdown($dropdown['contract']));
+        $mform->addElement('select', 'operative_now_at', get_string('operative_now_at', 'local_mp_report'), createDropdown($dropdown['operative_at_now']));
         $mform->setType('operative_now_at', PARAM_TEXT);
         $mform->addRule('operative_now_at', get_string('required'), 'required','','client');
 
         
 
         $mform->addElement('text', 'time_lost_hours', get_string('time_lost_hours', 'local_mp_report'), 'maxlength="100" size="40" width="40px" ');
-        $mform->setType('time_lost_hours', PARAM_TEXT);
+        $mform->setType('time_lost_hours', PARAM_INT);
         $mform->addRule('time_lost_hours', get_string('required'), 'required','','client');
 
         
         $mform->addElement('text', 'time_lost_minutes', get_string('time_lost_minutes', 'local_mp_report'), 'maxlength="100" size="40" width="40px" ');
-        $mform->setType('time_lost_minutes', PARAM_TEXT);
+        $mform->setType('time_lost_minutes', PARAM_INT);
         $mform->addRule('time_lost_minutes', get_string('required'), 'required','','client');
 
         
         $mform->addElement('text', 'time_lost_none', get_string('time_lost_none', 'local_mp_report'), 'maxlength="100" size="40" width="40px" ');
-        $mform->setType('time_lost_none', PARAM_TEXT);
+        $mform->setType('time_lost_none', PARAM_INT);
         $mform->addRule('time_lost_none', get_string('required'), 'required','','client');
 
         
@@ -89,12 +89,12 @@ class new_accident_report_form extends moodleform {
         $mform->addRule('temporary_address', get_string('required'), 'required','','client');
        
         
-        $mform->addElement('select', 'employment_status', get_string('employment_status', 'local_mp_report'), createDropdown($dropdown['contract']));
+        $mform->addElement('select', 'employment_status', get_string('employment_status', 'local_mp_report'), createDropdown($dropdown['employment_status']));
         $mform->setType('employment_status', PARAM_TEXT);
         $mform->addRule('employment_status', get_string('required'), 'required','','client');
 
         
-        $mform->addElement('select', 'occupation', get_string('occupation', 'local_mp_report'), createDropdown($dropdown['contract']));
+        $mform->addElement('text', 'occupation', get_string('occupation', 'local_mp_report'),  'maxlength="100" size="40" width="40px" ');
         $mform->setType('occupation', PARAM_TEXT);
         $mform->addRule('occupation', get_string('required'), 'required','','client');
 
@@ -151,16 +151,27 @@ class new_accident_report_form extends moodleform {
 
         $mform->addElement('html', '<fieldset class="scheduler-border"><legend class="scheduler-border">KIND OF ACCIDENT/INCIDENT/DANGEROUS OCCURRENCE</legend>');
 
+         foreach($dropdown['kind_of_occurrence'] as $key=>$value){
+            $mform->addElement('checkbox', 'kind_of_occurrence_'.$key, $value);
+         } 
        
 
         $mform->addElement('html', '</fieldset>');
 
         $mform->addElement('html', '<fieldset class="scheduler-border"><legend class="scheduler-border">AGENT(S) INVOLVED</legend>');
        
+       
+        foreach($dropdown['agent_involved'] as $key=>$value){
+            $mform->addElement('checkbox', 'agent_involved_'.$key, $value);
+         } 
         $mform->addElement('html', '</fieldset>');
 
         $mform->addElement('html', '<fieldset class="scheduler-border"><legend class="scheduler-border">ACCOUNT OF INCIDENT/DANGEROUS OCCURRENCE</legend><br><br>');
        
+        $mform->addElement('textarea', 'account_occurrance', get_string('account_occurrance', 'local_mp_report'), 'wrap="virtual" rows="3" cols="40"');
+        $mform->setType('account_occurrance', PARAM_TEXT);
+        $mform->addRule('account_occurrance', get_string('required'), 'required','','client');
+
         $mform->addElement('html', '</fieldset>');
 
         $mform->addElement('html', '<fieldset class="scheduler-border"><legend class="scheduler-border">ACTION TAKEN TO PREVENT RE-OCCURRENCE </legend><br><br>');
