@@ -49,6 +49,16 @@ $functions = array(
         'ajax' => true,                                       // is the service available to 'internal' ajax calls.
         'services' => array('mpreport')                     // Optional, only available for Moodle 3.1 onwards. List of built-in services (by shortname) where the function will be included.  Services created manually via the Moodle interface are not supported.
     ),
+
+    'local_mp_report_get_new_standing_table' => array(          //web service function name
+        'classname'   => 'local_mp_report_external',            //class containing the external function
+        'methodname'  => 'get_new_standing_table',              //external function name
+        'classpath'   => 'local/mp_report/externallib.php',     //file containing the class/external function
+        'description' => 'Get Report New Standing Table Data',  //human readable description of the web service function
+        'type'        => 'read',                                //database rights of the web service function (read, write)
+        'ajax' => true,                                         // is the service available to 'internal' ajax calls.
+        'services' => array('mpreport')                         // Optional, only available for Moodle 3.1 onwards. List of built-in services (by shortname) where the function will be included.  Services created manually via the Moodle interface are not supported.
+    ),
 );
 
 ?>

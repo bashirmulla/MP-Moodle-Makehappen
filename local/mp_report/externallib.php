@@ -51,6 +51,55 @@ class local_mp_report_external extends external_api {
     }
 // Standing Table API END
 
+
+
+
+
+
+/* BM added */
+// New Standing Table API Start
+
+    public static function get_new_standing_table_parameters() {
+        return new external_function_parameters(
+            array(
+                //if I had any parameters, they would be described here. But I don't have any, so this array is empty.
+            )
+        );
+    }
+
+    public static function get_new_standing_table() {
+        global $USER,$DB;
+        //Parameter validation
+        //REQUIRED
+
+
+        $result = $DB->get_records("new_standing_table",array("field_status" => 1));
+
+        return $result;
+    }
+
+    public static function get_new_standing_table_returns() {
+        return new external_multiple_structure(
+            new external_single_structure(
+                array(
+                    'id' => new external_value(PARAM_INT, 'new_standing_table id'),
+                    'report_id' => new external_value(PARAM_INT, 'report_id of new_standing_table'),
+                    'dropdown_name' => new external_value(PARAM_TEXT, 'dropdown_name of new_standing_table'),
+                    'field_value' => new external_value(PARAM_TEXT, 'field_value of new_standing_table'),
+                )
+            )
+        );
+    }
+// New Standing Table API END
+/* EOF BM */
+
+
+
+
+
+
+
+
 // Email Table API START
     public static function get_email_table_parameters() {
         return new external_function_parameters(
