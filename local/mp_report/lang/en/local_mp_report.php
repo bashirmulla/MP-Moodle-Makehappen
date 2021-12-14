@@ -167,8 +167,12 @@ $string['assign_api']   = 'MP H&S Assign to Mobile App Api'; /* BM added */
 $string['physical_toolbox_talk_notification'] = 'Physical Toolbox Talk Notification';
 $string['physical_toolbox_talk_regular_notification'] = 'Physical Toolbox Talk Regular Notification';
 $string['high_h_and_s_notification']  = 'Email notification on high H&S report volumes';
+$string['resume_work']   = 'If resumed work on the day of the accident state time lost';
+$string['account_occurrance']   = 'Describe what happened and how (in the case of an accident state, what the injured person was doing at the time)';
+$string['firstaid_administered']   = 'Was First Aid Administered?';
 
-
+$string['reporter_name']   = 'Name of the Person Making Report';
+$string['reported_date']   = 'Date';
 
 
 

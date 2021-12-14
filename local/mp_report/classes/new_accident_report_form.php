@@ -43,13 +43,15 @@ class new_accident_report_form extends moodleform {
 
         $mform->addElement('html', '<fieldset class="scheduler-border"><legend class="scheduler-border">THE INJURED / INVOLVED PERSON</legend>');
 
-        $mform->addElement('text', 'injured_surname', get_string('injured_surname', 'local_mp_report'), 'maxlength="100" size="40" ');
+        $mform->addElement('text', 'injured_surname', get_string('injured_surname', 'local_mp_report'), 'maxlength="100" style="background-color:#efecec" size="40" disabled readonly');
         $mform->setType('injured_surname', PARAM_TEXT);
         $mform->addRule('injured_surname', get_string('required'), 'required','','client');
+        $mform->setDefault('injured_surname', $USER->firstname);
        
-        $mform->addElement('text', 'injured_forename', get_string('injured_forename', 'local_mp_report'), 'maxlength="100" size="40" ');
+        $mform->addElement('text', 'injured_forename', get_string('injured_forename', 'local_mp_report'), 'maxlength="100" style="background-color:#efecec" size="40" disabled readonly');
         $mform->setType('injured_forename', PARAM_TEXT);
         $mform->addRule('injured_forename', get_string('required'), 'required','','client');
+        $mform->setDefault('injured_surname', $USER->lastname);
 
 
         $mform->addElement('textarea', 'home_address', get_string('home_address', 'local_mp_report'), 'wrap="virtual" rows="3" cols="40"');
@@ -66,22 +68,30 @@ class new_accident_report_form extends moodleform {
         $mform->setType('operative_now_at', PARAM_TEXT);
         $mform->addRule('operative_now_at', get_string('required'), 'required','','client');
 
-        
+        $mform->addElement("html","<hr><h6> <b>THIS SECTION MUST BE COMPLETED </b> if resumed work on the day of the accident state time lost</h6>");
 
+        $radioarray   = array();
+        $radioarray[] = $mform->createElement('radio', 'resume_work', '', "Yes", 'Yes');
+        $radioarray[] = $mform->createElement('radio', 'resume_work', '', "No", 'No');
+        $mform->addGroup($radioarray, 'resume_work', get_string('resume_work','local_mp_report'), array(''), false);
+        $mform->addRule('resume_work', get_string('required'), 'required','','client');
+        $mform->setDefault('resume_work', 'Yes');
+
+           
         $mform->addElement('text', 'time_lost_hours', get_string('time_lost_hours', 'local_mp_report'), 'maxlength="100" size="40" width="40px" ');
         $mform->setType('time_lost_hours', PARAM_INT);
         $mform->addRule('time_lost_hours', get_string('required'), 'required','','client');
-
+        
         
         $mform->addElement('text', 'time_lost_minutes', get_string('time_lost_minutes', 'local_mp_report'), 'maxlength="100" size="40" width="40px" ');
         $mform->setType('time_lost_minutes', PARAM_INT);
         $mform->addRule('time_lost_minutes', get_string('required'), 'required','','client');
+        $mform->addElement("html","<hr>");
 
-        
-        $mform->addElement('text', 'time_lost_none', get_string('time_lost_none', 'local_mp_report'), 'maxlength="100" size="40" width="40px" ');
-        $mform->setType('time_lost_none', PARAM_INT);
-        $mform->addRule('time_lost_none', get_string('required'), 'required','','client');
 
+        $mform->hideIf('time_lost_hours', 'resume_work',  'eq', 'No');
+        $mform->hideIf('time_lost_minutes', 'resume_work',  'eq','No');
+      
         
 
         $mform->addElement('textarea', 'temporary_address', get_string('temporary_address', 'local_mp_report'), 'wrap="virtual" rows="3" cols="40"');
@@ -164,6 +174,15 @@ class new_accident_report_form extends moodleform {
         foreach($dropdown['agent_involved'] as $key=>$value){
             $mform->addElement('checkbox', 'agent_involved_'.$key, $value);
          } 
+
+
+        $radioarray   = array();
+        $radioarray[] = $mform->createElement('radio', 'firstaid_administered', '', "Yes", 'Yes');
+        $radioarray[] = $mform->createElement('radio', 'firstaid_administered', '', "No", 'No');
+        $mform->addGroup($radioarray, 'firstaid_administered', get_string('firstaid_administered','local_mp_report'), array(''), false);
+        $mform->addRule('firstaid_administered', get_string('required'), 'required','','client');
+      
+        
         $mform->addElement('html', '</fieldset>');
 
         $mform->addElement('html', '<fieldset class="scheduler-border"><legend class="scheduler-border">ACCOUNT OF INCIDENT/DANGEROUS OCCURRENCE</legend><br><br>');
@@ -179,6 +198,19 @@ class new_accident_report_form extends moodleform {
         $mform->addElement('textarea', 'action_taken_to_prevent', get_string('action_taken_to_prevent', 'local_mp_report'), 'wrap="virtual" rows="3" cols="40"');
         $mform->setType('action_taken_to_prevent', PARAM_TEXT);
         $mform->addRule('action_taken_to_prevent', get_string('required'), 'required','','client');
+
+        $mform->addElement('html', '</fieldset>');
+
+        $mform->addElement('html', '<fieldset class="scheduler-border"><legend class="scheduler-border">DECLERATION </legend><br><br>');
+        
+        $mform->addElement('text', 'reporter_name', get_string('reporter_name', 'local_mp_report'), 'maxlength="100" style="background-color:#efecec" size="40" disabled readonly');
+        $mform->setType('reporter_name', PARAM_TEXT);
+        $mform->addRule('reporter_name', get_string('required'), 'required','','client');
+        $mform->setDefault('reporter_name', $USER->firstname);
+
+        $mform->addElement('date_selector', 'reported_date', get_string('reported_date', 'local_mp_report'), 'maxlength="100" size="40" ');
+        $mform->setType('reported_date', PARAM_TEXT);
+        $mform->addRule('reported_date', get_string('required'), 'required','','client');
 
         $mform->addElement('html', '</fieldset>');
 
