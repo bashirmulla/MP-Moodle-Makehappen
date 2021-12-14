@@ -51,7 +51,7 @@ class new_accident_report_form extends moodleform {
         $mform->addElement('text', 'injured_forename', get_string('injured_forename', 'local_mp_report'), 'maxlength="100" style="background-color:#efecec" size="40" disabled readonly');
         $mform->setType('injured_forename', PARAM_TEXT);
         $mform->addRule('injured_forename', get_string('required'), 'required','','client');
-        $mform->setDefault('injured_surname', $USER->lastname);
+        $mform->setDefault('injured_forename', $USER->lastname);
 
 
         $mform->addElement('textarea', 'home_address', get_string('home_address', 'local_mp_report'), 'wrap="virtual" rows="3" cols="40"');
@@ -120,7 +120,7 @@ class new_accident_report_form extends moodleform {
 
         $mform->addElement('html', '<fieldset class="scheduler-border"><legend class="scheduler-border">DATE, TIME, AND PLACE OF ACCIDENT/INCIDENT/DANGEROUS OCCURRENCE</legend>');
 
-        $mform->addElement('date_selector', 'occurrence_date', get_string('occurrence_date', 'local_mp_report'), 'maxlength="100" size="40" ');
+        $mform->addElement('date_time_selector', 'occurrence_date', get_string('occurrence_date', 'local_mp_report'), 'maxlength="100" size="40" ');
         $mform->setType('occurrence_date', PARAM_TEXT);
         $mform->addRule('occurrence_date', get_string('required'), 'required','','client');
 
@@ -140,7 +140,7 @@ class new_accident_report_form extends moodleform {
 
         
 
-        $mform->addElement('date_selector', 'reported_datetime', get_string('reported_datetime', 'local_mp_report'), 'maxlength="100" size="40" ');
+        $mform->addElement('date_time_selector', 'reported_datetime', get_string('reported_datetime', 'local_mp_report'), 'maxlength="100" size="40" ');
         $mform->setType('reported_datetime', PARAM_TEXT);
         $mform->addRule('reported_datetime', get_string('required'), 'required','','client');
 
@@ -206,9 +206,9 @@ class new_accident_report_form extends moodleform {
         $mform->addElement('text', 'reporter_name', get_string('reporter_name', 'local_mp_report'), 'maxlength="100" style="background-color:#efecec" size="40" disabled readonly');
         $mform->setType('reporter_name', PARAM_TEXT);
         $mform->addRule('reporter_name', get_string('required'), 'required','','client');
-        $mform->setDefault('reporter_name', $USER->firstname);
+        $mform->setDefault('reporter_name', $USER->firstname.' '.$USER->lastname);
 
-        $mform->addElement('date_selector', 'reported_date', get_string('reported_date', 'local_mp_report'), 'maxlength="100" size="40" ');
+        $mform->addElement('date_time_selector', 'reported_date', get_string('reported_date', 'local_mp_report'), 'maxlength="100" size="40" ');
         $mform->setType('reported_date', PARAM_TEXT);
         $mform->addRule('reported_date', get_string('required'), 'required','','client');
 
