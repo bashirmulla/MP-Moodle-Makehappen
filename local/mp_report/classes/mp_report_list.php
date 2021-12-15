@@ -119,7 +119,7 @@ class new_accident_page extends moodleform {
 
         $count=0;
         foreach($result as $rec) {
-            $editDeleteLink = "<a href='index.php?cmd=acc_edit&id=$rec->id'>Edit</a>";
+            $editDeleteLink = "<a href='index.php?cmd=new_acc_edit&id=$rec->id'>Edit</a>";
             $reporter = get_userInfo(array("id" => $rec->created_by));
             $table->data[] = new html_table_row(array( $rec->id,date("d/m/Y",$rec->occurrence_date),$reporter->firstname." ".$reporter->lastname,$rec->injured_surname,$editDeleteLink));
         }
@@ -279,10 +279,11 @@ class home_page extends moodleform {
                             <div class="icon ccn_icon_2 color-white"><span data-ccn="icon4" class="flaticon-checklist"></span></div>
                             <div class="details">
                                 <h5 class="color-white">New Accident Report</h5><p class="color-white">Over 0 accident</p>
-                            </div>
+                            </div>t
                         </div>
                     </a>
                 </div>
+                <!--
                 <div class="col-sm-6 col-md-6 col-lg-4 col-lg-5th-1">
 					<a href="/local/mp_report/index.php?cmd=accpage" data-ccn-c="color3" data-ccn-co="bg" class="icon_hvr_img_box ccn-color-cat-boxes" style="background:rgba(0, 97, 255, 0.6);">
 						<div class="overlay">
@@ -293,6 +294,7 @@ class home_page extends moodleform {
 						</div>
 					</a>
 				</div>
+                -->
                 <div class="col-sm-6 col-md-6 col-lg-4 col-lg-5th-1">
 					<a href="/local/mp_report/index.php?cmd=incpage" data-ccn-c="color4" data-ccn-co="bg" class="icon_hvr_img_box ccn-color-cat-boxes" style="background:rgba(241, 67, 45, 0.6);">
 						<div class="overlay">

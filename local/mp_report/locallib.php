@@ -509,6 +509,21 @@ function checkWitness($fields)
     return true;
 }
 
+function checkNewAccidentValidation($fields)
+{
+    $retrunArr = [];
+    if (!empty($fields['kind_of_occurrence_10']) && $fields['kind_of_occurrence_10']==1) {
+
+        if(empty($fields['fall_height'])) $retrunArr =  array_merge(array('fall_height' => 'Required'));
+      
+        //if(empty($_FILES['witnesses_report_diagram']['name'])) $retrunArr =  array_merge(array('witnesses_report_diagram' => 'Required'));
+
+        return $retrunArr;
+    }
+    return true;
+}
+
+
 function accidentDateRequired($fields)
 {
     $retrunArr = [];

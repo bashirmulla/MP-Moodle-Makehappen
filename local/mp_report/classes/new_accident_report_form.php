@@ -163,8 +163,14 @@ class new_accident_report_form extends moodleform {
 
          foreach($dropdown['kind_of_occurrence'] as $key=>$value){
             $mform->addElement('checkbox', 'kind_of_occurrence_'.$key, $value);
+            if($key==10)
+            {
+                $mform->addElement('text', 'fall_height', NULL, 'maxlength="100" size="40" id="fall_height" style="width:150px" ');
+            }
+
          } 
        
+         $mform->hideIf('fall_height', 'kind_of_occurrence_10',  'eq', '');
 
         $mform->addElement('html', '</fieldset>');
 
@@ -215,8 +221,34 @@ class new_accident_report_form extends moodleform {
         $mform->addElement('html', '</fieldset>');
 
 
-        $mform->addFormRule('checkWitness');
+        $mform->addFormRule('checkNewAccidentValidation');
 
+    }
+
+    
+    public function userPartViewNew($reportData){
+
+        global $CFG;
+
+        $mform = $this->_form;
+        $managerList  = get_com_manager_list();
+        $dropdown     = get_new_dropdown_data(1);
+        $user         = get_userInfo(array("id" => $reportData->created_by));
+
+        $mform->addElement('html', '<fieldset class="scheduler-border"><legend class="scheduler-border"></legend>');
+        $mform->addElement('static', 'name1', get_string('name', 'local_mp_report'),$user->firstname.' '.$user->lastname );
+
+        $mform->addElement('static', 'address1', get_string('home_address', 'local_mp_report'),$reportData->home_address);
+        $mform->addElement('static', 'postcode1', get_string('telephone', 'local_mp_report'),$reportData->telephone);
+        $mform->addElement('static', 'occupation1', get_string('operative_now_at', 'local_mp_report'),$reportData->operative_now_at);
+        $mform->addElement('static', 'user_contract1', get_string('resume_work', 'local_mp_report'),@$dropdown['contract'][$reportData->user_contract]);
+        $mform->addElement('static', 'user_manager1', get_string('time_lost_hours', 'local_mp_report'),$managerList[$reportData->user_manager]);
+        $mform->addElement('static', 'user_date1', get_string('time_lost_minutes', 'local_mp_report'), date("d-M-Y",$reportData->user_date));
+        $mform->addElement('html', '</fieldset>');
+
+      
+
+        $mform->addFormRule('checkWitness');
     }
 
     public function userPartView($reportData){
@@ -662,8 +694,8 @@ class new_accident_report_form extends moodleform {
 
 		$heading = '<h3 style="text-align: center">'.get_string('accident', 'local_mp_report');
         $report_closed = FALSE;
-        if(isset($_REQUEST['id']) && $_REQUEST['cmd']=='acc_edit' &&( is_senior_manager() || is_complieance() || is_admin() || is_manager()) ) {
-            $reportData = get_data(array("id"=>$_REQUEST['id']),get_string('accident_table','local_mp_report'));
+        if(isset($_REQUEST['id']) && $_REQUEST['cmd']=='new_acc_edit' &&( is_senior_manager() || is_complieance() || is_admin() || is_manager()) ) {
+            $reportData = get_data(array("id"=>$_REQUEST['id']),get_string('new_accident_table','local_mp_report'));
 
             if ($reportData->s_mgt_rpt_ant_closed_off==1){
                 $report_closed = TRUE;
@@ -687,12 +719,12 @@ class new_accident_report_form extends moodleform {
             }
 
             $mform->addElement('html', $heading);
-            $this->userPartView($reportData);
-            if ($reportData->read_only==1){
-                $this->managerPartView($reportData);
-            }else {
-                $this->managerPartForm($reportData);
-            }
+            $this->userPartViewNew($reportData);
+            //if ($reportData->read_only==1){
+            //    $this->managerPartView($reportData);
+            //}else {
+            //    $this->managerPartForm($reportData);
+            //}
             $btnLavel = get_string('savebutton', 'local_mp_report');
         }
         else {
