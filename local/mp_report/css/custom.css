@@ -8,11 +8,11 @@ fieldset.scheduler-border {
 
 legend.scheduler-border {
     font-size: 1.1em !important;
-    font-weight: normal !important;
+    font-weight: bold !important;
     text-align: left !important;
     width:auto;
-    padding:5px 0px;
-    border-bottom:1px solid;
+    padding:5px 10px;
+    
 }
 
 .custom-select{

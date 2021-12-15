@@ -171,6 +171,7 @@ $string['resume_work']   = 'If resumed work on the day of the accident state tim
 $string['account_occurrance']   = 'Describe what happened and how (in the case of an accident state, what the injured person was doing at the time)';
 $string['firstaid_administered']   = 'Was First Aid Administered?';
 
+$string['agent_involved']  = 'Indicate which, if any of the categories of agent or factor were involved (tick one or more boxes)';
 $string['reporter_name']   = 'Name of the Person Making Report';
 $string['reported_date']   = 'Date';
 

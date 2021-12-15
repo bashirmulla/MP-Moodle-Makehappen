@@ -155,6 +155,9 @@ require(['jquery', 'core/modal_factory', 'core/notification', 'core/modal_events
         });
     });
 
+    //$('#occurrance_section > div.div.col-md-3').css('display','none');
+
+
     $('#accident_link').on('click', function() {
         window.location = '/local/mp_report/index.php?cmd=form1';
     });
