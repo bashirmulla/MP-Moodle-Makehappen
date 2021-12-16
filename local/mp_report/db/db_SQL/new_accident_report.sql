@@ -26,8 +26,9 @@ SET time_zone = "+00:00";
 --
 -- Table structure for table `new_accident_report`
 --
+DROP TABLE IF EXISTS `mdl_new_accident_report`;
 
-CREATE TABLE `new_accident_report` (
+CREATE TABLE `mdl_new_accident_report` (
   `id` int(11) NOT NULL,
   `user_id` int(11) NOT NULL,
   `a_surname` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
@@ -79,7 +80,7 @@ CREATE TABLE `new_accident_report` (
 --
 -- Indexes for table `new_accident_report`
 --
-ALTER TABLE `new_accident_report`
+ALTER TABLE `mdl_new_accident_report`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -89,7 +90,7 @@ ALTER TABLE `new_accident_report`
 --
 -- AUTO_INCREMENT for table `new_accident_report`
 --
-ALTER TABLE `new_accident_report`
+ALTER TABLE `mdl_new_accident_report`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 COMMIT;
 
