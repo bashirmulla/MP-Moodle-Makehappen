@@ -1152,24 +1152,24 @@ function processFile($filename,$fileContents,$report_type,$id){
 function create_accident($dataobject){
     global $CFG,$OUTPUT,$homeurl,$successurl, $USER;
 
-    $tableName = get_string('accident_table','local_mp_report');
+    $tableName = get_string('new_accident_table','local_mp_report');
 
 
     if(!empty($dataobject)){
 
-        $photo_1  = isset($dataobject['photo_1']) ?  $dataobject['photo_1'] : null;
-        $photo_2  = isset($dataobject['photo_2']) ?  $dataobject['photo_2'] : null;
-        $photo_3  = isset($dataobject['photo_3']) ?  $dataobject['photo_3'] : null;
-        $photo_4  = isset($dataobject['photo_4']) ?  $dataobject['photo_4'] : null;
-        $photo_5  = isset($dataobject['photo_5']) ?  $dataobject['photo_5'] : null;
-        $photo_6  = isset($dataobject['photo_6']) ?  $dataobject['photo_6'] : null;
+        //$photo_1  = isset($dataobject['photo_1']) ?  $dataobject['photo_1'] : null;
+        //$photo_2  = isset($dataobject['photo_2']) ?  $dataobject['photo_2'] : null;
+        //$photo_3  = isset($dataobject['photo_3']) ?  $dataobject['photo_3'] : null;
+        //$photo_4  = isset($dataobject['photo_4']) ?  $dataobject['photo_4'] : null;
+        //$photo_5  = isset($dataobject['photo_5']) ?  $dataobject['photo_5'] : null;
+        //$photo_6  = isset($dataobject['photo_6']) ?  $dataobject['photo_6'] : null;
 
-        unset($dataobject['photo_1']);
-        unset($dataobject['photo_2']);
-        unset($dataobject['photo_3']);
-        unset($dataobject['photo_4']);
-        unset($dataobject['photo_5']);
-        unset($dataobject['photo_6']);
+        //unset($dataobject['photo_1']);
+        //unset($dataobject['photo_2']);
+        //unset($dataobject['photo_3']);
+        //unset($dataobject['photo_4']);
+        //unset($dataobject['photo_5']);
+        //unset($dataobject['photo_6']);
 
         $dataobject['submitter_to_manager'] = 'Yes';
 
@@ -1178,21 +1178,21 @@ function create_accident($dataobject){
 
         if(!empty($id) ){
 
-            $updateData['id'] =  $id;
-            $updateData['photo_1'] = processFile('photo_1',$photo_1, 'accident',  $id);
-            $updateData['photo_2'] = processFile('photo_2',$photo_2, 'accident',  $id);
-            $updateData['photo_3'] = processFile('photo_3',$photo_3, 'accident',  $id);
-            $updateData['photo_4'] = processFile('photo_4',$photo_4, 'accident',  $id);
-            $updateData['photo_5'] = processFile('photo_5',$photo_5, 'accident',  $id);
-            $updateData['photo_6'] = processFile('photo_6',$photo_6, 'accident',  $id);
+            //$updateData['id'] =  $id;
+            //$updateData['photo_1'] = processFile('photo_1',$photo_1, 'accident',  $id);
+            //$updateData['photo_2'] = processFile('photo_2',$photo_2, 'accident',  $id);
+            //$updateData['photo_3'] = processFile('photo_3',$photo_3, 'accident',  $id);
+            //$updateData['photo_4'] = processFile('photo_4',$photo_4, 'accident',  $id);
+            //$updateData['photo_5'] = processFile('photo_5',$photo_5, 'accident',  $id);
+            //$updateData['photo_6'] = processFile('photo_6',$photo_6, 'accident',  $id);
 
-            update_data($updateData, get_string('accident_table', 'local_mp_report'));
+            //update_data($updateData, get_string('accident_table', 'local_mp_report'));
 
             $pdf_file = accident_pdf($id);
             $report_title = "Accident Report";
             $subject = "Notification of Accident Report";
             $message = "A new accident report has been submitted. Please see the attached report.";
-            send_email_to_manager($dataobject['user_manager'],"Makehappen", $subject, $message, pdfs_email_attachment().$pdf_file, $pdf_file,$report_title);
+            //send_email_to_manager($dataobject['user_manager'],"Makehappen", $subject, $message, pdfs_email_attachment().$pdf_file, $pdf_file,$report_title);
             send_mp_report_email("Makehappen", $subject, $message, pdfs_email_attachment() . $pdf_file, $pdf_file,$report_title);
 
             return array("id" => $id);

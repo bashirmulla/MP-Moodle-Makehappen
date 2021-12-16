@@ -68,14 +68,14 @@ class new_accident_report_form extends moodleform {
         $mform->setType('operative_now_at', PARAM_TEXT);
         $mform->addRule('operative_now_at', get_string('required'), 'required','','client');
 
-        $mform->addElement("html","<hr><h6> <b>THIS SECTION MUST BE COMPLETED </b> if resumed work on the day of the accident state time lost</h6>");
+        $mform->addElement("html","<hr><h5> <b>THIS SECTION MUST BE COMPLETED </b> if resumed work on the day of the accident state time lost</h5>");
 
         $radioarray   = array();
         $radioarray[] = $mform->createElement('radio', 'resume_work', '', "Yes", 'Yes');
         $radioarray[] = $mform->createElement('radio', 'resume_work', '', "No", 'No');
         $mform->addGroup($radioarray, 'resume_work', get_string('resume_work','local_mp_report'), array(''), false);
         $mform->addRule('resume_work', get_string('required'), 'required','','client');
-        $mform->setDefault('resume_work', 'Yes');
+        //$mform->setDefault('resume_work', 'Yes');
 
            
         $mform->addElement('text', 'time_lost_hours', get_string('time_lost_hours', 'local_mp_report'), 'maxlength="100" size="40" width="40px" ');
@@ -90,6 +90,9 @@ class new_accident_report_form extends moodleform {
 
         $mform->hideIf('time_lost_hours', 'resume_work',  'eq', 'No');
         $mform->hideIf('time_lost_minutes', 'resume_work',  'eq','No');
+        
+        $mform->hideIf('time_lost_hours', 'resume_work',  'eq', NULL);
+        $mform->hideIf('time_lost_minutes', 'resume_work',  'eq',NULL);
       
         
 

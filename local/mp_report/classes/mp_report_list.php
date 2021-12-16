@@ -274,7 +274,7 @@ class home_page extends moodleform {
 
         $html = '<div class="row justify-content-center" style="text-align: center !important;">
                 <div class="col-sm-6 col-md-6 col-lg-4 col-lg-5th-1">
-                    <a href="/local/mp_report/index.php?cmd=new_accpage" data-ccn-c="color4" data-ccn-co="bg" class="icon_hvr_img_box ccn-color-cat-boxes" style="background:rgb(21, 6, 147,0.6);">
+                    <a href="/local/mp_report/index.php?cmd=new_accpage" data-ccn-c="color4" data-ccn-co="bg" class="icon_hvr_img_box ccn-color-cat-boxes" style="background:rgb(0, 97, 255,0.6);">
                         <div class="overlay">
                             <div class="icon ccn_icon_2 color-white"><span data-ccn="icon4" class="flaticon-checklist"></span></div>
                             <div class="details">
