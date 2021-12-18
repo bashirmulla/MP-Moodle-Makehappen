@@ -120,8 +120,8 @@ class new_accident_page extends moodleform {
         $count=0;
         foreach($result as $rec) {
             $editDeleteLink = "<a href='index.php?cmd=new_acc_edit&id=$rec->id'>Edit</a>";
-            $reporter = get_userInfo(array("id" => $rec->created_by));
-            $table->data[] = new html_table_row(array( $rec->id,date("d/m/Y",$rec->occurrence_date),$reporter->firstname." ".$reporter->lastname,$rec->injured_surname,$editDeleteLink));
+            $reporter = get_userInfo(array("id" => $rec->user_id));
+            $table->data[] = new html_table_row(array( $rec->id,date("d/m/Y",$rec->b_date),$reporter->firstname." ".$reporter->lastname,$rec->a_surname,$editDeleteLink));
         }
         $html .= html_writer::table($table);
         $html .= "<hr></br>";

@@ -139,8 +139,8 @@ $cmd = get_request('cmd');
 
 
 switch ($cmd){
-     case 'home'         : home_page();           break;
-     case 'new_accpage'  : new_accident_page();   break;
+     case 'home'         : home_page();            break;
+     case 'new_accpage'  : new_accident_page();    break;
      case 'accpage'      : accident_page();        break;
      case 'incpage'      : incident_page();        break;
      case 'form1'        : accident_form();        break;

@@ -43,117 +43,142 @@ class new_accident_report_form extends moodleform {
 
         $mform->addElement('html', '<fieldset class="scheduler-border"><legend class="scheduler-border">A. THE INJURED / INVOLVED PERSON</legend>');
 
-        $mform->addElement('text', 'injured_surname', get_string('injured_surname', 'local_mp_report'), 'maxlength="100" style="background-color:#efecec" size="40" disabled readonly');
-        $mform->setType('injured_surname', PARAM_TEXT);
+        $mform->addElement('text', 'a_surname', get_string('a_surname', 'local_mp_report'), 'maxlength="100" style="background-color:#efecec" size="40" disabled readonly');
+        $mform->setType('a_surname', PARAM_TEXT);
         
-        $mform->setDefault('injured_surname', $USER->firstname);
+        $mform->setDefault('a_surname', $USER->firstname);
        
-        $mform->addElement('text', 'injured_forename', get_string('injured_forename', 'local_mp_report'), 'maxlength="100" style="background-color:#efecec" size="40" disabled readonly');
-        $mform->setType('injured_forename', PARAM_TEXT);
+        $mform->addElement('text', 'a_forename', get_string('a_forename', 'local_mp_report'), 'maxlength="100" style="background-color:#efecec" size="40" disabled readonly');
+        $mform->setType('a_forename', PARAM_TEXT);
         
-        $mform->setDefault('injured_forename', $USER->lastname);
+        $mform->setDefault('a_forename', $USER->lastname);
 
 
-        $mform->addElement('textarea', 'home_address', get_string('home_address', 'local_mp_report'), 'wrap="virtual" rows="3" cols="40"');
-        $mform->setType('home_address', PARAM_TEXT);
-        $mform->addRule('home_address', get_string('required'), 'required','','client');
+        $mform->addElement('textarea', 'a_home_address', get_string('a_home_address', 'local_mp_report'), 'wrap="virtual" rows="3" cols="40"');
+        $mform->setType('a_home_address', PARAM_TEXT);
+        $mform->addRule('a_home_address', get_string('required'), 'required','','client');
+        
 
+        $mform->addElement('text', 'a_postcode', get_string('a_postcode', 'local_mp_report'), 'maxlength="100" size="40" width="40px" ');
+        $mform->setType('a_postcode', PARAM_TEXT);
+        $mform->addRule('a_postcode', get_string('required'), 'required','','client');
 
-        $mform->addElement('text', 'telephone', get_string('telephone', 'local_mp_report'), 'maxlength="100" size="40" width="40px" ');
-        $mform->setType('telephone', PARAM_TEXT);
-        $mform->addRule('telephone', get_string('required'), 'required','','client');
+        $mform->addElement('text', 'a_tel_no', get_string('a_tel_no', 'local_mp_report'), 'maxlength="100" size="40" width="40px" ');
+        $mform->setType('a_tel_no', PARAM_TEXT);
+        $mform->addRule('a_tel_no', get_string('required'), 'required','','client');
 
+        $mform->addElement('select', 'a_sex', get_string('a_sex', 'local_mp_report'), createDropdown(array('Male' =>'Male','Female' =>'Female')));
+        $mform->setType('a_sex', PARAM_TEXT);
+        $mform->addRule('a_sex', get_string('required'), 'required','','client');
+        
+        $mform->addElement('text', 'a_age', get_string('a_age', 'local_mp_report'), 'maxlength="100" size="40" width="40px" ');
+        $mform->setType('a_age', PARAM_TEXT);
+        $mform->addRule('a_age', get_string('required'), 'required','','client');
 
-        $mform->addElement('select', 'operative_now_at', get_string('operative_now_at', 'local_mp_report'), createDropdown($dropdown['operative_at_now']));
-        $mform->setType('operative_now_at', PARAM_TEXT);
-        $mform->addRule('operative_now_at', get_string('required'), 'required','','client');
+        $mform->addElement('select', 'a_following_accident', get_string('a_following_accident', 'local_mp_report'), createDropdown($dropdown['operative_at_now']));
+        $mform->setType('a_following_accident', PARAM_TEXT);
+        $mform->addRule('a_following_accident', get_string('required'), 'required','','client');
 
         $mform->addElement("html","<hr><h5> <b>THIS SECTION MUST BE COMPLETED </b> if resumed work on the day of the accident state time lost</h5>");
 
         $radioarray   = array();
-        $radioarray[] = $mform->createElement('radio', 'resume_work', '', "Yes", 'Yes');
-        $radioarray[] = $mform->createElement('radio', 'resume_work', '', "No", 'No');
-        $mform->addGroup($radioarray, 'resume_work', get_string('resume_work','local_mp_report'), array(''), false);
-        $mform->addRule('resume_work', get_string('required'), 'required','','client');
-        //$mform->setDefault('resume_work', 'Yes');
+        $radioarray[] = $mform->createElement('radio', 'a_resumed_work', '', "Yes", 'Yes');
+        $radioarray[] = $mform->createElement('radio', 'a_resumed_work', '', "No", 'No');
+        $mform->addGroup($radioarray, 'a_resumed_work', get_string('a_resumed_work','local_mp_report'), array(''), false);
+        $mform->addRule('a_resumed_work', get_string('required'), 'required','','client');
+        //$mform->setDefault('a_resumed_work', 'Yes');
 
            
-        $mform->addElement('text', 'time_lost_hours', get_string('time_lost_hours', 'local_mp_report'), 'maxlength="100" size="40" width="40px" ');
-        $mform->setType('time_lost_hours', PARAM_INT);
+        $mform->addElement('text', 'a_hours', get_string('a_hours', 'local_mp_report'), 'maxlength="100" size="40" width="40px" ');
+        $mform->setType('a_hours', PARAM_INT);
        
         
-        $mform->addElement('text', 'time_lost_minutes', get_string('time_lost_minutes', 'local_mp_report'), 'maxlength="100" size="40" width="40px" ');
-        $mform->setType('time_lost_minutes', PARAM_INT);
+        $mform->addElement('text', 'a_mins', get_string('a_mins', 'local_mp_report'), 'maxlength="100" size="40" width="40px" ');
+        $mform->setType('a_mins', PARAM_INT);
        
         $mform->addElement("html","<hr>");
 
 
-        $mform->hideIf('time_lost_hours', 'resume_work',  'eq', 'No');
-        $mform->hideIf('time_lost_minutes', 'resume_work',  'eq','No');
-        
-        $mform->hideIf('time_lost_hours', 'resume_work',  'eq', NULL);
-        $mform->hideIf('time_lost_minutes', 'resume_work',  'eq',NULL);
-      
-        
-
-        $mform->addElement('textarea', 'temporary_address', get_string('temporary_address', 'local_mp_report'), 'wrap="virtual" rows="3" cols="40"');
-        $mform->setType('temporary_address', PARAM_TEXT);
-        $mform->addRule('temporary_address', get_string('required'), 'required','','client');
+        $mform->addElement('textarea', 'a_temp_address', get_string('a_temp_address', 'local_mp_report'), 'wrap="virtual" rows="3" cols="40"');
+        $mform->setType('a_temp_address', PARAM_TEXT);
+        $mform->addRule('a_temp_address', get_string('required'), 'required','','client');
        
         
-        $mform->addElement('select', 'employment_status', get_string('employment_status', 'local_mp_report'), createDropdown($dropdown['employment_status']));
-        $mform->setType('employment_status', PARAM_TEXT);
-        $mform->addRule('employment_status', get_string('required'), 'required','','client');
+        $mform->addElement('select', 'a_status', get_string('a_status', 'local_mp_report'), createDropdown($dropdown['employment_status']));
+        $mform->setType('a_status', PARAM_TEXT);
+        $mform->addRule('a_status', get_string('required'), 'required','','client');
 
         
-        $mform->addElement('text', 'occupation', get_string('occupation', 'local_mp_report'),  'maxlength="100" size="40" width="40px" ');
-        $mform->setType('occupation', PARAM_TEXT);
-        $mform->addRule('occupation', get_string('required'), 'required','','client');
+        $mform->addElement('text', 'a_job_title', get_string('a_job_title', 'local_mp_report'),  'maxlength="100" size="40" width="40px" ');
+        $mform->setType('a_job_title', PARAM_TEXT);
+        $mform->addRule('a_job_title', get_string('required'), 'required','','client');
 
         
-        $mform->addElement('text', 'nature_of_injury', get_string('nature_of_injury', 'local_mp_report'), 'maxlength="100" size="40" width="40px" ');
-        $mform->setType('nature_of_injury', PARAM_TEXT);
-        $mform->addRule('nature_of_injury', get_string('required'), 'required','','client');
+        $mform->addElement('text', 'a_injury_condition', get_string('a_injury_condition', 'local_mp_report'), 'maxlength="100" size="40" width="40px" ');
+        $mform->setType('a_injury_condition', PARAM_TEXT);
+        $mform->addRule('a_injury_condition', get_string('required'), 'required','','client');
 
-        $mform->addElement('text', 'part_of_body_affected', get_string('part_of_body_affected', 'local_mp_report'), 'maxlength="100" size="40" width="40px" ');
-        $mform->setType('part_of_body_affected', PARAM_TEXT);
-        $mform->addRule('part_of_body_affected', get_string('required'), 'required','','client');
+        $mform->addElement('text', 'a_body_affected', get_string('a_body_affected', 'local_mp_report'), 'maxlength="100" size="40" width="40px" ');
+        $mform->setType('a_body_affected', PARAM_TEXT);
+        $mform->addRule('a_body_affected', get_string('required'), 'required','','client');
+
+        $mform->addElement('text', 'a_employers_name', get_string('a_employers_name', 'local_mp_report'), 'maxlength="100" size="40" width="40px" ');
+        $mform->setType('a_employers_name', PARAM_TEXT);
+        $mform->addRule('a_employers_name', get_string('required'), 'required','','client');
+        
+
         $mform->addElement('html', '</fieldset>');
 
         $mform->addElement('html', '<fieldset class="scheduler-border"><legend class="scheduler-border">B. DATE, TIME, AND PLACE OF ACCIDENT/INCIDENT/DANGEROUS OCCURRENCE</legend>');
 
-        $mform->addElement('date_time_selector', 'occurrence_date', get_string('occurrence_date', 'local_mp_report'), 'maxlength="100" size="40" ');
-        $mform->setType('occurrence_date', PARAM_TEXT);
-        $mform->addRule('occurrence_date', get_string('required'), 'required','','client');
+        $mform->addElement('date_time_selector', 'b_date', get_string('b_date', 'local_mp_report'), 'maxlength="100" size="40" ');
+        $mform->setType('b_date', PARAM_TEXT);
+        $mform->addRule('b_date', get_string('required'), 'required','','client');
 
-        $mform->addElement('text', 'name_address_of_site', get_string('name_address_of_site', 'local_mp_report'), 'maxlength="100" size="40" ');
-        $mform->setType('name_address_of_site', PARAM_TEXT);
-        $mform->addRule('name_address_of_site', get_string('required'), 'required','','client');
+        $mform->addElement('text', 'b_name_address_site', get_string('b_name_address_site', 'local_mp_report'), 'maxlength="100" size="40" ');
+        $mform->setType('b_name_address_site', PARAM_TEXT);
+        $mform->addRule('b_name_address_site', get_string('required'), 'required','','client');
 
-        $mform->addElement('text', 'exect_location_on_site', get_string('exect_location_on_site', 'local_mp_report'), 'maxlength="100" size="40" ');
-        $mform->setType('exect_location_on_site', PARAM_TEXT);
-        $mform->addRule('exect_location_on_site', get_string('required'), 'required','','client');
-
-        
-
-        $mform->addElement('text', 'work_type_of_occurrence', get_string('work_type_of_occurrence', 'local_mp_report'), 'maxlength="100" size="40" ');
-        $mform->setType('work_type_of_occurrence', PARAM_TEXT);
-        $mform->addRule('work_type_of_occurrence', get_string('required'), 'required','','client');
+        $mform->addElement('text', 'b_exact_location_site', get_string('b_exact_location_site', 'local_mp_report'), 'maxlength="100" size="40" ');
+        $mform->setType('b_exact_location_site', PARAM_TEXT);
+        $mform->addRule('b_exact_location_site', get_string('required'), 'required','','client');
 
         
 
-        $mform->addElement('date_time_selector', 'reported_datetime', get_string('reported_datetime', 'local_mp_report'), 'maxlength="100" size="40" ');
-        $mform->setType('reported_datetime', PARAM_TEXT);
-        $mform->addRule('reported_datetime', get_string('required'), 'required','','client');
-
-        $mform->addElement('text', 'injured_person_believe', get_string('injured_person_believe', 'local_mp_report'), 'maxlength="100" size="40" ');
-        $mform->setType('injured_person_believe', PARAM_TEXT);
-        $mform->addRule('injured_person_believe', get_string('required'), 'required','','client');
+        $mform->addElement('text', 'b_dangerous', get_string('b_dangerous', 'local_mp_report'), 'maxlength="100" size="40" ');
+        $mform->setType('b_dangerous', PARAM_TEXT);
+        $mform->addRule('b_dangerous', get_string('required'), 'required','','client');
 
         
-        $mform->addElement('text', 'witness_name_address', get_string('witness_name_address', 'local_mp_report'), 'maxlength="100" size="40" ');
-        $mform->setType('witness_name_address', PARAM_TEXT);
-        $mform->addRule('witness_name_address', get_string('required'), 'required','','client');
+
+        $mform->addElement('date_time_selector', 'b2_date', get_string('b2_date', 'local_mp_report'), 'maxlength="100" size="40" ');
+        $mform->setType('b2_date', PARAM_TEXT);
+        $mform->addRule('b2_date', get_string('required'), 'required','','client');
+
+        $mform->addElement('text', 'b_injured', get_string('b_injured', 'local_mp_report'), 'maxlength="100" size="40" ');
+        $mform->setType('b_injured', PARAM_TEXT);
+        $mform->addRule('b_injured', get_string('required'), 'required','','client');
+
+
+        
+        $radioarray   = array();
+        $radioarray[] = $mform->createElement('radio', 'b_witness', '', "Yes", 'Yes');
+        $radioarray[] = $mform->createElement('radio', 'b_witness', '', "No", 'No');
+        $mform->addGroup($radioarray, 'b_witness', get_string('b_witness','local_mp_report'), array(''), false);
+        $mform->addRule('b_witness', get_string('required'), 'required','','client');
+        
+        $mform->addElement('text', 'b_witness_name', get_string('b_witness_name', 'local_mp_report'), 'maxlength="100" size="40" ');
+        $mform->setType('b_witness_name', PARAM_TEXT);
+        //$mform->addRule('b_witness_name', get_string('required'), 'required','','client');
+
+        $mform->addElement('text', 'b_witness_address', get_string('b_witness_address', 'local_mp_report'), 'maxlength="100" size="40" ');
+        $mform->setType('b_witness_address', PARAM_TEXT);
+        //$mform->addRule('b_witness_address', get_string('required'), 'required','','client');
+
+        $mform->addElement('text', 'b_tel_witness', get_string('b_tel_witness', 'local_mp_report'), 'maxlength="100" size="40" ');
+        $mform->setType('b_tel_witness', PARAM_TEXT);
+        //$mform->addRule('b_tel_witness', get_string('required'), 'required','','client');
+
 
         $mform->addElement('html', '</fieldset>');
 
@@ -164,14 +189,14 @@ class new_accident_report_form extends moodleform {
         $mform->addElement('html', '<fieldset id="occurrance_section" class="scheduler-border"><legend class="scheduler-border">C. KIND OF ACCIDENT/INCIDENT/DANGEROUS OCCURRENCE</legend>');
         $mform->addElement("html","<h6> Indicate what kind of accident, incident or dangerous occurrence led to the injury or condition (one box)</h6>");
          foreach($dropdown['kind_of_occurrence'] as $key=>$value){
-            $mform->addElement('checkbox', 'kind_of_occurrence_'.$key, $value);
-            $mform->setDefault('kind_of_occurrence_'.$key, '0');
+            $mform->addElement('checkbox', 'c_kind_of_accident##'.$key, $value);
+            $mform->setDefault('c_kind_of_accident##'.$key, '0');
             if($key==10)
             {
                 
-                $mform->addElement('text', 'fall_height', NULL, 'maxlength="100" size="40" style="width:150px" ');
+                $mform->addElement('text', 'c_metres', NULL, 'maxlength="100" size="40" style="width:150px" ');
                 
-                $mform->hideIf('fall_height', 'kind_of_occurrence_10',  'notchecked');
+                $mform->hideIf('c_metres', 'c_kind_of_accident##10',  'notchecked');
             }
 
          } 
@@ -184,44 +209,44 @@ class new_accident_report_form extends moodleform {
         $mform->addElement("html","<h6> Indicate which, if any of the categories of agent or factor were involved (tick one or more boxes)</h6>");
 
         foreach($dropdown['agent_involved'] as $key=>$value){
-            $mform->addElement('checkbox', 'agent_involved_'.$key, $value);
+            $mform->addElement('checkbox', 'd_agents##'.$key, $value);
          } 
 
 
         $radioarray   = array();
-        $radioarray[] = $mform->createElement('radio', 'firstaid_administered', '', "Yes", 'Yes');
-        $radioarray[] = $mform->createElement('radio', 'firstaid_administered', '', "No", 'No');
-        $mform->addGroup($radioarray, 'firstaid_administered', get_string('firstaid_administered','local_mp_report'), array(''), false);
-        $mform->addRule('firstaid_administered', get_string('required'), 'required','','client');
+        $radioarray[] = $mform->createElement('radio', 'd_first_aid', '', "Yes", 'Yes');
+        $radioarray[] = $mform->createElement('radio', 'd_first_aid', '', "No", 'No');
+        $mform->addGroup($radioarray, 'd_first_aid', get_string('firstaid_administered','local_mp_report'), array(''), false);
+        $mform->addRule('d_first_aid', get_string('required'), 'required','','client');
       
         
         $mform->addElement('html', '</fieldset>');
 
         $mform->addElement('html', '<fieldset class="scheduler-border"><legend class="scheduler-border">E. ACCOUNT OF INCIDENT/DANGEROUS OCCURRENCE</legend>');
        
-        $mform->addElement('textarea', 'account_occurrance', get_string('account_occurrance', 'local_mp_report'), 'wrap="virtual" rows="3" cols="40"');
-        $mform->setType('account_occurrance', PARAM_TEXT);
-        $mform->addRule('account_occurrance', get_string('required'), 'required','','client');
+        $mform->addElement('textarea', 'e_accident_state', get_string('e_accident_state', 'local_mp_report'), 'wrap="virtual" rows="3" cols="40"');
+        $mform->setType('e_accident_state', PARAM_TEXT);
+        $mform->addRule('e_accident_state', get_string('required'), 'required','','client');
 
         $mform->addElement('html', '</fieldset>');
 
         $mform->addElement('html', '<fieldset class="scheduler-border"><legend class="scheduler-border">F. ACTION TAKEN TO PREVENT RE-OCCURRENCE </legend>');
         
-        $mform->addElement('textarea', 'action_taken_to_prevent', get_string('action_taken_to_prevent', 'local_mp_report'), 'wrap="virtual" rows="3" cols="40"');
-        $mform->setType('action_taken_to_prevent', PARAM_TEXT);
-        $mform->addRule('action_taken_to_prevent', get_string('required'), 'required','','client');
+        $mform->addElement('textarea', 'f_action_taken', get_string('f_action_taken', 'local_mp_report'), 'wrap="virtual" rows="3" cols="40"');
+        $mform->setType('f_action_taken', PARAM_TEXT);
+        $mform->addRule('f_action_taken', get_string('required'), 'required','','client');
 
         $mform->addElement('html', '</fieldset>');
 
         $mform->addElement('html', '<fieldset class="scheduler-border"><legend class="scheduler-border">DECLERATION </legend>');
         
-        $mform->addElement('text', 'reporter_name', get_string('reporter_name', 'local_mp_report'), 'maxlength="100" style="background-color:#efecec" size="40" disabled readonly');
-        $mform->setType('reporter_name', PARAM_TEXT);        
-        $mform->setDefault('reporter_name', $USER->firstname.' '.$USER->lastname);
+        $mform->addElement('text', 'declaration_name_of_person', get_string('declaration_name_of_person', 'local_mp_report'), 'maxlength="100" style="background-color:#efecec" size="40" disabled readonly');
+        $mform->setType('declaration_name_of_person', PARAM_TEXT);        
+        $mform->setDefault('declaration_name_of_person', $USER->firstname.' '.$USER->lastname);
 
-        $mform->addElement('date_time_selector', 'reported_date', get_string('reported_date', 'local_mp_report'), 'maxlength="100" size="40" ');
-        $mform->setType('reported_date', PARAM_TEXT);
-        $mform->addRule('reported_date', get_string('required'), 'required','','client');
+        $mform->addElement('date_time_selector', 'declaration_date', get_string('declaration_date', 'local_mp_report'), 'maxlength="100" size="40" ');
+        $mform->setType('declaration_date', PARAM_TEXT);
+        $mform->addRule('declaration_date', get_string('required'), 'required','','client');
 
         $mform->addElement('html', '</fieldset>');
 
@@ -238,22 +263,122 @@ class new_accident_report_form extends moodleform {
         $mform = $this->_form;
         $managerList  = get_com_manager_list();
         $dropdown     = get_new_dropdown_data(1);
-        $user         = get_userInfo(array("id" => $reportData->created_by));
+        $user         = get_userInfo(array("id" => $reportData->user_id));
+        ob_start();
+        ?>
+        
+         <p id="view_p">A. THE INJURED / INVOLVED PERSON</p>
+                <table id="view_table" width="100%">
+                <tr>
+                    <td>Surname: <br> <?=boldText($reportData->a_surname   ) ?></td>
+                    <td>Forename(s): <br><?=boldText($reportData->a_forename   ) ?></td>
+                </tr>
+                <tr>
+                    <td>Home Address: <br><?=boldText($reportData->a_home_address   ) ?></td>
+                    <td>Tel No: <br><?=boldText($reportData->a_tel_no   ) ?></td>
+                </tr>
+                <tr>
+                    <td>Sex (M/F): <br><?=boldText($reportData->a_sex   ) ?></td>
+                    <td>Age: <?=boldText($reportData->a_age   ) ?></td>
+                </tr>
+                <tr>
+                    <td>Following the accident, the Operative is now at:<br> <?=boldText($reportData->a_following_accident   ) ?></td>
+                    <td>THIS SECTION MUST BE COMPLETED <br>If resumed work on the day of the accident state time lost: <br>
 
-        $mform->addElement('html', '<fieldset class="scheduler-border"><legend class="scheduler-border"></legend>');
-        $mform->addElement('static', 'name1', get_string('name', 'local_mp_report'),$user->firstname.' '.$user->lastname );
+                    <?=($reportData->a_resumed_work=='No')? boldText($reportData->a_resumed_work ): boldText($reportData->a_hours).''. boldText($reportData->a_mins) ?>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Temporary Address (if applicable): <br> <?=boldText($reportData->a_temp_address   ) ?></td>
+                    <td>Status: <br><?=boldText($reportData->a_status   ) ?></td>
+                </tr>
+                <tr>
+                    <td>Occupation or Job Title: <br><?=boldText($reportData->a_job_title   ) ?></td>
+                    <td>(If Applicable) Employers Name and Address: </td>
+                </tr>
+                </table>
+                
+                <p  id="view_p">B. DATE, TIME, AND PLACE OF ACCIDENT/INCIDENT/DANGEROUS OCCURRENCE</p>
+                <table id="view_table" width="100%">
+                <tr>
+                    <td>Date: <br><?=boldText(date("d-M-Y",$reportData->b_date)   ) ?></td>
+                    <td>Time: <br><?=boldText(date("H:m",$reportData->b_date)   ) ?></td>
+                </tr>
+                <tr>
+                    <td>Name & Address of Site: <br><?=boldText($reportData->b_name_address_site   ) ?></td>
+                    <td>Exact Location on Site: <br><?=boldText($reportData->b_exact_location_site   ) ?></td>
+                </tr>
+                <tr>
+                    <td>On what work was the operative engaged upon at the time and/or what was the dangerous occurrence?: <br><?=boldText($reportData->b_dangerous   ) ?></td>
+                    <td>Reported: <br><?=boldText($reportData->b2_date   ) ?></td>
+                </tr>
+                <tr>
+                    <td>What Does the Injured Person Believe Caused the Accident?:<br> <?=boldText($reportData->b_injured   ) ?></td>
+                    <td>Witness(es) – Names & Addresses:<br> <?=boldText($reportData->b_witness_name   ) ?></td>
+                </tr>
+                </table>
+                
+                <p  id="view_p">C. KIND OF ACCIDENT/INCIDENT/DANGEROUS OCCURRENCE</p>
+                <table id="view_table" width="100%">
+                <?php
+                   $ids = explode(',',$reportData->c_kind_of_accident);
+                   foreach($dropdown['kind_of_occurrence'] as $key=>$value){
+                       if(in_array($key,$ids))
+                       echo "<tr> <td style='border:0px'> &#10157; ".$value."</td></tr>";
+                   } 
+                ?>    
+               
+                </table>
+                
+                <p  id="view_p">D. AGENT(S) INVOLVED</p>
+                <table id="view_table" width="100%">
+                <?php
+                    $ids = explode(',',$reportData->d_agents);
+                   foreach($dropdown['agent_involved'] as $key=>$value){
+                    if(in_array($key,$ids))
+                       echo "<tr> <td style='border:0px'> &#10157; ".$value."</td></tr>";
+                   } 
+                ?>    
+                </table>
+                
+                <p  id="view_p">E. ACCOUNT OF INCIDENT/DANGEROUS OCCURRENCE</p>
+                <table id="view_table" width="100%">
+                <tr>
+                    <td>Describe what happened and how (in the case of an accident state, what the injured person was doing at the time):<br>
+                    <?=boldText($reportData->e_accident_state) ?>
+                
+                </td>
+                
+                </tr>
+                </table>
+                
+                <p id="view_p">F. ACTION TAKEN TO PREVENT RE-OCCURRENCE</p>
+                <table id="view_table" width="100%">
+                <tr>
+                    <td>
+                    
+                    </td>
+                
+                </tr>
+                </table>
+                
+                
+                <table id="view_table" width="100%">
+                <tr>
+                    <td>Name of Person Making Report</td>
+                    <td>Date</td>
+                
+                </tr>
+                </table>
+                 
+                <?php
 
-        $mform->addElement('static', 'address1', get_string('home_address', 'local_mp_report'),$reportData->home_address);
-        $mform->addElement('static', 'postcode1', get_string('telephone', 'local_mp_report'),$reportData->telephone);
-        $mform->addElement('static', 'occupation1', get_string('operative_now_at', 'local_mp_report'),$reportData->operative_now_at);
-        $mform->addElement('static', 'user_contract1', get_string('resume_work', 'local_mp_report'),@$dropdown['contract'][$reportData->user_contract]);
-        $mform->addElement('static', 'user_manager1', get_string('time_lost_hours', 'local_mp_report'),$managerList[$reportData->user_manager]);
-        $mform->addElement('static', 'user_date1', get_string('time_lost_minutes', 'local_mp_report'), date("d-M-Y",$reportData->user_date));
-        $mform->addElement('html', '</fieldset>');
+        $html = ob_get_contents();
+        ob_clean();    
 
-      
 
-        $mform->addFormRule('checkWitness');
+        $mform->addElement('html', $html);
+        
     }
 
     public function userPartView($reportData){

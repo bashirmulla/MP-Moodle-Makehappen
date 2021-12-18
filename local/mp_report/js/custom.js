@@ -157,6 +157,86 @@ require(['jquery', 'core/modal_factory', 'core/notification', 'core/modal_events
 
     //$('#occurrance_section > div.div.col-md-3').css('display','none');
 
+    var no = $("#id_a_resumed_work_No").is(":checked");
+
+    if(no == false){
+        $("#fitem_id_a_hours").hide();
+        $("#fitem_id_a_mins").hide();
+    }
+    else{
+        $("#fitem_id_a_hours").show();
+        $("#fitem_id_a_mins").show();
+    }
+
+    $('#id_a_resumed_work_No').on('click', function() {
+        var no = $("#id_a_resumed_work_No").is(":checked");
+
+        if(no == false){
+            $("#fitem_id_a_hours").hide();
+            $("#fitem_id_a_mins").hide();
+        }
+        else{
+            $("#fitem_id_a_hours").show();
+            $("#fitem_id_a_mins").show();
+        }
+    });
+
+    $('#id_a_resumed_work_Yes').on('click', function() {
+        var no = $("#id_a_resumed_work_No").is(":checked");
+
+        if(no == false){
+            $("#fitem_id_a_hours").hide();
+            $("#fitem_id_a_mins").hide();
+        }
+        else{
+            $("#fitem_id_a_hours").show();
+            $("#fitem_id_a_mins").show();
+        }
+    });
+
+    var b_witness = $("#id_b_witness_No").is(":checked");
+
+    if(b_witness == true){
+        $("#fitem_id_b_witness_name").hide();
+        $("#fitem_id_b_witness_address").hide();
+        $("#fitem_id_b_tel_witness").hide();
+    }
+    else{
+        $("#fitem_id_b_witness_name").show();
+        $("#fitem_id_b_witness_address").show();
+        $("#fitem_id_b_tel_witness").show();
+    }
+
+    $('#id_b_witness_No').on('click', function() {
+        var no = $("#id_b_witness_No").is(":checked");
+
+        if(no == true){
+            $("#fitem_id_b_witness_name").hide();
+            $("#fitem_id_b_witness_address").hide();
+            $("#fitem_id_b_tel_witness").hide();
+        }
+        else{
+            $("#fitem_id_b_witness_name").show();
+            $("#fitem_id_b_witness_address").show();
+            $("#fitem_id_b_tel_witness").show();
+        }
+    });
+
+    $('#id_b_witness_Yes').on('click', function() {
+        var no = $("#id_b_witness_No").is(":checked");
+
+        if(no == true){
+            $("#fitem_id_b_witness_name").hide();
+            $("#fitem_id_b_witness_address").hide();
+            $("#fitem_id_b_tel_witness").hide();
+        }
+        else{
+            $("#fitem_id_b_witness_name").show();
+            $("#fitem_id_b_witness_address").show();
+            $("#fitem_id_b_tel_witness").show();
+        }
+    });
+
 
     $('#accident_link').on('click', function() {
         window.location = '/local/mp_report/index.php?cmd=form1';

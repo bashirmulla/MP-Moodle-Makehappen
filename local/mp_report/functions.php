@@ -292,15 +292,52 @@ function new_accident_form(){
 
     $dataobject  = $form->get_submitted_data();
 
+    
+    $c_kind_of_accident = "";
+    $d_agents           = "";
+
+    foreach($dataobject as $key=>$data){
+        if( preg_match('/c_kind_of_accident/i', $key)){
+               
+               $temp = explode("##",$key);
+                             
+               if(!empty($c_kind_of_accident)){
+                  $c_kind_of_accident .= ",".$temp[1];
+               }
+               else{
+                  $c_kind_of_accident .= $temp[1];
+               }
+            unset($dataobject->$key);   
+        }
+
+        if( preg_match('/d_agents/i', $key)){
+               
+            $temp = explode("##",$key);
+                          
+            if(!empty($d_agents)){
+               $d_agents .= ",".$temp[1];
+            }
+            else{
+               $d_agents .= $temp[1];
+            }
+            unset($dataobject->$key);   
+        }
+    }
+    $dataobject->c_kind_of_accident = $c_kind_of_accident;
+    $dataobject->d_agents           = $d_agents;
+
+    unset($dataobject->read_only);
+    unset($dataobject->save);
+    
     if(!empty($dataobject) && $form->is_validated()){
 
         $dataobject->submitter_to_manager = 'Yes';
 
         //GDPR implementation
-        $dataobject->witness_name_address  = !empty($dataobject->witness_name_address) ? encrypt($dataobject->witness_name_address) : NULL;
-        $dataobject->created_by            = $USER->id;
-        $dataobject->created_date          = date('Y-m-d');   
-        $dataobject->updated_date          = date('Y-m-d');    
+        //$dataobject->witness_name_address  = !empty($dataobject->witness_name_address) ? encrypt($dataobject->witness_name_address) : NULL;
+        $dataobject->user_id         = $USER->id;
+        $dataobject->created_date    = date('Y-m-d');   
+        $dataobject->updated_date    = date('Y-m-d');    
 
         $id = save_data($dataobject,$tableName);
 
@@ -469,7 +506,7 @@ function delete_data(){
 function export_pdf($report_type,$filename) {
 
     if($report_type == 'acc') {
-        $pdf_file = accident_pdf(intval($_REQUEST['id']));
+        $pdf_file = new_accident_pdf(intval($_REQUEST['id']));
     } elseif($report_type == 'inc') {
         $pdf_file = incident_pdf(intval($_REQUEST['id']));
     }elseif($report_type == 'full_acc') {
@@ -496,182 +533,133 @@ function new_accident_pdf($acc_id) {
     $photo_path = $CFG->dataroot."/filedir/upload";
     $tableName  = get_string('new_accident_table','local_mp_report');
     $select['id']  = $acc_id;
-    $data = $DB->get_record($tableName, $select);
-    $user = get_userInfo( array("id" => $data -> user_id ));
+    $reportData = $DB->get_record($tableName, $select);
+    $user = get_userInfo( array("id" => $reportData -> user_id ));
 
-    $manager            = get_userInfo( array("id" => $data -> user_manager ));
+    //$manager            = get_userInfo( array("id" => $reportData -> user_manager ));
     $dropdown           = get_new_dropdown_data(1);
     $employment_status  = $dropdown['employment_status'];
     $operative_at_now   = $dropdown['operative_at_now'];
 
-
     ob_start();
     ?>
-    <style type="text/css">
-        table { border-collapse: }
-        td, th { font-family:Arial, Helvetica, sans-serif; font-size:7pt; line-height:12pt; padding: 8px; }
-        th { text-align:right; }
+    <style type="text/css">        
+       
 
-        table.data-table td, table.data-table th { font-size:7pt; border:.5px solid #333; margin-top:10px; }
-
-        table.data-table tr th { background-color:#f6f6f6; }
-
-        .section-hd { font-weight:bold; border-bottom:.5px solid #333; }
-
+        p{
+            font-weight: bold;
+            margin: 10px 0px;
+        } 
     </style>
+     <p id="view_p">A. THE INJURED / INVOLVED PERSON</p>
+            <table id="view_table" width="100%">
+            <tr>
+                <td>Surname: <br> <?=boldText($reportData->a_surname   ) ?></td>
+                <td>Forename(s): <br><?=boldText($reportData->a_forename   ) ?></td>
+            </tr>
+            <tr>
+                <td>Home Address: <br><?=boldText($reportData->a_home_address   ) ?></td>
+                <td>Tel No: <br><?=boldText($reportData->a_tel_no   ) ?></td>
+            </tr>
+            <tr>
+                <td>Sex (M/F): <br><?=boldText($reportData->a_sex   ) ?></td>
+                <td>Age: <?=boldText($reportData->a_age   ) ?></td>
+            </tr>
+            <tr>
+                <td>Following the accident, the Operative is now at:<br> <?=boldText($reportData->a_following_accident   ) ?></td>
+                <td>THIS SECTION MUST BE COMPLETED <br>If resumed work on the day of the accident state time lost: <br>
 
-    <div style="font-size:10pt; text-align:center;">
-        Accident Report
-    </div>
-    <table width="100%">
-        <tr>
-            <td colspan="2" style="padding-bottom:15px;">
-                <table width="100%" style="border-bottom:.5px solid #333; padding-bottom:2px;">
-                    <tr>
-                        <td align="left"><strong><?= $user -> firstname?> <?= $user -> lastname?></strong></td>
-                        <td align="right"><strong><?= date("d-M-Y G:i:s", $data -> accident_date)?></strong></td>
-                    </tr>
-                </table>
+                <?=($reportData->a_resumed_work=='No')? boldText($reportData->a_resumed_work ): boldText($reportData->a_hours).''. boldText($reportData->a_mins) ?>
+                </td>
+            </tr>
+            <tr>
+                <td>Temporary Address (if applicable): <br> <?=boldText($reportData->a_temp_address   ) ?></td>
+                <td>Status: <br><?=boldText($reportData->a_status   ) ?></td>
+            </tr>
+            <tr>
+                <td>Occupation or Job Title: <br><?=boldText($reportData->a_job_title   ) ?></td>
+                <td>(If Applicable) Employers Name and Address: </td>
+            </tr>
+            </table>
+            
+            <p  id="view_p">B. DATE, TIME, AND PLACE OF ACCIDENT/INCIDENT/DANGEROUS OCCURRENCE</p>
+            <table id="view_table" width="100%">
+            <tr>
+                <td>Date: <br><?=boldText(date("d-M-Y",$reportData->b_date)   ) ?></td>
+                <td>Time: <br><?=boldText(date("H:m",$reportData->b_date)   ) ?></td>
+            </tr>
+            <tr>
+                <td>Name & Address of Site: <br><?=boldText($reportData->b_name_address_site   ) ?></td>
+                <td>Exact Location on Site: <br><?=boldText($reportData->b_exact_location_site   ) ?></td>
+            </tr>
+            <tr>
+                <td>On what work was the operative engaged upon at the time and/or what was the dangerous occurrence?: <br><?=boldText($reportData->b_dangerous   ) ?></td>
+                <td>Reported: <br><?=boldText($reportData->b2_date   ) ?></td>
+            </tr>
+            <tr>
+                <td>What Does the Injured Person Believe Caused the Accident?:<br> <?=boldText($reportData->b_injured   ) ?></td>
+                <td>Witness(es) – Names & Addresses:<br> <?=boldText($reportData->b_witness_name   ) ?></td>
+            </tr>
+            </table>
+            
+            <p  id="view_p">C. KIND OF ACCIDENT/INCIDENT/DANGEROUS OCCURRENCE</p>
+            <table id="view_table" width="100%">
+            <?php
+               $ids = explode(',',$reportData->c_kind_of_accident);
+               foreach($dropdown['kind_of_occurrence'] as $key=>$value){
+                   if(in_array($key,$ids))
+                   echo "<tr> <td style='border:0px'> &#10157; ".$value."</td></tr>";
+               } 
+            ?>    
+           
+            </table>
+            
+            <p  id="view_p">D. AGENT(S) INVOLVED</p>
+            <table id="view_table" width="100%">
+            <?php
+                $ids = explode(',',$reportData->d_agents);
+               foreach($dropdown['agent_involved'] as $key=>$value){
+                if(in_array($key,$ids))
+                   echo "<tr> <td style='border:0px'> &#10157; ".$value."</td></tr>";
+               } 
+            ?>    
+            </table>
+            
+            <p  id="view_p">E. ACCOUNT OF INCIDENT/DANGEROUS OCCURRENCE</p>
+            <table id="view_table" width="100%">
+            <tr>
+                <td>Describe what happened and how (in the case of an accident state, what the injured person was doing at the time):<br>
+                <?=boldText($reportData->e_accident_state) ?>
+            
             </td>
-
-        </tr>
-        <tr>
-            <td colspan="2">
-                <div class="section-hd">User Details</div>
-                <table width="100%" class="data-table">
-
-                    <tr class="even">
-                        <th width="15%">Occupation</th>
-                        <td width="35%"><?= $data -> user_occupation?></td>
-                        <th width="15%">Postcode</th>
-                        <td width="35%"><?= $data -> user_postcode?></td>
-
-                    </tr>
-                    <tr>
-                        <th>Contract</th>
-                        <td><?= @$contracts[$data -> user_contract];?></td>
-                        <th>Manager</th>
-                        <td><?= $manager -> firstname?> <?= $manager -> lastname?></td>
-                    </tr>
-                    <tr>
-                        <th>Address</th>
-                        <td colspan="3"><?= $data -> user_address?></td>
-                    </tr>
-                </table>
-                <div class="section-hd">About the Person who had the accident</div>
-                <table width="100%" class="data-table">
-                    <tr>
-                        <th width="15%">Name</th>
-                        <td width="35%"><?= $data -> victim_name?></td>
-                        <th width="15%">Occupation</th>
-                        <td width="35%"><?= $data -> victim_occupation?></td>
-
-                    </tr>
-                    <tr>
-                        <th>Postcode</th>
-                        <td><?= $data -> victim_postcode?></td>
-                        <th>Address</th>
-                        <td><?= $data -> victim_address?></td>
-                    </tr>
-                </table>
-            </td>
-
-        </tr>
-
-        <tr>
-            <td colspan="2">
-                <div class="section-hd">About the accident</div>
-                <table width="100%" class="data-table">
-                    <tr>
-                        <th width="15%">Category</th>
-                        <td width="35%"><?= @$categories[$data -> accident_category]?></td>
-                        <th width="15%">Medical Treatment over first aid?</th>
-                        <td width="35%"><?= $data -> accident_treatment?></td>
-                    </tr>
-                    <tr>
-                        <th>Minor Injuries?</th>
-                        <td><?= $data -> minor_injuries?></td>
-                        <th>Date and Time of accident</th>
-                        <td><?= date("d-M-Y G:i:s", $data -> accident_date)?> </td>
-
-                    </tr>
-                    <tr>
-                        <th>Where did it happen</th>
-                        <td><?= $data -> accident_place?></td>
-                        <th>How did it happen and why</th>
-                        <td><?= $data -> accident_reason?></td>
-                    </tr>
-                    <tr>
-                        <th>Details of any injury suffered or treatment given</th>
-                        <td colspan="3"><?= $data -> accident_detail?></td>
-
-                    </tr>
-
-                </table>
-                <div class="section-hd">Accident Witness Report</div>
-                <?php if($data -> accident_witnesses > 0) {?>
-                    <table width="100%" class="data-table" >
-                        <tr>
-                            <th width="15%">Name of Witness </th>
-                            <td width="35%"><?= decrypt($data -> witnesses_name)?></td>
-                            <th width="15%">Home/Work Address </th>
-                            <td width="35%"><?= decrypt($data -> witnesses_address)?></td>
-
-                        </tr>
-                        <tr>
-                            <th> Telephone Number </th>
-                            <td><?= decrypt($data -> witnesses_phone_number)?></td>
-                            <th> Date of witness report </th>
-                            <td><?= date("d-M-Y", $data -> witnesses_report_date)?></td>
-                        </tr>
-                        <tr>
-                            <th colspan="4" style="text-align: left">Detail & Describe the occurrence and how it happened. Be specific, who? What? Why?, Where?, when?, how?. What Injuries to persons or damage to property occurred? </th>
-                        </tr>
-                        <tr>
-                            <td colspan="4">
-                                <?= $data -> witnesses_report_details?>
-                            </td>
-                        </tr>
-
-                    </table>
-                <?php } ?>
-            </td>
-
-        </tr>
-        <tr>
-            <td colspan="2">
-                <div class="section-hd">Photos</div><br />
-                <table width="100%" style="margin-top:20px;">
-                    <tr>
-                        <?php
-                        $c = 0;
-                        for($i=1; $i<=6; $i++){
-                        $photo = 'photo_'.$i;
-                        if(!empty($data -> $photo) && file_exists( $photo_path."/".$data -> $photo )) {
-                        $c++;?>
-                        <td width="30%"><img src="<?= $photo_path."/".$data -> $photo;?>" width="130px"/></td>
-                        <?php
-                        if($i == 3) { ?></tr><tr> <?php }
-                        }
-                        else{
-                            ?><td width="30%"></td> <?php
-                        }
-                        }
-                        if($c == 0) { ?>
-                            <span style="color:#F00"></span>
-                        <?php }?>
-                    </tr>
-
-                </table>
-            </td>
-        </tr>
-
-    </table>
-
-    <?php
+            
+            </tr>
+            </table>
+            
+            <p id="view_p">F. ACTION TAKEN TO PREVENT RE-OCCURRENCE</p>
+            <table id="view_table" width="100%">
+            <tr>
+                <td>
+                
+                </td>
+            
+            </tr>
+            </table>
+            
+            
+            <table id="view_table" width="100%">
+            <tr>
+                <td>Name of Person Making Report</td>
+                <td>Date</td>
+            
+            </tr>
+            </table>
+             
+            <?php
 
     $html = ob_get_contents();
-    ob_clean();
+    ob_clean();    
+
 
     require_once($CFG->libdir.'/pdflib.php');
 

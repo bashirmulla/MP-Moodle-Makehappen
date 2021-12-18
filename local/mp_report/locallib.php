@@ -31,7 +31,9 @@ function get_userInfo($data){
 
 }
 
-
+function boldText($string){
+    return "<b>".$string."</b>";
+}
 function encrypt($string) {
     global $CFG;
     $output = false;
@@ -512,13 +514,19 @@ function checkWitness($fields)
 function checkNewAccidentValidation($fields)
 {
     $retrunArr = [];
-    if (!empty($fields['kind_of_occurrence_10']) && $fields['kind_of_occurrence_10']==1) {
-        if(empty($fields['fall_height'])) $retrunArr =  array_merge(array('fall_height' => 'Required'));
+    if (!empty($fields['c_kind_of_accident##10']) && $fields['c_kind_of_accident##10']==1) {
+        if(empty($fields['c_metres'])) $retrunArr =  array_merge(array('c_metres' => 'Required'));
     }
 
-    if (!empty($fields['resume_work']) && $fields['resume_work']=='Yes') {
-        if(empty($fields['time_lost_hours'])) $retrunArr =  array_merge(array('time_lost_hours' => 'Required'));
-        if(empty($fields['time_lost_minutes'])) $retrunArr =  array_merge(array('time_lost_minutes' => 'Required'));
+    if (!empty($fields['a_resumed_work']) && $fields['a_resumed_work']=='Yes') {
+        if(empty($fields['a_hours'])) $retrunArr =  array_merge(array('a_hours' => 'Required'));
+        if(empty($fields['a_mins'])) $retrunArr =  array_merge(array('a_mins' => 'Required'));
+    }
+
+    if (!empty($fields['b_witness']) && $fields['b_witness']=='Yes') {
+        if(empty($fields['b_witness_name'])) $retrunArr    =  array_merge(array('b_witness_name'    => 'Required'));
+        if(empty($fields['b_witness_address'])) $retrunArr =  array_merge(array('b_witness_address' => 'Required'));
+        if(empty($fields['b_tel_witness'])) $retrunArr     =  array_merge(array('b_tel_witness'     => 'Required'));
     }
 
     return $retrunArr;

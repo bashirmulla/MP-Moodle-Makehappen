@@ -177,27 +177,45 @@ $string['reported_date']   = 'Date';
 
 
 
-$string['injured_surname']          = 'Surname';
-$string['injured_forename']         = 'Forename';
-$string['home_address']             = 'Home Addres';
-$string['telephone']                = 'Telephone';
-$string['operative_now_at']         = 'Operative Now At';
-$string['time_lost_hours']          = 'Hours';
-$string['time_lost_minutes']        = 'Minutes';
+$string['a_surname']          = 'Surname';
+$string['a_forename']         = 'Forename';
+$string['a_home_address']             = 'Home Addres';
+$string['a_postcode']                 = 'Postcode';
+$string['a_tel_no']                   = 'Telephone';
+$string['a_sex']                      = 'Sex';
+$string['a_age']                      = 'Age';
+
+$string['a_following_accident']     = 'Operative Now At';
+$string['a_resumed_work']           = 'Resumed Work';
+
+$string['a_hours']                  = 'Hours';
+$string['a_mins']                   = 'Minutes';
 $string['time_lost_none']           = 'None';
-$string['temporary_address']        = 'Temporary Address';
-$string['employment_status']        = 'Employment Status';
-$string['occupation']               = 'Occupation';
-$string['nature_of_injury']         = 'Nature of Injury';
-$string['part_of_body_affected']    = 'Body Affected';
-$string['occurrence_date']          = 'Occurence Date';
-$string['name_address_of_site']     = 'Name address of site';
-$string['exect_location_on_site']   = 'Exect location on site';
-$string['work_type_of_occurrence']  = 'Type of Work at Occurrence';
-$string['reported_datetime']        = 'Reported Date';
-$string['injured_person_believe']   = 'Person believe';
-$string['witness_name_address']     = 'Witness name & address';
+$string['a_temp_address']           = 'Temporary Address';
+$string['a_status']                 = 'Employment Status';
+$string['a_job_title']              = 'Occupation';
+$string['a_injury_condition']       = 'Nature of Injury';
+$string['a_body_affected']          = 'Body Affected';
 
 
+$string['a_employers_name']       = 'Employee Name';
 
-$string['action_taken_to_prevent']     = 'Action Taken to Prevent';
+$string['b_date']                = 'Occurence Date';
+$string['b_name_address_site']   = 'Name address of site';
+$string['b_exact_location_site'] = 'Exect location on site';
+$string['b_dangerous']           = 'Type of Work at Occurrence';
+$string['b2_date']              = 'Reported Date';
+$string['b_injured']            = 'Person believe';
+$string['b_witness']            = 'Witness?';
+$string['b_witness_name']       = 'Witness name';
+$string['b_witness_address']    = 'Witness address';
+$string['b_tel_witness']        = 'Witness telephone';
+$string['c_kind_of_accident']   = 'Witness name & address';
+$string['c_metres']             = 'Metres';
+$string['d_agents']             = 'Agents';
+$string['d_first_aid']          = 'First Aid';
+$string['e_accident_state']     = 'Accident State';
+$string['f_action_taken']       = 'Action Taken to Prevent';
+$string['declaration_name_of_person']       = 'Decleartion name of person';
+$string['declaration_date']       = 'Date';
+
