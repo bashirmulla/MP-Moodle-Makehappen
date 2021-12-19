@@ -266,8 +266,31 @@ class new_accident_report_form extends moodleform {
         $user         = get_userInfo(array("id" => $reportData->user_id));
         ob_start();
         ?>
-        
-         <p id="view_p">A. THE INJURED / INVOLVED PERSON</p>
+        <style>
+            .scheduler-border{
+                background-color: WHITE !important;
+            }
+
+            #view_table.table > th , td {
+                border-bottom: 1px solid #CCC;
+                padding: 5px;
+                width: 50%;
+                margin-bottom: 10px;
+            }
+           
+            #table.table > th , td {
+                
+                padding: 5px;
+                width: 50%;
+            }
+
+            #view_p{
+                font-weight: bold;
+                margin: 10px 0px;
+            } 
+        </style>
+            <fieldset class="scheduler-border"><legend class="scheduler-border">A. THE INJURED / INVOLVED PERSON</legend>
+         
                 <table id="view_table" width="100%">
                 <tr>
                     <td>Surname: <br> <?=boldText($reportData->a_surname   ) ?></td>
@@ -297,8 +320,10 @@ class new_accident_report_form extends moodleform {
                     <td>(If Applicable) Employers Name and Address: </td>
                 </tr>
                 </table>
+            </fieldset>
+            
+            <fieldset class="scheduler-border"><legend class="scheduler-border">B. DATE, TIME, AND PLACE OF ACCIDENT/INCIDENT/DANGEROUS OCCURRENCE</legend>
                 
-                <p  id="view_p">B. DATE, TIME, AND PLACE OF ACCIDENT/INCIDENT/DANGEROUS OCCURRENCE</p>
                 <table id="view_table" width="100%">
                 <tr>
                     <td>Date: <br><?=boldText(date("d-M-Y",$reportData->b_date)   ) ?></td>
@@ -317,8 +342,9 @@ class new_accident_report_form extends moodleform {
                     <td>Witness(es) – Names & Addresses:<br> <?=boldText($reportData->b_witness_name   ) ?></td>
                 </tr>
                 </table>
-                
-                <p  id="view_p">C. KIND OF ACCIDENT/INCIDENT/DANGEROUS OCCURRENCE</p>
+            </fieldset>    
+            
+            <fieldset class="scheduler-border"><legend class="scheduler-border">C. KIND OF ACCIDENT/INCIDENT/DANGEROUS OCCURRENCE</legend>
                 <table id="view_table" width="100%">
                 <?php
                    $ids = explode(',',$reportData->c_kind_of_accident);
@@ -329,8 +355,10 @@ class new_accident_report_form extends moodleform {
                 ?>    
                
                 </table>
+            </fieldset>
+            
+            <fieldset class="scheduler-border"><legend class="scheduler-border">D. AGENT(S) INVOLVED</legend>
                 
-                <p  id="view_p">D. AGENT(S) INVOLVED</p>
                 <table id="view_table" width="100%">
                 <?php
                     $ids = explode(',',$reportData->d_agents);
@@ -340,8 +368,10 @@ class new_accident_report_form extends moodleform {
                    } 
                 ?>    
                 </table>
+            </fieldset>
+            
+            <fieldset class="scheduler-border"><legend class="scheduler-border">E. ACCOUNT OF INCIDENT/DANGEROUS OCCURRENCE</legend>
                 
-                <p  id="view_p">E. ACCOUNT OF INCIDENT/DANGEROUS OCCURRENCE</p>
                 <table id="view_table" width="100%">
                 <tr>
                     <td>Describe what happened and how (in the case of an accident state, what the injured person was doing at the time):<br>
@@ -351,8 +381,10 @@ class new_accident_report_form extends moodleform {
                 
                 </tr>
                 </table>
+            </fieldset>
+            
+            <fieldset class="scheduler-border"><legend class="scheduler-border">F. ACTION TAKEN TO PREVENT RE-OCCURRENCE</legend>
                 
-                <p id="view_p">F. ACTION TAKEN TO PREVENT RE-OCCURRENCE</p>
                 <table id="view_table" width="100%">
                 <tr>
                     <td>
@@ -361,8 +393,9 @@ class new_accident_report_form extends moodleform {
                 
                 </tr>
                 </table>
-                
-                
+            </fieldset>    
+            
+            
                 <table id="view_table" width="100%">
                 <tr>
                     <td>Name of Person Making Report</td>
@@ -497,255 +530,146 @@ class new_accident_report_form extends moodleform {
 
         $dropdown = get_dropdown_data(1);
 
-        //echo "<pre>";
-        //print_r($dropdown);
-        //die;
+        
 
         $mform = $this->_form;
+        
+        $mform->addElement('html', '<h3 style="text-align:center;margin-top:30px">Accident Investigation Form</h3>');
 
-        $mform->addElement('html', '<fieldset class="scheduler-border"><legend class="scheduler-border">Line Manager Review</legend>');
+        $mform->addElement('html', '<fieldset class="scheduler-border"><legend class="scheduler-border">Information</legend>');
 
-        $mform->addElement('select', 'manager_id', get_string('manager_name', 'local_mp_report'), createDropdown(get_com_manager_list()));
-        $mform->setType('manager_id', PARAM_TEXT);
-        $mform->setDefault('manager_id', $reportData->manager_id);
-        $mform->addRule('manager_id', get_string('required'), 'required', '', 'client');
+            $mform->addElement('select', 'incident_type', 'Incident Type', createDropdown($dropdown['incident_type']));
+            $mform->setType('incident_type', PARAM_TEXT);
+            $mform->addRule('incident_type', get_string('required'), 'required','','client');
 
-        $radioarray   = array();
-        $radioarray[] = $mform->createElement('radio', 'accident_additional_details', '', "Yes", 'Yes');
-        $radioarray[] = $mform->createElement('radio', 'accident_additional_details', '', "No", 'No');
-        $mform->addGroup($radioarray, 'accident_additional_details', get_string('accident_additional_details','local_mp_report'), array(''), false);
-        $mform->addRule('accident_additional_details', get_string('required'), 'required','','client');
-        $mform->setDefault('accident_additional_details', $reportData->accident_additional_details);
+            $mform->addElement('select', 'affecting', 'Affecting', createDropdown($dropdown['affecting']));
+            $mform->setType('affecting', PARAM_TEXT);
+            $mform->addRule('affecting', get_string('required'), 'required','','client');
 
-        $mform->addElement('textarea', 'additional_details', get_string('additional_details', 'local_mp_report'), 'wrap="virtual" rows="6" cols="40"');
-        $mform->setType('additional_details', PARAM_TEXT);
-        $mform->setDefault('additional_details', $reportData->additional_details);
-        //$mform->addRule('additional_details', get_string('required'), 'required','','client');
-        $mform->hideIf('additional_details', 'accident_additional_details',  'eq', 'No');
-
-        $mform->addElement('textarea', 'root_cause', get_string('root_cause', 'local_mp_report'), 'wrap="virtual" rows="6" cols="40"');
-        $mform->setType('root_cause', PARAM_TEXT);
-        $mform->setDefault('root_cause', $reportData->root_cause);
-        $mform->addRule('root_cause', get_string('required'), 'required','','client');
-
-        $mform->addElement('textarea', 'immediate_action', get_string('immediate_action', 'local_mp_report'), 'wrap="virtual" rows="6" cols="40"');
-        $mform->setType('immediate_action', PARAM_TEXT);
-        $mform->setDefault('immediate_action', $reportData->immediate_action);
-        $mform->addRule('immediate_action', get_string('required'), 'required','','client');
-
-        $mform->addElement('textarea', 'further_action_required', get_string('further_action_required', 'local_mp_report'), 'wrap="virtual" rows="6" cols="40"');
-        $mform->setType('further_action_required', PARAM_TEXT);
-        $mform->setDefault('further_action_required', $reportData->further_action_required);
-        $mform->addRule('further_action_required', get_string('required'), 'required','','client');
-
-
-        $radioarray   = array();
-        $radioarray[] = $mform->createElement('radio', 'lost_time', '', "Yes", 'Yes');
-        $radioarray[] = $mform->createElement('radio', 'lost_time', '', "No", 'No');
-        $mform->addGroup($radioarray, 'lost_time', get_string('lost_time','local_mp_report'), array(''), false);
-        $mform->addRule('lost_time', get_string('required'), 'required','','client');
-        $mform->setDefault('lost_time', $reportData->lost_time);
-
-        $mform->addElement('text', 'lost_time_days', get_string('lost_time_days', 'local_mp_report'), 'maxlength="3" size="10" ');
-        $mform->setType('lost_time_days', PARAM_INT);
-        $mform->setDefault('lost_time_days', $reportData->lost_time_days);
-//        $mform->addRule('lost_time_days', get_string('required'), 'required','','client');
-        $mform->disabledIf('lost_time_days', 'lost_time',  'eq', 'No');
-
-
-        $mform->addElement('date_selector', 'mgt_review_report_date', get_string('mgt_review_report_date', 'local_mp_report'), 'maxlength="100" size="40" ');
-        $mform->setType('mgt_review_report_date', PARAM_TEXT);
-        $mform->setDefault('mgt_review_report_date', $reportData->mgt_review_report_date);
-        $mform->addRule('mgt_review_report_date', get_string('required'), 'required','','client');
-
-        $mform->addElement('select', 'mgt_review_status', get_string('mgt_review_status', 'local_mp_report'), createDropdown($dropdown['mgt_review_status']));
-        $mform->setType('mgt_review_status', PARAM_TEXT);
-        $mform->setDefault('mgt_review_status', $reportData->mgt_review_status);
-        $mform->addRule('mgt_review_status', get_string('required'), 'required','','client');
-
-        $mform->addElement('textarea', 'mgt_review_comments', get_string('mgt_review_comments', 'local_mp_report'), 'wrap="virtual" rows="6" cols="40"');
-        $mform->setType('mgt_review_comments', PARAM_TEXT);
-        $mform->setDefault('mgt_review_comments', $reportData->mgt_review_comments);
-        $mform->addRule('mgt_review_comments', get_string('required'), 'required','','client');
+            $mform->addElement('select', 'compensation', 'Compensation', createDropdown($dropdown['compensation']));
+            $mform->setType('compensation', PARAM_TEXT);
+            $mform->addRule('compensation', get_string('required'), 'required','','client');
         $mform->addElement('html', '</fieldset>');
 
+        $mform->addElement('html', '<fieldset class="scheduler-border"><legend class="scheduler-border">Affected Employee / Person</legend>');
+        
+            $mform->addElement('static', 'name1', 'Name',$reportData->a_surname.' '.$reportData->a_forename );
+            $mform->addElement('static', 'name2', 'Role & Department','' );
+            $mform->addElement('static', 'name3', 'Phone Number',$reportData->a_tel_no );
+            $mform->addElement('static', 'name4', 'Date of Incident',$reportData->b_date );
+            $mform->addElement('static', 'name5', 'Time of Incident',$reportData->b_date );
+            $mform->addElement('static', 'name7', 'Location of Incident',$reportData->b_exact_location_site );
+            $mform->addElement('static', 'name8', 'Supervisor Name',$reportData->a_employers_name );
 
-        $mform->addFormRule('accidentManagerVaidations');
+        $mform->addElement('html', '</fieldset>');
 
-        if(!empty($reportData->manager_id) and (is_senior_manager() or is_complieance() or is_admin())) {
-            $mform->addElement('html', '<fieldset class="scheduler-border"><legend class="scheduler-border">Senior Management Report</legend>');
-            $mform->addElement('select', 's_mgt_rpt_name', get_string('s_mgt_rpt_name', 'local_mp_report'), createDropdown(get_s_manager_and_complience_list()));
-            $mform->setType('s_mgt_rpt_name', PARAM_TEXT);
-            $mform->setDefault('s_mgt_rpt_name', $reportData->s_mgt_rpt_name);
-            $mform->addRule('s_mgt_rpt_name', get_string('required'), 'required', '', 'client');
+        $mform->addElement('html', '<fieldset class="scheduler-border"><legend class="scheduler-border">Interviewee 1</legend>');
 
-            $mform->addElement('date_selector', 's_mgt_rpt_report_date', get_string('s_mgt_rpt_report_date', 'local_mp_report'), 'maxlength="100" size="40" ');
-            $mform->setType('s_mgt_rpt_report_date', PARAM_TEXT);
-            $mform->setDefault('s_mgt_rpt_report_date', $reportData->s_mgt_rpt_report_date);
-            $mform->addRule('s_mgt_rpt_report_date', get_string('required'), 'required', '', 'client');
+            $mform->addElement('text', 'interviewee1_name', 'Name', 'maxlength="100" size="40" width="40px" ');
+            $mform->setType('interviewee1_name', PARAM_TEXT);
+            $mform->addRule('interviewee1_name', get_string('required'), 'required','','client');
 
-            $mform->addElement('textarea', 's_mgt_rpt_comments', get_string('s_mgt_rpt_comments', 'local_mp_report'), 'wrap="virtual" rows="6" cols="40"');
-            $mform->setType('s_mgt_rpt_comments', PARAM_TEXT);
-            $mform->setDefault('s_mgt_rpt_comments', $reportData->s_mgt_rpt_comments);
-            $mform->addRule('s_mgt_rpt_comments', get_string('required'), 'required', '', 'client');
+            $mform->addElement('text', 'interviewee1_role', 'Role & Department', 'maxlength="100" size="40" width="40px" ');
+            $mform->setType('interviewee1_role', PARAM_TEXT);
+            $mform->addRule('interviewee1_role', get_string('required'), 'required','','client');
+
+            $mform->addElement('text', 'interviewee1_telephone', 'Phone Number', 'maxlength="100" size="40" width="40px" ');
+            $mform->setType('interviewee1_telephone', PARAM_TEXT);
+            $mform->addRule('interviewee1_telephone', get_string('required'), 'required','','client');
+
+        $mform->addElement('html', '</fieldset>');
+
+        $mform->addElement('html', '<fieldset class="scheduler-border"><legend class="scheduler-border">Interviewee 2</legend>');
+
+            $mform->addElement('text', 'interviewee2_name', 'Name', 'maxlength="100" size="40" width="40px" ');
+            $mform->setType('interviewee2_name', PARAM_TEXT);
+            $mform->addRule('interviewee2_name', get_string('required'), 'required','','client');
+
+            $mform->addElement('text', 'interviewee2_role', 'Role & Department', 'maxlength="100" size="40" width="40px" ');
+            $mform->setType('interviewee2_role', PARAM_TEXT);
+            $mform->addRule('interviewee2_role', get_string('required'), 'required','','client');
+
+            $mform->addElement('text', 'interviewee2_telephone', 'Phone Number', 'maxlength="100" size="40" width="40px" ');
+            $mform->setType('interviewee2_telephone', PARAM_TEXT);
+            $mform->addRule('interviewee2_telephone', get_string('required'), 'required','','client');
+
+        $mform->addElement('html', '</fieldset>');
+
+        $mform->addElement('html', '<fieldset class="scheduler-border"><legend class="scheduler-border">Investigator</legend>');
+
+            $mform->addElement('text', 'investigator_name', 'Name', 'maxlength="100" size="40" width="40px" ');
+            $mform->setType('investigator_name', PARAM_TEXT);
+            $mform->addRule('investigator_name', get_string('required'), 'required','','client');
+
+            $mform->addElement('text', 'investigator_role', 'Role & Department', 'maxlength="100" size="40" width="40px" ');
+            $mform->setType('investigator_role', PARAM_TEXT);
+            $mform->addRule('investigator_role', get_string('required'), 'required','','client');
+
+            $mform->addElement('text', 'investigator_telephone', 'Phone Number', 'maxlength="100" size="40" width="40px" ');
+            $mform->setType('investigator_telephone', PARAM_TEXT);
+            $mform->addRule('investigator_telephone', get_string('required'), 'required','','client');
+
+            $mform->addElement('date_selector', 'investigation_date', 'Date of Investigation', 'maxlength="100" size="40" width="40px" ');
+            $mform->setType('investigation_date', PARAM_TEXT);
+            $mform->addRule('investigation_date', get_string('required'), 'required','','client');
+
+        $mform->addElement('html', '</fieldset>');
+
+        $mform->addElement('html', '<fieldset class="scheduler-border"><legend class="scheduler-border">Other Information</legend>');
+
+            $mform->addElement('textarea', 'incident_description', 'Incident Description', 'maxlength="100" size="40" width="40px" ');
+            $mform->setType('incident_description', PARAM_TEXT);
+            $mform->addRule('incident_description', get_string('required'), 'required','','client');
+
+            $mform->addElement('textarea', 'interviewee1_statement', 'Interviewee 1 Statement', 'maxlength="100" size="40" width="40px" ');
+            $mform->setType('interviewee1_statement', PARAM_TEXT);
+            $mform->addRule('interviewee1_statement', get_string('required'), 'required','','client');
+
+            $mform->addElement('textarea', 'interviewee2_statement', 'Interviewee 2 Statement', 'maxlength="100" size="40" width="40px" ');
+            $mform->setType('interviewee2_statement', PARAM_TEXT);
+            $mform->addRule('interviewee2_statement', get_string('required'), 'required','','client');
+
+            $mform->addElement('select', 'contributors_incident', 'Contributors to Incident', createDropdown($dropdown['contributors_incident']));
+            $mform->setType('contributors_incident', PARAM_TEXT);
+            $mform->addRule('contributors_incident', get_string('required'), 'required','','client');
+
+            $mform->addElement('textarea', 'results_investigation', 'Results of Investigation', 'maxlength="100" size="40" width="40px" ');
+            $mform->setType('results_investigation', PARAM_TEXT);
+            $mform->addRule('results_investigation', get_string('required'), 'required','','client');
+
+            $radioarray   = array();
+            $radioarray[] = $mform->createElement('radio', 'receive_medical_treatment', '', "Yes", 'Yes');
+            $radioarray[] = $mform->createElement('radio', 'receive_medical_treatment', '', "No", 'No');
+            $mform->addGroup($radioarray, 'receive_medical_treatment','Did the employee receive medical treatment? (give details)', array(''), false);
+            $mform->addRule('receive_medical_treatment', get_string('required'), 'required','','client');
+            //$mform->setDefault('a_resumed_work', 'Yes');
+
+            $radioarray   = array();
+            $radioarray[] = $mform->createElement('radio', 'lost_time_report', '', "Yes", 'Yes');
+            $radioarray[] = $mform->createElement('radio', 'lost_time_report', '', "No", 'No');
+            $mform->addGroup($radioarray, 'lost_time_report','Is there any lost time to report? (give details)', array(''), false);
+            $mform->addRule('lost_time_report', get_string('required'), 'required','','client');
+
+            $mform->addElement('select', 'recommended_actions', 'Recommended Corrective Actions', createDropdown($dropdown['recommended_actions']));
+            $mform->setType('recommended_actions', PARAM_TEXT);
+            $mform->addRule('recommended_actions', get_string('required'), 'required','','client');
 
 
-            $mform->addElement('select', 's_mgt_rpt_f_action', get_string('s_mgt_rpt_f_action', 'local_mp_report'), createDropdown($dropdown['further_action']));
-            $mform->setType('s_mgt_rpt_f_action', PARAM_TEXT);
-            $mform->setDefault('s_mgt_rpt_f_action', $reportData->s_mgt_rpt_f_action);
-            $mform->addRule('s_mgt_rpt_f_action', get_string('required'), 'required', '', 'client');
+            $mform->addElement('textarea', 'specifice_corrective_actions', 'Please provide additional Information regarding specific corrective actions:', 'maxlength="100" size="40" width="40px" ');
+            $mform->setType('specifice_corrective_actions', PARAM_TEXT);
+            $mform->addRule('specifice_corrective_actions', get_string('required'), 'required','','client');
 
-            $mform->addElement('textarea', 's_mgt_rpt_f_a_comment', get_string('s_mgt_rpt_f_a_comment', 'local_mp_report'), 'wrap="virtual" rows="6" cols="40"');
-            $mform->setType('s_mgt_rpt_f_a_comment', PARAM_TEXT);
-            $mform->setDefault('s_mgt_rpt_f_a_comment', $reportData->s_mgt_rpt_f_a_comment);
-            $mform->addRule('s_mgt_rpt_f_a_comment', get_string('required'), 'required', '', 'client');
-
-            /*
-            $mform->addElement('select', 's_mgt_rpt_a_b_completed', get_string('s_mgt_rpt_a_b_completed', 'local_mp_report'), $dropdown['yes_no']);
-            $mform->setType('s_mgt_rpt_a_b_completed', PARAM_TEXT);
-            $mform->setDefault('s_mgt_rpt_a_b_completed', $reportData->s_mgt_rpt_a_b_completed);
-            $mform->addRule('s_mgt_rpt_a_b_completed', get_string('required'), 'required','','client');
-
-            $mform->addElement('date_selector', 's_mgt_rpt_a_b_cpt_date', get_string('s_mgt_rpt_a_b_cpt_date', 'local_mp_report'), 'maxlength="100" size="40" ');
-            $mform->setType('s_mgt_rpt_a_b_cpt_date', PARAM_TEXT);
-            $mform->setDefault('s_mgt_rpt_a_b_cpt_date', $reportData->s_mgt_rpt_a_b_cpt_date);
-            //$mform->addRule('s_mgt_rpt_a_b_cpt_date', get_string('required'), 'required','','client');
-            $mform->disabledIf('s_mgt_rpt_a_b_cpt_date', 's_mgt_rpt_a_b_completed',  'neq', 1);
-            */
-            $mform->addElement('select', 's_mgt_rpt_2508_completed', get_string('s_mgt_rpt_2508_completed', 'local_mp_report'), $dropdown['yes_no']);
-            $mform->setType('s_mgt_rpt_2508_completed', PARAM_TEXT);
-            $mform->setDefault('s_mgt_rpt_2508_completed', $reportData->s_mgt_rpt_2508_completed);
-            $mform->addRule('s_mgt_rpt_2508_completed', get_string('required'), 'required', '', 'client');
-
-            $mform->addElement('date_selector', 's_mgt_rpt_2508_cpt_date', get_string('s_mgt_rpt_2508_cpt_date', 'local_mp_report'), 'maxlength="100" size="40" ');
-            $mform->setType('s_mgt_rpt_2508_cpt_date', PARAM_TEXT);
-            $mform->setDefault('s_mgt_rpt_2508_cpt_date', $reportData->s_mgt_rpt_2508_cpt_date);
-            //$mform->addRule('s_mgt_rpt_2508_cpt_date', get_string('required'), 'required','','client');
-            $mform->disabledIf('s_mgt_rpt_2508_cpt_date', 's_mgt_rpt_2508_completed', 'neq', 1);
-
-            $mform->addElement('select', 's_mgt_rpt_riddor_event_clf', get_string('s_mgt_rpt_riddor_event_clf', 'local_mp_report'), createDropdown($dropdown['riddor_classification']));
-            $mform->setType('s_mgt_rpt_riddor_event_clf', PARAM_TEXT);
-            $mform->setDefault('s_mgt_rpt_riddor_event_clf', $reportData->s_mgt_rpt_riddor_event_clf);
-            //$mform->addRule('s_mgt_rpt_riddor_event_clf', get_string('required'), '','','client');
-            $mform->disabledIf('s_mgt_rpt_riddor_event_clf', 's_mgt_rpt_2508_completed', 'neq', 1);
-
-            $mform->addElement('select', 'riddor_subcategory', get_string('s_mgt_rpt_riddor_subcategory', 'local_mp_report'), createDropdown($dropdown['RIDDOR_subcategory']));
-            $mform->setType('riddor_subcategory', PARAM_TEXT);
-            $mform->setDefault('riddor_subcategory', $reportData->riddor_subcategory);
-
-            $html = "<div class='form-group row' id='riddor_file_div'> 
+            $mform->addElement('textarea', 'corrective_actions_completed', 'Please provide details of when the corrective actions have been completed', 'maxlength="100" size="40" width="40px" ');
+            $mform->setType('corrective_actions_completed', PARAM_TEXT);
+            $mform->addRule('corrective_actions_completed', get_string('required'), 'required','','client');
             
-            <div class='col-md-3'> RIDDOR Files</div> <div class='col-md-6'>
-           <form method='post' enctype='multipart/form-data'>";
+            $mform->addElement('textarea', 'other_materials', 'Please detail any other materials including photographs', 'maxlength="100" size="40" width="40px" ');
+            $mform->setType('other_materials', PARAM_TEXT);
+            $mform->addRule('other_materials', get_string('required'), 'required','','client');
 
-            $html .= "<input type='file' name='riddor_file' id='riddor_file' data-accid='$reportData->id' maxlength='200' size='40'>";
-            $html .= '</<form></div></div>';
-            $mform->addElement('html', $html, 'local_mp_report');
-
-            $result = $DB->get_records("accident_riddor_files",array('accident_id' => $reportData->id));
-
-            $table = new html_table();
-            $table->attributes['class'] = 'table generaltable  dataTable no-footer riddor_file_td';
-            $table->width = '100%';
-
-
-            $table->head  = array("File Name","Action");
-            $table->align = array( 'left','center');
-            $table->size  = array('75%',"25%");
-
-
-            $html = "<div class='form-group row' id='riddor_file_table'> <div class='col-md-3'></div> <div class='col-md-6'>";
-            foreach($result as $rec) {
-                $downoadLink = "<a target='new' href='$rec->file_location'> View </a> | <a href='javascript::void(0)' id='del_riddor_file' data-id='$rec->id' > Delete </a>";
-                $table->data[] = new html_table_row(array($rec->file_name,$downoadLink));
-            }
-            $html .= html_writer::table($table);
-            $html .= "<hr></br></div></div>";
-
-
-
-            $mform->addElement('html', $html, 'local_mp_report');
-
-
-
-            //$mform->addRule('s_mgt_rpt_riddor_event_clf', get_string('required'), '','','client');
-            //$mform->hideIf('riddor_file', 's_mgt_rpt_riddor_event_clf', 'eq', '');
-            $mform->hideIf('riddor_subcategory', 's_mgt_rpt_2508_completed', 'neq', 1);
-            $mform->hideIf('riddor_subcategory', 's_mgt_rpt_riddor_event_clf', 'eq', 16);
-            $mform->hideIf('riddor_subcategory', 's_mgt_rpt_riddor_event_clf', 'eq', 18);
-            $mform->hideIf('riddor_subcategory', 's_mgt_rpt_riddor_event_clf', 'eq', 19);
-            $mform->hideIf('riddor_subcategory', 's_mgt_rpt_riddor_event_clf', 'eq', 22);
-
-
-            $mform->addElement('select', 's_mgt_rpt_reported_en_a', get_string('s_mgt_rpt_reported_en_a', 'local_mp_report'), $dropdown['yes_no']);
-            $mform->setType('s_mgt_rpt_reported_en_a', PARAM_TEXT);
-            $mform->setDefault('s_mgt_rpt_reported_en_a', $reportData->s_mgt_rpt_reported_en_a);
-            $mform->addRule('s_mgt_rpt_reported_en_a', get_string('required'), 'required', '', 'client');
-
-            $mform->addElement('date_selector', 's_mgt_rpt_reported_en_a_date', get_string('s_mgt_rpt_reported_en_a_date', 'local_mp_report'), 'maxlength="100" size="40" ');
-            $mform->setType('s_mgt_rpt_reported_en_a_date', PARAM_TEXT);
-            $mform->setDefault('s_mgt_rpt_reported_en_a_date', $reportData->s_mgt_rpt_reported_en_a_date);
-            //$mform->addRule('s_mgt_rpt_reported_en_a_date', get_string('required'), 'required','','client');
-            $mform->disabledIf('s_mgt_rpt_reported_en_a_date', 's_mgt_rpt_reported_en_a', 'neq', 1);
-
-            $mform->addElement('select', 's_mgt_rpt_sr_mgr_notified', get_string('s_mgt_rpt_sr_mgr_notified', 'local_mp_report'), $dropdown['yes_no']);
-            $mform->setType('s_mgt_rpt_sr_mgr_notified', PARAM_TEXT);
-            $mform->setDefault('s_mgt_rpt_sr_mgr_notified', $reportData->s_mgt_rpt_sr_mgr_notified);
-            $mform->addRule('s_mgt_rpt_sr_mgr_notified', get_string('required'), 'required', '', 'client');
-
-            $mform->addElement('date_selector', 's_mgt_rpt_sr_mgr_notified_date', get_string('s_mgt_rpt_sr_mgr_notified_date', 'local_mp_report'), 'maxlength="100" size="40" ');
-            $mform->setType('s_mgt_rpt_sr_mgr_notified_date', PARAM_TEXT);
-            $mform->setDefault('s_mgt_rpt_sr_mgr_notified_date', $reportData->s_mgt_rpt_sr_mgr_notified_date);
-            //$mform->addRule('s_mgt_rpt_sr_mgr_notified_date', get_string('required'), 'required','','client');
-            $mform->disabledIf('s_mgt_rpt_sr_mgr_notified_date', 's_mgt_rpt_sr_mgr_notified', 'neq', 1);
-
-            $mform->addElement('select', 's_mgt_rpt_in_br_informed', get_string('s_mgt_rpt_in_br_informed', 'local_mp_report'), $dropdown['yes_no']);
-            $mform->setType('s_mgt_rpt_in_br_informed', PARAM_TEXT);
-            $mform->setDefault('s_mgt_rpt_in_br_informed', $reportData->s_mgt_rpt_in_br_informed);
-            $mform->addRule('s_mgt_rpt_in_br_informed', get_string('required'), 'required', '', 'client');
-
-            //$mform->addElement('date_selector', 's_mgt_rpt_in_br_informed_date', get_string('s_mgt_rpt_in_br_informed_date', 'local_mp_report'), 'maxlength="100" size="40" ');
-            //$mform->setType('s_mgt_rpt_in_br_informed_date', PARAM_TEXT);
-            //$mform->setDefault('s_mgt_rpt_in_br_informed_date', $reportData->s_mgt_rpt_in_br_informed_date);
-            //$mform->addRule('s_mgt_rpt_in_br_informed_date', get_string('required'), 'required','','client');
-            //$mform->disabledIf('s_mgt_rpt_in_br_informed_date', 's_mgt_rpt_in_br_informed', 'neq', 1);
-
-
-            $radioarray = array();
-            $radioarray[] = $mform->createElement('radio', 's_mgt_rpt_ant_closed_off', '', "Yes", 1);
-            $radioarray[] = $mform->createElement('radio', 's_mgt_rpt_ant_closed_off', '', "No", 0);
-            $mform->addGroup($radioarray, 's_mgt_rpt_ant_closed_off', get_string('s_mgt_rpt_ant_closed_off', 'local_mp_report'), array(' '), false);
-            $mform->addRule('s_mgt_rpt_ant_closed_off', get_string('required'), 'required', '', 'client');
-            $mform->setDefault('s_mgt_rpt_ant_closed_off', $reportData->s_mgt_rpt_ant_closed_off);
-
-            $mform->addElement('date_selector', 's_mgt_rpt_ant_closed_off_date', get_string('s_mgt_rpt_ant_closed_off_date', 'local_mp_report'), 'maxlength="100" size="40" ');
-            $mform->setType('s_mgt_rpt_ant_closed_off_date', PARAM_TEXT);
-            $mform->setDefault('s_mgt_rpt_ant_closed_off_date', $reportData->s_mgt_rpt_ant_closed_off_date);
-            //$mform->addRule('s_mgt_rpt_ant_closed_off_date', get_string('required'), 'required','','client');
-            $mform->disabledIf('s_mgt_rpt_ant_closed_off_date', 's_mgt_rpt_ant_closed_off', 'neq', 1);
-
-
-            $mform->addElement('html', '</fieldset>');
-
-            $mform->addFormRule('accidentDateRequired');
-            $mform->addFormRule('accidentSeniorManagerVaidations');
-
-        }
-
-        if( is_senior_manager() || is_complieance() || is_admin() || is_manager()) {
-            $pdfbuttons ='<div class="row" >
-                <div class="col-sm-6">
-                    
-                 </div>
-                <div class="col-sm-6" style="text-align: right !important;">     
-                     <a class="btn btn-dark" style="background-color: #fcc42c; border-color: #fcc42c !important;" href="index.php?cmd=acc_pdf&id='.$_REQUEST['id'].'&download=1&uid='.$reportData->user_id.'&d='.$reportData->accident_date.'"><i class="fa fa-check-circle"> </i> Export Initial Report as PDF </a>
-                
-                     <a class="btn btn-dark" style="background-color: #2441e7; border-color: #2441e7 !important;" href="index.php?cmd=acc_full_pdf&id='.$_REQUEST['id'].'&download=1&uid='.$reportData->user_id.'&d='.$reportData->accident_date.'"><i class="fa fa-plus-circle"> </i> Export Full Report as PDF</a>
-                 </div>
-             </div><hr>';
-        }
-        $mform->addElement('html', $pdfbuttons);
-
+           
+        $mform->addElement('html', '</fieldset>');
+       
     }
 
     public function managerPartView($reportData){
@@ -850,6 +774,7 @@ class new_accident_report_form extends moodleform {
 
             $mform->addElement('html', $heading);
             $this->userPartViewNew($reportData);
+            $this->managerPartForm($reportData);
             //if ($reportData->read_only==1){
             //    $this->managerPartView($reportData);
             //}else {

@@ -60,26 +60,3 @@ legend.scheduler-border {
     color: #000 !important;
 }
 
-
-#view_table{
-    border: 1px solid rgb(138, 132, 132);
-    border-collapse: collapse;
-}
-
-#view_table.table > th , td {
-    border: 1px solid rgb(138, 132, 132);
-    padding: 5px;
-    width: 50%;
-  }
-
-  
-#table.table > th , td {
-    
-    padding: 5px;
-    width: 50%;
-  }
-
- #view_p{
-     font-weight: bold;
-     margin: 10px 0px;
- } 
