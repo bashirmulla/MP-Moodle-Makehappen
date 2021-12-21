@@ -277,12 +277,11 @@ class new_accident_report_form extends moodleform {
                 width: 50%;
                 margin-bottom: 10px;
             }
-           
-            #table.table > th , td {
-                
-                padding: 5px;
-                width: 50%;
+
+            #view_table.table > tr:last-child {
+                border-bottom: none !important;
             }
+           
 
             #view_p{
                 font-weight: bold;
@@ -302,22 +301,22 @@ class new_accident_report_form extends moodleform {
                 </tr>
                 <tr>
                     <td>Sex (M/F): <br><?=boldText($reportData->a_sex   ) ?></td>
-                    <td>Age: <?=boldText($reportData->a_age   ) ?></td>
+                    <td>Age: <br><?=boldText($reportData->a_age   ) ?></td>
                 </tr>
                 <tr>
-                    <td>Following the accident, the Operative is now at:<br> <?=boldText($reportData->a_following_accident   ) ?></td>
-                    <td>THIS SECTION MUST BE COMPLETED <br>If resumed work on the day of the accident state time lost: <br>
+                    <td>Following the accident, the Operative is now at:<br> <?=boldText($dropdown['operative_at_now'][$reportData->a_following_accident]   ) ?></td>
+                    <td>If resumed work on the day of the accident state time lost: <br>
 
-                    <?=($reportData->a_resumed_work=='No')? boldText($reportData->a_resumed_work ): boldText($reportData->a_hours).''. boldText($reportData->a_mins) ?>
+                    <?=($reportData->a_resumed_work=='No')? boldText('None'): boldText($reportData->a_hours).''. boldText($reportData->a_mins) ?>
                     </td>
                 </tr>
                 <tr>
                     <td>Temporary Address (if applicable): <br> <?=boldText($reportData->a_temp_address   ) ?></td>
-                    <td>Status: <br><?=boldText($reportData->a_status   ) ?></td>
+                    <td>Status: <br><?=boldText($dropdown['employment_status'][$reportData->a_status]   ) ?></td>
                 </tr>
                 <tr>
-                    <td>Occupation or Job Title: <br><?=boldText($reportData->a_job_title   ) ?></td>
-                    <td>(If Applicable) Employers Name and Address: </td>
+                    <td style="border: none !important;">Occupation or Job Title: <br><?=boldText($reportData->a_job_title   ) ?></td>
+                    <td style="border: none !important;">(If Applicable) Employers Name and Address: </td>
                 </tr>
                 </table>
             </fieldset>
@@ -335,71 +334,60 @@ class new_accident_report_form extends moodleform {
                 </tr>
                 <tr>
                     <td>On what work was the operative engaged upon at the time and/or what was the dangerous occurrence?: <br><?=boldText($reportData->b_dangerous   ) ?></td>
-                    <td>Reported: <br><?=boldText($reportData->b2_date   ) ?></td>
+                    <td>Reported: <br><?=boldText(date("d-M-Y",$reportData->b2_date)   ) ?></td>
                 </tr>
                 <tr>
-                    <td>What Does the Injured Person Believe Caused the Accident?:<br> <?=boldText($reportData->b_injured   ) ?></td>
-                    <td>Witness(es) – Names & Addresses:<br> <?=boldText($reportData->b_witness_name   ) ?></td>
+                    <td style="border: none !important;">What Does the Injured Person Believe Caused the Accident?:<br> <?=boldText($reportData->b_injured   ) ?></td>
+                    <td style="border: none !important;">Witness(es) – Names & Addresses:<br> <?=boldText($reportData->b_witness_name   ) ?></td>
                 </tr>
                 </table>
             </fieldset>    
             
             <fieldset class="scheduler-border"><legend class="scheduler-border">C. KIND OF ACCIDENT/INCIDENT/DANGEROUS OCCURRENCE</legend>
-                <table id="view_table" width="100%">
+                
                 <?php
                    $ids = explode(',',$reportData->c_kind_of_accident);
                    foreach($dropdown['kind_of_occurrence'] as $key=>$value){
                        if(in_array($key,$ids))
-                       echo "<tr> <td style='border:0px'> &#10157; ".$value."</td></tr>";
+                       echo "<tr> <td style='border:0px'> &#10157; ".$value."<br>";
                    } 
                 ?>    
                
-                </table>
             </fieldset>
             
             <fieldset class="scheduler-border"><legend class="scheduler-border">D. AGENT(S) INVOLVED</legend>
-                
-                <table id="view_table" width="100%">
+               
                 <?php
                     $ids = explode(',',$reportData->d_agents);
                    foreach($dropdown['agent_involved'] as $key=>$value){
                     if(in_array($key,$ids))
-                       echo "<tr> <td style='border:0px'> &#10157; ".$value."</td></tr>";
+                       echo "<tr> <td style='border:0px'> &#10157; ".$value."<br>";
                    } 
                 ?>    
-                </table>
+            
             </fieldset>
             
             <fieldset class="scheduler-border"><legend class="scheduler-border">E. ACCOUNT OF INCIDENT/DANGEROUS OCCURRENCE</legend>
                 
-                <table id="view_table" width="100%">
-                <tr>
-                    <td>Describe what happened and how (in the case of an accident state, what the injured person was doing at the time):<br>
+                
+                    Describe what happened and how (in the case of an accident state, what the injured person was doing at the time):<br>
                     <?=boldText($reportData->e_accident_state) ?>
-                
-                </td>
-                
-                </tr>
-                </table>
+               
+               
             </fieldset>
             
             <fieldset class="scheduler-border"><legend class="scheduler-border">F. ACTION TAKEN TO PREVENT RE-OCCURRENCE</legend>
-                
-                <table id="view_table" width="100%">
-                <tr>
-                    <td>
-                    
-                    </td>
-                
-                </tr>
-                </table>
+                <?=boldText($reportData->f_action_taken) ?>
+                  
             </fieldset>    
             
             
                 <table id="view_table" width="100%">
                 <tr>
-                    <td>Name of Person Making Report</td>
-                    <td>Date</td>
+                    <td>Name of Person Making Report: <?=boldText($reportData->declaration_name_of_person) ?></td>
+                
+                
+                    <td>Date: <?=boldText(date("d-M-Y",$reportData->declaration_date)) ?></td>
                 
                 </tr>
                 </table>
@@ -529,8 +517,7 @@ class new_accident_report_form extends moodleform {
         global $USER, $CFG,$DB;
 
         $dropdown = get_dropdown_data(1);
-
-        
+      
 
         $mform = $this->_form;
         

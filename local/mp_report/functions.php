@@ -545,13 +545,18 @@ function new_accident_pdf($acc_id) {
     ?>
     <style type="text/css">        
        
-
+        table, th, td {
+           border: 1px solid #CCC;
+           border-collapse: collapse;
+           padding: 5px;
+        }
         p{
             font-weight: bold;
             margin: 10px 0px;
         } 
     </style>
-     <p id="view_p">A. THE INJURED / INVOLVED PERSON</p>
+     <center><h1 style="text-align: center;">Accident Incident Report</h1></center>
+         <p id="view_p">A. THE INJURED / INVOLVED PERSON</p>
             <table id="view_table" width="100%">
             <tr>
                 <td>Surname: <br> <?=boldText($reportData->a_surname   ) ?></td>
@@ -563,18 +568,18 @@ function new_accident_pdf($acc_id) {
             </tr>
             <tr>
                 <td>Sex (M/F): <br><?=boldText($reportData->a_sex   ) ?></td>
-                <td>Age: <?=boldText($reportData->a_age   ) ?></td>
+                <td>Age: <br><?=boldText($reportData->a_age   ) ?></td>
             </tr>
             <tr>
-                <td>Following the accident, the Operative is now at:<br> <?=boldText($reportData->a_following_accident   ) ?></td>
-                <td>THIS SECTION MUST BE COMPLETED <br>If resumed work on the day of the accident state time lost: <br>
+                <td>Following the accident, the Operative is now at:<br> <?=boldText($dropdown['operative_at_now'][$reportData->a_following_accident]  ) ?></td>
+                <td>If resumed work on the day of the accident state time lost: <br>
 
                 <?=($reportData->a_resumed_work=='No')? boldText($reportData->a_resumed_work ): boldText($reportData->a_hours).''. boldText($reportData->a_mins) ?>
                 </td>
             </tr>
             <tr>
                 <td>Temporary Address (if applicable): <br> <?=boldText($reportData->a_temp_address   ) ?></td>
-                <td>Status: <br><?=boldText($reportData->a_status   ) ?></td>
+                <td>Status: <br><?=boldText($dropdown['employment_status'][$reportData->a_status]  ) ?></td>
             </tr>
             <tr>
                 <td>Occupation or Job Title: <br><?=boldText($reportData->a_job_title   ) ?></td>
@@ -603,27 +608,27 @@ function new_accident_pdf($acc_id) {
             </table>
             
             <p  id="view_p">C. KIND OF ACCIDENT/INCIDENT/DANGEROUS OCCURRENCE</p>
-            <table id="view_table" width="100%">
+            <div style="border: 1px solid #CCC; padding:5px" width="100%">
             <?php
                $ids = explode(',',$reportData->c_kind_of_accident);
                foreach($dropdown['kind_of_occurrence'] as $key=>$value){
                    if(in_array($key,$ids))
-                   echo "<tr> <td style='border:0px'> &#10157; ".$value."</td></tr>";
+                   echo "&#10157; ".$value."<br>";
                } 
             ?>    
            
-            </table>
+            </div>
             
             <p  id="view_p">D. AGENT(S) INVOLVED</p>
-            <table id="view_table" width="100%">
+            <div style="border: 1px solid #CCC; padding:5px" width="100%">
             <?php
                 $ids = explode(',',$reportData->d_agents);
                foreach($dropdown['agent_involved'] as $key=>$value){
                 if(in_array($key,$ids))
-                   echo "<tr> <td style='border:0px'> &#10157; ".$value."</td></tr>";
+                   echo "&#10157; ".$value."<br>";
                } 
             ?>    
-            </table>
+            </div>
             
             <p  id="view_p">E. ACCOUNT OF INCIDENT/DANGEROUS OCCURRENCE</p>
             <table id="view_table" width="100%">
@@ -640,24 +645,27 @@ function new_accident_pdf($acc_id) {
             <table id="view_table" width="100%">
             <tr>
                 <td>
-                
+                <?=boldText($reportData->f_action_taken) ?>
                 </td>
             
             </tr>
             </table>
             
-            
-            <table id="view_table" width="100%">
+            <br><br>
+            <table width="100%">
             <tr>
-                <td>Name of Person Making Report</td>
-                <td>Date</td>
+                <td>Name of Person Making Report: <?=boldText($reportData->declaration_name_of_person) ?></td>
+            
+           
+                <td>Name of Person Making Report: <?=boldText(date("d-M-Y",$reportData->declaration_date)) ?></td>
             
             </tr>
             </table>
              
             <?php
 
-    $html = ob_get_contents();
+     $html = ob_get_contents();
+   
     ob_clean();    
 
 
