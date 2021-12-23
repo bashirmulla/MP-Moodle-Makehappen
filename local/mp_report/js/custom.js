@@ -157,21 +157,28 @@ require(['jquery', 'core/modal_factory', 'core/notification', 'core/modal_events
 
     //$('#occurrance_section > div.div.col-md-3').css('display','none');
 
-    var no = $("#id_a_resumed_work_No").is(":checked");
+    var no  = $("#id_a_resumed_work_No").is(":checked");
+    var yes = $("#id_a_resumed_work_Yes").is(":checked");
 
-    if(no == false){
+
+    if(no== false && yes == false){
         $("#fitem_id_a_hours").hide();
         $("#fitem_id_a_mins").hide();
     }
-    else{
+    else  if(no== true && yes == false){
+        $("#fitem_id_a_hours").hide();
+        $("#fitem_id_a_mins").hide();
+    }
+    else  if(no== false && yes == true){
         $("#fitem_id_a_hours").show();
         $("#fitem_id_a_mins").show();
     }
+ 
 
     $('#id_a_resumed_work_No').on('click', function() {
         var no = $("#id_a_resumed_work_No").is(":checked");
 
-        if(no == false){
+        if(no == true){
             $("#fitem_id_a_hours").hide();
             $("#fitem_id_a_mins").hide();
         }
@@ -182,31 +189,37 @@ require(['jquery', 'core/modal_factory', 'core/notification', 'core/modal_events
     });
 
     $('#id_a_resumed_work_Yes').on('click', function() {
-        var no = $("#id_a_resumed_work_No").is(":checked");
+        var yes = $("#id_a_resumed_work_Yes").is(":checked");
 
-        if(no == false){
-            $("#fitem_id_a_hours").hide();
-            $("#fitem_id_a_mins").hide();
-        }
-        else{
+        if(yes == true){
             $("#fitem_id_a_hours").show();
             $("#fitem_id_a_mins").show();
         }
+        else{
+            $("#fitem_id_a_hours").hide();
+            $("#fitem_id_a_mins").hide();
+        }
     });
 
-    var b_witness = $("#id_b_witness_No").is(":checked");
+    var b_witness_yes = $("#id_b_witness_Yes").is(":checked");
+    var b_witness_no  = $("#id_b_witness_No").is(":checked");
 
-    if(b_witness == true){
+    if(b_witness_no== false && b_witness_yes == false){
         $("#fitem_id_b_witness_name").hide();
         $("#fitem_id_b_witness_address").hide();
         $("#fitem_id_b_tel_witness").hide();
     }
-    else{
+    else  if(b_witness_no== true && b_witness_yes == false){
+        $("#fitem_id_b_witness_name").hide();
+        $("#fitem_id_b_witness_address").hide();
+        $("#fitem_id_b_tel_witness").hide();
+    }
+    else  if(b_witness_no== false && b_witness_yes == true){
         $("#fitem_id_b_witness_name").show();
         $("#fitem_id_b_witness_address").show();
         $("#fitem_id_b_tel_witness").show();
     }
-
+ 
     $('#id_b_witness_No').on('click', function() {
         var no = $("#id_b_witness_No").is(":checked");
 
@@ -223,17 +236,17 @@ require(['jquery', 'core/modal_factory', 'core/notification', 'core/modal_events
     });
 
     $('#id_b_witness_Yes').on('click', function() {
-        var no = $("#id_b_witness_No").is(":checked");
+        var yes = $("#id_b_witness_Yes").is(":checked");
 
-        if(no == true){
-            $("#fitem_id_b_witness_name").hide();
-            $("#fitem_id_b_witness_address").hide();
-            $("#fitem_id_b_tel_witness").hide();
-        }
-        else{
+        if(yes == true){
             $("#fitem_id_b_witness_name").show();
             $("#fitem_id_b_witness_address").show();
             $("#fitem_id_b_tel_witness").show();
+        }
+        else{
+            $("#fitem_id_b_witness_name").hide();
+            $("#fitem_id_b_witness_address").hide();
+            $("#fitem_id_b_tel_witness").hide();
         }
     });
 

@@ -335,9 +335,9 @@ function new_accident_form(){
 
         //GDPR implementation
         //$dataobject->witness_name_address  = !empty($dataobject->witness_name_address) ? encrypt($dataobject->witness_name_address) : NULL;
-        $dataobject->user_id         = $USER->id;
-        $dataobject->created_date    = date('Y-m-d');   
-        $dataobject->updated_date    = date('Y-m-d');    
+        $dataobject->user_id       = $USER->id;
+        $dataobject->created_at    = date('Y-m-d');   
+        $dataobject->updated_at    = date('Y-m-d');    
 
         $id = save_data($dataobject,$tableName);
 
