@@ -660,56 +660,70 @@ class new_accident_report_form extends moodleform {
        
     }
 
-    public function managerPartView($reportData){
-        global $USER, $CFG;
+    public function managerPartView($reportData,$accidentData){
+        global $USER, $CFG,$DB;
 
-        $dropdown = get_dropdown_data(1);
-
-        //echo "<pre>";
-        //print_r($dropdown);
-        //die;
-
+        $dropdown = get_new_dropdown_data(1);
+      
         $mform = $this->_form;
 
-        $mform->addElement('html', '<fieldset class="scheduler-border"><legend class="scheduler-border">Line Manager Review</legend>');
-        $manager_list = get_com_manager_list();
-        $mform->addElement('static', 'manager_id', get_string('manager_name', 'local_mp_report'), $manager_list[$reportData->manager_id]);
-        $mform->addElement('static', 'accident_additional_details', get_string('accident_additional_details', 'local_mp_report'), $reportData->accident_additional_details);
-        $mform->addElement('static', 'additional_details', get_string('additional_details', 'local_mp_report'), $reportData->additional_details);
-        $mform->addElement('static', 'root_cause', get_string('root_cause', 'local_mp_report'), $reportData->root_cause);
-        $mform->addElement('static', 'immediate_action', get_string('immediate_action', 'local_mp_report'), $reportData->immediate_action);
-        $mform->addElement('static', 'further_action_required', get_string('further_action_required', 'local_mp_report'), $reportData->further_action_required);
-        $mform->addElement('static', 'lost_time', get_string('lost_time','local_mp_report'), $reportData->lost_time);
-        $mform->addElement('static', 'lost_time_days', get_string('lost_time_days', 'local_mp_report'), $reportData->lost_time_days);
-        $mform->addElement('static', 'mgt_review_report_date', get_string('mgt_review_report_date', 'local_mp_report'), date('d-M-Y',$reportData->mgt_review_report_date));
-        $mform->addElement('static', 'mgt_review_status', get_string('mgt_review_status', 'local_mp_report'), $dropdown['mgt_review_status'][$reportData->mgt_review_status]);
-        $mform->addElement('static', 'mgt_review_comments', get_string('mgt_review_comments', 'local_mp_report'), $reportData->mgt_review_comments);
+        //$mform->addElement('hidden', 'new_accident_id', !empty($_REQUEST['id']) ? $_REQUEST['id'] : $mform->new_accident_id);
+        
+        $mform->addElement('html', '<h3 style="text-align:center;margin-top:30px">Accident Investigation Form</h3>');
+
+        $mform->addElement('html', '<fieldset class="scheduler-border"><legend class="scheduler-border">Information</legend>');
+            $mform->addElement('static', 'm1', 'Incident Type', @$dropdown['incident_type'][$reportData->incident_type]);
+            $mform->addElement('static', 'm2', 'Affecting',     @$dropdown['affecting'][$reportData->affecting]);
+            $mform->addElement('static', 'm3', 'Compensation',  @$dropdown['compensation'][$reportData->compensation]);
         $mform->addElement('html', '</fieldset>');
 
-        if(!empty($reportData->manager_id) and (is_senior_manager() or is_complieance() or is_admin())) {
-            $mform->addElement('html', '<fieldset class="scheduler-border"><legend class="scheduler-border">Senior Management Report</legend>');
+        $mform->addElement('html', '<fieldset class="scheduler-border"><legend class="scheduler-border">Affected Employee / Person</legend>');        
+            $mform->addElement('static', 'name1', 'Name',$accidentData->a_surname.' '.$accidentData->a_forename );
+            $mform->addElement('static', 'name2', 'Role & Department','' );
+            $mform->addElement('static', 'name3', 'Phone Number',$accidentData->a_tel_no );
+            $mform->addElement('static', 'name4', 'Date of Incident',$accidentData->b_date );
+            $mform->addElement('static', 'name5', 'Time of Incident',$accidentData->b_date );
+            $mform->addElement('static', 'name7', 'Location of Incident',$accidentData->b_exact_location_site );
+            $mform->addElement('static', 'name8', 'Supervisor Name',$accidentData->a_employers_name );
+        $mform->addElement('html', '</fieldset>');
 
-            $s_manager_and_complience_list = get_s_manager_and_complience_list();
-            $mform->addElement('static', 's_mgt_rpt_name', get_string('s_mgt_rpt_name', 'local_mp_report'), $s_manager_and_complience_list[$reportData->s_mgt_rpt_name]);
-            $mform->addElement('static', 's_mgt_rpt_report_date', get_string('s_mgt_rpt_report_date', 'local_mp_report'), date('d-M-Y',$reportData->s_mgt_rpt_report_date));
-            $mform->addElement('static', 's_mgt_rpt_comments', get_string('s_mgt_rpt_comments', 'local_mp_report'), $reportData->s_mgt_rpt_comments);
-            $mform->addElement('static', 's_mgt_rpt_f_action', get_string('s_mgt_rpt_f_action', 'local_mp_report'), $dropdown['further_action'][$reportData->s_mgt_rpt_f_action]);
-            $mform->addElement('static', 's_mgt_rpt_f_a_comment', get_string('s_mgt_rpt_f_a_comment', 'local_mp_report'), $reportData->s_mgt_rpt_f_a_comment);
-            $mform->addElement('static', 's_mgt_rpt_2508_completed', get_string('s_mgt_rpt_2508_completed', 'local_mp_report'), $dropdown['yes_no'][$reportData->s_mgt_rpt_2508_completed]);
-            $mform->addElement('static', 's_mgt_rpt_2508_cpt_date', get_string('s_mgt_rpt_2508_cpt_date', 'local_mp_report'), date('d-M-Y',$reportData->s_mgt_rpt_2508_cpt_date));
-            $mform->addElement('static', 's_mgt_rpt_riddor_event_clf', get_string('s_mgt_rpt_riddor_event_clf', 'local_mp_report'), $dropdown['riddor_classification'][$reportData->s_mgt_rpt_riddor_event_clf]);
-            $mform->addElement('static', 'riddor_subcategory', get_string('s_mgt_rpt_riddor_subcategory', 'local_mp_report'), $dropdown['RIDDOR_subcategory'][$reportData->riddor_subcategory]);
-            $mform->addElement('static', 's_mgt_rpt_reported_en_a', get_string('s_mgt_rpt_reported_en_a', 'local_mp_report'), $dropdown['yes_no'][$reportData->s_mgt_rpt_reported_en_a]);
-            $mform->addElement('static', 's_mgt_rpt_reported_en_a_date', get_string('s_mgt_rpt_reported_en_a_date', 'local_mp_report'), date('d-M-Y',$reportData->s_mgt_rpt_reported_en_a_date));
-            $mform->addElement('static', 's_mgt_rpt_sr_mgr_notified', get_string('s_mgt_rpt_sr_mgr_notified', 'local_mp_report'), $dropdown['yes_no'][$reportData->s_mgt_rpt_sr_mgr_notified]);
-            $mform->addElement('static', 's_mgt_rpt_sr_mgr_notified_date', get_string('s_mgt_rpt_sr_mgr_notified_date', 'local_mp_report'), date('d-M-Y',$reportData->s_mgt_rpt_sr_mgr_notified_date));
-            $mform->addElement('static', 's_mgt_rpt_in_br_informed', get_string('s_mgt_rpt_in_br_informed', 'local_mp_report'), $dropdown['yes_no'][$reportData->s_mgt_rpt_in_br_informed]);
-            $mform->addElement('static', 's_mgt_rpt_ant_closed_off', get_string('s_mgt_rpt_ant_closed_off', 'local_mp_report'), $dropdown['yes_no'][$reportData->s_mgt_rpt_ant_closed_off]);
-            $mform->addElement('static', 's_mgt_rpt_ant_closed_off_date', get_string('s_mgt_rpt_ant_closed_off_date', 'local_mp_report'), date('d-M-Y',$reportData->s_mgt_rpt_ant_closed_off_date));
+        $mform->addElement('html', '<fieldset class="scheduler-border"><legend class="scheduler-border">Interviewee 1</legend>');
+            $mform->addElement('static', 'interviewee1_nameM', 'Name', $reportData->interviewee1_name);  
+            $mform->addElement('static', 'interviewee1_roleM', 'Role & Department', $reportData->interviewee1_role);
+            $mform->addElement('static', 'interviewee1_telephoneM', 'Phone Number', $reportData->interviewee1_telephone);
+        $mform->addElement('html', '</fieldset>');
 
-            $mform->addElement('html', '</fieldset>');
+        $mform->addElement('html', '<fieldset class="scheduler-border"><legend class="scheduler-border">Interviewee 2</legend>');
+            $mform->addElement('static', 'interviewee2_nameM', 'Name', $reportData->interviewee2_name);
+            $mform->addElement('static', 'interviewee2_roleM', 'Role & Department', $reportData->interviewee2_role);
+            $mform->addElement('static', 'interviewee2_telephoneM', 'Phone Number', $reportData->interviewee2_telephone);
+        $mform->addElement('html', '</fieldset>');
 
-        }
+        $mform->addElement('html', '<fieldset class="scheduler-border"><legend class="scheduler-border">Investigator</legend>');
+            $mform->addElement('static', 'investigator_nameM', 'Name', $reportData->investigator_name);
+            $mform->addElement('static', 'investigator_roleM', 'Role & Department', $reportData->investigator_role);
+            $mform->addElement('static', 'investigator_telephoneM', 'Phone Number', $reportData->investigator_telephone);
+            $mform->addElement('static', 'investigation_dateM', 'Date of Investigation', $reportData->investigation_date);
+        $mform->addElement('html', '</fieldset>');
+
+        $mform->addElement('html', '<fieldset class="scheduler-border"><legend class="scheduler-border">Other Information</legend>');
+            $mform->addElement('static', 'incident_descriptionM', 'Incident Description', $reportData->incident_description);
+            $mform->addElement('static', 'interviewee1_statementM', 'Interviewee 1 Statement', $reportData->interviewee1_statement);
+            $mform->addElement('static', 'interviewee2_statementM', 'Interviewee 2 Statement', $reportData->interviewee2_statement);
+            $mform->addElement('static', 'contributors_incidentM', 'Contributors to Incident', @$dropdown['contributors_incident'][$reportData->contributors_incident]);
+            $mform->addElement('static', 'results_investigationM', 'Results of Investigation', $reportData->results_investigation);
+            $mform->addElement('static', 'receive_medical_treatmentM', $reportData->receive_medical_treatment);
+            $mform->addElement('static', 'lost_time_reportM', $reportData->lost_time_report);
+            $mform->addElement('static', 'recommended_actionsM', 'Recommended Corrective Actions', @$dropdown['recommended_actions'][$reportData->recommended_actions]);
+            $mform->addElement('static', 'specifice_corrective_actionsM', 'Please provide additional Information regarding specific corrective actions:', $reportData->specifice_corrective_actions);
+            $mform->addElement('static', 'corrective_actions_completedM', 'Please provide details of when the corrective actions have been completed', $reportData->corrective_actions_completed);
+            $mform->addElement('static', 'other_materialsM', 'Please detail any other materials including photographs', $reportData->other_materials);
+            
+
+           
+        $mform->addElement('html', '</fieldset>');
+
+        
 
         if( is_senior_manager() || is_complieance() || is_admin() || is_manager()) {
             $pdfbuttons ='<div class="row" >
@@ -737,7 +751,8 @@ class new_accident_report_form extends moodleform {
 		$heading = '<h3 style="text-align: center">'.get_string('accident', 'local_mp_report');
         $report_closed = FALSE;
         if(isset($_REQUEST['id']) && $_REQUEST['cmd']=='new_acc_edit' &&( is_senior_manager() || is_complieance() || is_admin() || is_manager()) ) {
-            $reportData = get_data(array("id"=>$_REQUEST['id']),get_string('new_accident_table','local_mp_report'));
+            $reportData        = get_data(array("id"=>$_REQUEST['id']),get_string('new_accident_table','local_mp_report'));
+            $reportDataManager = get_data(array("new_accident_id"=>$reportData->id),get_string('new_accident_manager_table','local_mp_report'));
 
             if ($reportData->s_mgt_rpt_ant_closed_off==1){
                 $report_closed = TRUE;
@@ -762,12 +777,12 @@ class new_accident_report_form extends moodleform {
 
             $mform->addElement('html', $heading);
             $this->userPartViewNew($reportData);
-            $this->managerPartForm($reportData);
-            //if ($reportData->read_only==1){
-            //    $this->managerPartView($reportData);
-            //}else {
-            //    $this->managerPartForm($reportData);
-            //}
+            //$this->managerPartForm($reportData);
+            if (!empty($reportDataManager)){
+                $this->managerPartView($reportDataManager,$reportData);
+            }else {
+                $this->managerPartForm($reportData);
+            }
             $btnLavel = get_string('savebutton', 'local_mp_report');
         }
         else {
