@@ -519,6 +519,8 @@ class new_accident_report_form extends moodleform {
         $dropdown = get_new_dropdown_data(1);
       
         $mform = $this->_form;
+
+        //$mform->addElement('hidden', 'new_accident_id', !empty($_REQUEST['id']) ? $_REQUEST['id'] : $mform->new_accident_id);
         
         $mform->addElement('html', '<h3 style="text-align:center;margin-top:30px">Accident Investigation Form</h3>');
 

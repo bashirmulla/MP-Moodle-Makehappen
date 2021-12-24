@@ -153,7 +153,9 @@ $string['report_closed']              = 'Report closed?';
 
 
 
-$string['new_accident_table']   = 'new_accident_report';
+$string['new_accident_table']          = 'new_accident_report';
+$string['new_accident_manager_table']  = 'new_accident_manager_report';
+
 $string['accident_table']       = 'accident_report';
 $string['incident_table']       = 'incident_report';
 

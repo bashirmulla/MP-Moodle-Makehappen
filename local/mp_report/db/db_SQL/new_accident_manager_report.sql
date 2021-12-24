@@ -1,5 +1,5 @@
 
-CREATE TABLE `new_accident_manager_report` (
+CREATE TABLE `mdl_new_accident_manager_report` (
   `id` int(11) NOT NULL,
   `new_accident_id` int(11) NOT NULL,
   `incident_type` int(11) DEFAULT NULL,
@@ -31,10 +31,10 @@ CREATE TABLE `new_accident_manager_report` (
   `updated_at` bigint(20) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
-ALTER TABLE `new_accident_manager_report`
+ALTER TABLE `mdl_new_accident_manager_report`
   ADD PRIMARY KEY (`id`);
 
-ALTER TABLE `new_accident_manager_report`
+ALTER TABLE `mdl_new_accident_manager_report`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 COMMIT;
 

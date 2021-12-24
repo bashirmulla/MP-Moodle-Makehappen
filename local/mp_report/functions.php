@@ -293,68 +293,106 @@ function new_accident_form(){
     $dataobject  = $form->get_submitted_data();
 
     
+    
     $c_kind_of_accident = "";
     $d_agents           = "";
 
-    foreach($dataobject as $key=>$data){
-        if( preg_match('/c_kind_of_accident/i', $key)){
-               
-               $temp = explode("##",$key);
-                             
-               if(!empty($c_kind_of_accident)){
-                  $c_kind_of_accident .= ",".$temp[1];
-               }
-               else{
-                  $c_kind_of_accident .= $temp[1];
-               }
-            unset($dataobject->$key);   
-        }
+    if(!isset($dataobject->incident_type)){
 
-        if( preg_match('/d_agents/i', $key)){
-               
-            $temp = explode("##",$key);
-                          
-            if(!empty($d_agents)){
-               $d_agents .= ",".$temp[1];
+        foreach($dataobject as $key=>$data){
+            if( preg_match('/c_kind_of_accident/i', $key)){
+                
+                $temp = explode("##",$key);
+                                
+                if(!empty($c_kind_of_accident)){
+                    $c_kind_of_accident .= ",".$temp[1];
+                }
+                else{
+                    $c_kind_of_accident .= $temp[1];
+                }
+                unset($dataobject->$key);   
+            }
+
+            if( preg_match('/d_agents/i', $key)){
+                
+                $temp = explode("##",$key);
+                            
+                if(!empty($d_agents)){
+                $d_agents .= ",".$temp[1];
+                }
+                else{
+                $d_agents .= $temp[1];
+                }
+                unset($dataobject->$key);   
+            }
+        }
+        $dataobject->c_kind_of_accident = $c_kind_of_accident;
+        $dataobject->d_agents           = $d_agents;
+
+        unset($dataobject->read_only);
+        unset($dataobject->save);
+        
+        if(!empty($dataobject) && $form->is_validated()){
+
+            $dataobject->submitter_to_manager = 'Yes';
+
+            //GDPR implementation
+            //$dataobject->witness_name_address  = !empty($dataobject->witness_name_address) ? encrypt($dataobject->witness_name_address) : NULL;
+            $dataobject->user_id       = $USER->id;
+            //$dataobject->created_at    = date('Y-m-d');   
+            //$dataobject->updated_at    = date('Y-m-d'); 
+        
+
+            $id = save_data($dataobject,$tableName);
+
+            if(!empty($id) ){
+
+                if(empty($dataobject->id)) {
+                
+                    $pdf_file = new_accident_pdf($id);
+                    $report_title = "Accident Report";
+                    $subject = "Notification of Accident Report";
+                    $message = "A new accident report has been submitted. Please see the attached report.";
+                    //send_email_to_manager($dataobject->user_manager,"Makehappen", $subject, $message, pdfs_email_attachment().$pdf_file, $pdf_file,$report_title);
+                    //send_mp_report_email("Makehappen", $subject, $message, pdfs_email_attachment() . $pdf_file, $pdf_file,$report_title);
+
+                }
+
+
+                //echo $OUTPUT->notification("Data has been saved successfully!!...",'notifysuccess');
+                redirect($homeurl,"Data has been saved successfully!!...","6",'success');
             }
             else{
-               $d_agents .= $temp[1];
+                //echo $OUTPUT->notification("Sorry!!.. unable to save the data");
+                redirect($homeurl,"Sorry!!.. unable to save the data...","6",'error');
             }
-            unset($dataobject->$key);   
-        }
-    }
-    $dataobject->c_kind_of_accident = $c_kind_of_accident;
-    $dataobject->d_agents           = $d_agents;
 
-    unset($dataobject->read_only);
-    unset($dataobject->save);
-    
+        }
+        else {
+
+            $data = $form->get_data();
+            $form->set_data($data);
+            $form->display();
+        }
+   }
+   else{
+
+
+
     if(!empty($dataobject) && $form->is_validated()){
 
-        $dataobject->submitter_to_manager = 'Yes';
-
-        //GDPR implementation
-        //$dataobject->witness_name_address  = !empty($dataobject->witness_name_address) ? encrypt($dataobject->witness_name_address) : NULL;
-        $dataobject->user_id       = $USER->id;
-        //$dataobject->created_at    = date('Y-m-d');   
-        //$dataobject->updated_at    = date('Y-m-d'); 
-       
+        $tableName                   =  $tableName  = get_string('new_accident_manager_table','local_mp_report');
+        $dataobject->user_id         = $USER->id;
+        $dataobject->new_accident_id = $dataobject->id;
+        
+        unset($dataobject->id);
+        unset($dataobject->read_only);
+        unset($dataobject->save);
+        unset($dataobject->cmd);
 
         $id = save_data($dataobject,$tableName);
 
         if(!empty($id) ){
-
-            if(empty($dataobject->id)) {
-              
-                $pdf_file = new_accident_pdf($id);
-                $report_title = "Accident Report";
-                $subject = "Notification of Accident Report";
-                $message = "A new accident report has been submitted. Please see the attached report.";
-                //send_email_to_manager($dataobject->user_manager,"Makehappen", $subject, $message, pdfs_email_attachment().$pdf_file, $pdf_file,$report_title);
-                //send_mp_report_email("Makehappen", $subject, $message, pdfs_email_attachment() . $pdf_file, $pdf_file,$report_title);
-
-            }
-
 
             //echo $OUTPUT->notification("Data has been saved successfully!!...",'notifysuccess');
             redirect($homeurl,"Data has been saved successfully!!...","6",'success');
@@ -364,13 +402,14 @@ function new_accident_form(){
             redirect($homeurl,"Sorry!!.. unable to save the data...","6",'error');
         }
 
-    }
-    else {
+        }
+        else {
 
-        $data = $form->get_data();
-        $form->set_data($data);
-        $form->display();
-    }
+            $data = $form->get_data();
+            $form->set_data($data);
+            $form->display();
+        } 
+   }
 
 
 }
