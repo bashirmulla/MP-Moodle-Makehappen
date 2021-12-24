@@ -72,7 +72,7 @@ class new_accident_report_form extends moodleform {
         $mform->addRule('a_sex', get_string('required'), 'required','','client');
         
         $mform->addElement('text', 'a_age', get_string('a_age', 'local_mp_report'), 'maxlength="100" size="40" width="40px" ');
-        $mform->setType('a_age', PARAM_TEXT);
+        $mform->setType('a_age', PARAM_INT);
         $mform->addRule('a_age', get_string('required'), 'required','','client');
 
         $mform->addElement('select', 'a_following_accident', get_string('a_following_accident', 'local_mp_report'), createDropdown($dropdown['operative_at_now']));

@@ -336,8 +336,9 @@ function new_accident_form(){
         //GDPR implementation
         //$dataobject->witness_name_address  = !empty($dataobject->witness_name_address) ? encrypt($dataobject->witness_name_address) : NULL;
         $dataobject->user_id       = $USER->id;
-        $dataobject->created_at    = date('Y-m-d');   
-        $dataobject->updated_at    = date('Y-m-d');    
+        //$dataobject->created_at    = date('Y-m-d');   
+        //$dataobject->updated_at    = date('Y-m-d'); 
+       
 
         $id = save_data($dataobject,$tableName);
 
@@ -599,7 +600,7 @@ function new_accident_pdf($acc_id) {
             </tr>
             <tr>
                 <td>On what work was the operative engaged upon at the time and/or what was the dangerous occurrence?: <br><?=boldText($reportData->b_dangerous   ) ?></td>
-                <td>Reported: <br><?=boldText($reportData->b2_date   ) ?></td>
+                <td>Reported: <br><?=boldText(date("d-M-Y",$reportData->b2_date)) ?></td>
             </tr>
             <tr>
                 <td>What Does the Injured Person Believe Caused the Accident?:<br> <?=boldText($reportData->b_injured   ) ?></td>

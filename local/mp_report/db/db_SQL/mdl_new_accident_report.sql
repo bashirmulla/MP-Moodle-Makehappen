@@ -1,32 +1,3 @@
--- phpMyAdmin SQL Dump
--- version 5.1.1
--- https://www.phpmyadmin.net/
---
--- Host: 127.0.0.1
--- Generation Time: Dec 23, 2021 at 09:52 AM
--- Server version: 10.4.21-MariaDB
--- PHP Version: 7.3.31
-
-SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-START TRANSACTION;
-SET time_zone = "+00:00";
-
-
-/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
-/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8mb4 */;
-
---
--- Database: `mp-moodle`
---
-
--- --------------------------------------------------------
-
---
--- Table structure for table `mdl_new_accident_report`
---
-
 CREATE TABLE `mdl_new_accident_report` (
   `id` bigint(11) NOT NULL,
   `user_id` bigint(11) NOT NULL,
@@ -81,27 +52,10 @@ INSERT INTO `mdl_new_accident_report` (`id`, `user_id`, `a_surname`, `a_forename
 (3, 3, 'Happen1', 'Make', 'Gwgwg', 'Gwgwg', 21, 'Male', 12, '51', 'Yes', 11, 11, 'Gagwg', '55', 'Gagwg', 'Gwgw', 'Gwgw', 'Gwgw', 1640038080, 'Fwgw', 'Gwgw', 'Gwg2', 1640038080, 'Gwgw', 'Yes', 'Gwgwgs', 'Gwgwg', '64', 'Fall from height', 12, '22,27', 'Hwhw', 'Yes', 'Gwg', 'Gwg', 'Make Happen1', 1639958400, 'Yes', 1640039291, NULL),
 (4, 2, 'Admin', 'User', 'This is a Dest', 'sadf', 1714116624, 'Male', 222, '51', 'Yes', 33, 33, 'CDDL Humaira Palace, House: 310, Flat: 3B, Road: 03, Baitul Aman Housing, Adabor', '55', 'dfg', 'dsfg', 'dsfg', 'dfg', 1640248680, 'CDDL Humaira Palace, House: 310, Flat: 3B, Road: 03, Baitul Aman Housing, Adabor', 'sdfg', 'dsfg', 1640248680, 'dsfg', 'Yes', 'sdfg', 'dsfg', 'dsfg', '8,1,7', NULL, '24,23,22', NULL, 'Yes', 'sdfgsdf', 'dsfg', 'Admin User', 1640248680, 'Yes', NULL, NULL);
 
---
--- Indexes for dumped tables
---
 
---
--- Indexes for table `mdl_new_accident_report`
---
 ALTER TABLE `mdl_new_accident_report`
   ADD PRIMARY KEY (`id`);
 
---
--- AUTO_INCREMENT for dumped tables
---
-
---
--- AUTO_INCREMENT for table `mdl_new_accident_report`
---
 ALTER TABLE `mdl_new_accident_report`
   MODIFY `id` bigint(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 COMMIT;
-
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
