@@ -1,3 +1,4 @@
+DROP TABLE IF EXISTS `mdl_new_standing_table`;
 
 CREATE TABLE `mdl_new_standing_table` (
   `id` bigint(10) NOT NULL,

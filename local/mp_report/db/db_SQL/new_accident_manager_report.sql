@@ -1,4 +1,5 @@
 
+DROP TABLE IF EXISTS `mdl_new_accident_manager_report`;
 CREATE TABLE `mdl_new_accident_manager_report` (
   `id` int(11) NOT NULL,
   `new_accident_id` int(11) NOT NULL,

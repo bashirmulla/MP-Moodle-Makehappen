@@ -1,3 +1,5 @@
+
+DROP TABLE IF EXISTS `mdl_new_accident_report`;
 CREATE TABLE `mdl_new_accident_report` (
   `id` bigint(11) NOT NULL,
   `user_id` bigint(11) NOT NULL,
