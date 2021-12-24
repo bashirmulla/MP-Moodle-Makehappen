@@ -554,6 +554,9 @@ function export_pdf($report_type,$filename) {
     }elseif($report_type == 'full_inc') {
         $pdf_file = incident_full_pdf(intval($_REQUEST['id']));
     }
+    elseif($report_type == 'full_new_acc') {
+        echo $pdf_file = new_accident_full_pdf(intval($_REQUEST['id']));
+    }
 
     if($pdf_file) {
         $fileurl = pdfs_path() . $pdf_file;
@@ -705,6 +708,339 @@ function new_accident_pdf($acc_id) {
             <?php
 
      $html = ob_get_contents();
+   
+    ob_clean();    
+
+
+    require_once($CFG->libdir.'/pdflib.php');
+
+    $file_name = $user -> firstname ."-". $user -> lastname .'-'. $data -> id . '.pdf';
+    $file_name = str_replace(" ","-", $file_name);
+
+    $pdf = new pdf();
+    $PDF_HEADER_LOGO       = '/local/mp_report/images/mh_logo_sm.png'; //any image file. check correct path.
+    $PDF_HEADER_LOGO_WIDTH = "60%";
+    $PDF_HEADER_TITLE      = "";
+    $PDF_HEADER_STRING     = "";
+
+    $pdf->SetMargins(15, 20, 15);
+    $pdf->SetHeaderMargin(1);
+    $pdf->SetFooterMargin(0);
+    $pdf->SetHeaderData($PDF_HEADER_LOGO, $PDF_HEADER_LOGO_WIDTH, $PDF_HEADER_TITLE, $PDF_HEADER_STRING);
+
+
+    $pdf -> AddPage();
+    $pdf -> WriteHTML($html);
+    $pdf -> Output( pdfs_path() . $file_name, 'F' );
+
+    return $file_name;
+}
+
+function new_accident_full_pdf($acc_id) {
+
+    global $homeurl,$DB, $CFG;
+
+    $photo_path = $CFG->dataroot."/filedir/upload";
+    $tableName  = get_string('new_accident_table','local_mp_report');
+    $select['id']  = $acc_id;
+    $reportData        = $DB->get_record($tableName, $select);
+    $reporManagertData = $DB->get_record('new_accident_manager_report', array("new_accident_id" => $acc_id));
+    $user = get_userInfo( array("id" => $reportData -> user_id ));
+
+    //$manager            = get_userInfo( array("id" => $reportData -> user_manager ));
+    $dropdown           = get_new_dropdown_data(1);
+    $employment_status  = $dropdown['employment_status'];
+    $operative_at_now   = $dropdown['operative_at_now'];
+
+    ob_start();
+    ?>
+    <style type="text/css">        
+       
+        table, th, td {
+           border: 1px solid #CCC;
+           border-collapse: collapse;
+           padding: 5px;
+        }
+        p{
+            font-weight: bold;
+            margin: 10px 0px;
+        } 
+    </style>
+     <center><h1 style="text-align: center;">Accident Incident Report</h1></center>
+         <p id="view_p">A. THE INJURED / INVOLVED PERSON</p>
+            <table id="view_table" width="100%">
+            <tr>
+                <td>Surname: <br> <?=boldText($reportData->a_surname   ) ?></td>
+                <td>Forename(s): <br><?=boldText($reportData->a_forename   ) ?></td>
+            </tr>
+            <tr>
+                <td>Home Address: <br><?=boldText($reportData->a_home_address   ) ?></td>
+                <td>Tel No: <br><?=boldText($reportData->a_tel_no   ) ?></td>
+            </tr>
+            <tr>
+                <td>Sex (M/F): <br><?=boldText($reportData->a_sex   ) ?></td>
+                <td>Age: <br><?=boldText($reportData->a_age   ) ?></td>
+            </tr>
+            <tr>
+                <td>Following the accident, the Operative is now at:<br> <?=boldText($dropdown['operative_at_now'][$reportData->a_following_accident]  ) ?></td>
+                <td>If resumed work on the day of the accident state time lost: <br>
+
+                <?=($reportData->a_resumed_work=='No')? boldText($reportData->a_resumed_work ): boldText($reportData->a_hours).''. boldText($reportData->a_mins) ?>
+                </td>
+            </tr>
+            <tr>
+                <td>Temporary Address (if applicable): <br> <?=boldText($reportData->a_temp_address   ) ?></td>
+                <td>Status: <br><?=boldText($dropdown['employment_status'][$reportData->a_status]  ) ?></td>
+            </tr>
+            <tr>
+                <td>Occupation or Job Title: <br><?=boldText($reportData->a_job_title   ) ?></td>
+                <td>(If Applicable) Employers Name and Address: </td>
+            </tr>
+            </table>
+            
+            <p  id="view_p">B. DATE, TIME, AND PLACE OF ACCIDENT/INCIDENT/DANGEROUS OCCURRENCE</p>
+            <table id="view_table" width="100%">
+            <tr>
+                <td>Date: <br><?=boldText(date("d-M-Y",$reportData->b_date)   ) ?></td>
+                <td>Time: <br><?=boldText(date("H:m",$reportData->b_date)   ) ?></td>
+            </tr>
+            <tr>
+                <td>Name & Address of Site: <br><?=boldText($reportData->b_name_address_site   ) ?></td>
+                <td>Exact Location on Site: <br><?=boldText($reportData->b_exact_location_site   ) ?></td>
+            </tr>
+            <tr>
+                <td>On what work was the operative engaged upon at the time and/or what was the dangerous occurrence?: <br><?=boldText($reportData->b_dangerous   ) ?></td>
+                <td>Reported: <br><?=boldText(date("d-M-Y",$reportData->b2_date)) ?></td>
+            </tr>
+            <tr>
+                <td>What Does the Injured Person Believe Caused the Accident?:<br> <?=boldText($reportData->b_injured   ) ?></td>
+                <td>Witness(es) – Names & Addresses:<br> <?=boldText($reportData->b_witness_name   ) ?></td>
+            </tr>
+            </table>
+            
+            <p  id="view_p">C. KIND OF ACCIDENT/INCIDENT/DANGEROUS OCCURRENCE</p>
+            <div style="border: 1px solid #CCC; padding:5px" width="100%">
+            <?php
+               $ids = explode(',',$reportData->c_kind_of_accident);
+               foreach($dropdown['kind_of_occurrence'] as $key=>$value){
+                   if(in_array($key,$ids))
+                   echo "&#10157; ".$value."<br>";
+               } 
+            ?>    
+           
+            </div>
+            
+            <p  id="view_p">D. AGENT(S) INVOLVED</p>
+            <div style="border: 1px solid #CCC; padding:5px" width="100%">
+            <?php
+                $ids = explode(',',$reportData->d_agents);
+               foreach($dropdown['agent_involved'] as $key=>$value){
+                if(in_array($key,$ids))
+                   echo "&#10157; ".$value."<br>";
+               } 
+            ?>    
+            </div>
+            
+            <p  id="view_p">E. ACCOUNT OF INCIDENT/DANGEROUS OCCURRENCE</p>
+            <table id="view_table" width="100%">
+            <tr>
+                <td>Describe what happened and how (in the case of an accident state, what the injured person was doing at the time):<br>
+                <?=boldText($reportData->e_accident_state) ?>
+            
+            </td>
+            
+            </tr>
+            </table>
+            
+            <p id="view_p">F. ACTION TAKEN TO PREVENT RE-OCCURRENCE</p>
+            <table id="view_table" width="100%">
+            <tr>
+                <td>
+                <?=boldText($reportData->f_action_taken) ?>
+                </td>
+            
+            </tr>
+            </table>
+            
+            <br><br>
+            <table width="100%">
+            <tr>
+                <td>Name of Person Making Report: <?=boldText($reportData->declaration_name_of_person) ?></td>
+            
+           
+                <td>Name of Person Making Report: <?=boldText(date("d-M-Y",$reportData->declaration_date)) ?></td>
+            
+            </tr>
+            </table>
+
+        <!-- MANAGER REPORT SECTION -->
+        <div style="page-break-before:always">&nbsp;</div> 
+
+
+        <center><h1 style="text-align: center;">Accident Investigation Form</h1></center>
+            <table id="view_table" width="100%">
+                <tr>
+                    <td>Incident Type: <br> <?=boldText(@$dropdown['incident_type'][$reporManagertData->incident_type] ) ?></td>
+                    <td>Affecting: <br><?=boldText(@$dropdown['affecting'][$reporManagertData->affecting]) ?></td>
+                    <td>Compensation: <br><?=boldText(@$dropdown['compensation'][$reporManagertData->compensation]) ?></td>
+                    
+                </tr>
+            </table>    
+            <p  id="view_p">Affected Employee / Person</p>
+            <table id="view_table" width="100%">
+                <tr>
+                    <td>Name:</td>
+                    <td><?=boldText($reportData->a_surname.' '.$reportData->a_forename ) ?></td>
+                </tr>
+                <tr>
+                    <td>Role & Department:</td>
+                    <td><?=boldText($reportData->a_surname.' '.$reportData->a_forename ) ?></td>
+                </tr>
+                <tr>
+                    <td>Phone Number:</td>
+                    <td><?=boldText($reportData->a_tel_no) ?></td>
+                </tr>
+                <tr>
+                    <td>Date of Incident:</td>
+                    <td><?=boldText(date("d-M-Y",$reportData->b_date)) ?></td>
+                </tr>
+                <tr>
+                    <td>Time of Incident:</td>
+                    <td><?=boldText(date("d-M-Y",$reportData->b_date)) ?></td>
+                </tr>
+                <tr>
+                    <td>Location of Incident:</td>
+                    <td><?=boldText($reportData->b_exact_location_site) ?></td>
+                </tr>
+                <tr>
+                    <td>Supervisor Name:</td>
+                    <td><?=boldText($reportData->a_employers_name) ?></td>
+                </tr>
+            </table>
+            
+            <p  id="view_p">Interviewees</p>
+            <table id="view_table" width="100%">
+                <tr>
+                    <td></td>
+                    <td>Interviewee 1</td>
+                    <td>Interviewee 2</td>
+                </tr>
+                <tr>
+                    <td>Name: </td>
+                    <td><?=boldText($reporManagertData->interviewee1_name) ?></td>
+                    <td><?=boldText($reporManagertData->interviewee2_name) ?></td>
+                </tr>
+                <tr>
+                    <td>Role & Department: </td>
+                    <td><?=boldText($reporManagertData->interviewee1_role) ?></td>
+                    <td><?=boldText($reporManagertData->interviewee2_role) ?></td>
+                </tr>
+                <tr>
+                    <td>Phone Number: </td>
+                    <td><?=boldText($reporManagertData->interviewee1_telephone) ?></td>
+                    <td><?=boldText($reporManagertData->interviewee2_telephone) ?></td>
+                </tr>
+            </table>
+            
+            <p  id="view_p">Investigator</p>
+            <table id="view_table" width="100%">
+                <tr>
+                    <td>Name:</td>
+                    <td><?=boldText($reporManagertData->investigator_name) ?></td>
+                </tr>
+                <tr>
+                    <td>Role & Department:</td>
+                    <td><?=boldText($reporManagertData->investigator_role) ?></td>
+                </tr>
+                <tr>
+                    <td>Phone Number:</td>
+                    <td><?=boldText($reporManagertData->investigator_telephone) ?></td>
+                </tr>               
+                <tr>
+                    <td>Date of Investigation</td>
+                    <td><?=boldText(date("d-M-Y",$reportData->investigation_date)) ?></td>
+                </tr>
+                
+            </table>
+
+            <p  id="view_p">Incident Description</p>
+            <table id="view_table" width="100%">
+                <tr>
+                    <td><?=boldText($reporManagertData->incident_description) ?></td>
+                </tr>
+            </table>
+
+            <p  id="view_p">Interviewee 1 Statement</p>
+            <table id="view_table" width="100%">
+                <tr>
+                    <td><?=boldText($reporManagertData->interviewee1_statement) ?></td>
+                </tr>
+            </table>
+
+            <p  id="view_p">Interviewee 2 Statement</p>
+            <table id="view_table" width="100%">
+                <tr>
+                    <td><?=boldText($reporManagertData->interviewee2_statement) ?></td>
+                </tr>
+            </table>
+
+            <p  id="view_p">Contributors to Incident:</p>
+            <table id="view_table" width="100%">
+                <tr>
+                    <td><?=boldText($reporManagertData->contributors_incident) ?></td>
+                </tr>
+            </table>
+
+            <p  id="view_p">Results of Investigation:</p>
+            <table id="view_table" width="100%">
+                <tr>
+                    <td><?=boldText($reporManagertData->results_investigation) ?></td>
+                </tr>
+            </table>
+            <br>
+            <table id="view_table" width="100%">
+                <tr>
+                    <td>Did the employee receive medical treatment? (give details)</td>
+                    <td><?=boldText($reporManagertData->receive_medical_treatment) ?></td>
+                </tr>
+                <tr>
+                    <td>Is there any lost time to report? (give details)</td>
+                    <td><?=boldText($reporManagertData->lost_time_report) ?></td>
+                </tr>
+            </table>
+
+            <p  id="view_p">Recommended Corrective Actions:</p>
+            <table id="view_table" width="100%">
+                <tr>
+                    <td><?=boldText($reporManagertData->recommended_actions) ?></td>
+                </tr>
+            </table>
+
+            <p  id="view_p">Please provide additional Information regarding specific corrective actions:</p>
+            <table id="view_table" width="100%">
+                <tr>
+                    <td><?=boldText($reporManagertData->specifice_corrective_actions) ?></td>
+                </tr>
+            </table>
+
+            <p  id="view_p">Please provide details of when the corrective actions have been completed</p>
+            <table id="view_table" width="100%">
+                <tr>
+                    <td><?=boldText($reporManagertData->corrective_actions_completed) ?></td>
+                </tr>
+            </table>
+
+            <p  id="view_p">Please detail any other materials including photographs</p>
+            <table id="view_table" width="100%">
+                <tr>
+                    <td><?=boldText($reporManagertData->other_materials) ?></td>
+                </tr>
+            </table>
+             
+            <?php
+
+      $html = ob_get_contents();
+     
    
     ob_clean();    
 

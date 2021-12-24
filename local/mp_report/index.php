@@ -111,7 +111,23 @@ if(@$_GET['download'] == '1') {
         save_data($data,"report_download_history");
         export_pdf('full_acc',$reportname);
 
-    }elseif(get_request('cmd') == 'inc_full_pdf' ) {
+    }elseif( get_request('cmd') == 'new_acc_full_pdf' ) {
+
+        $data->report_id   = 1;
+        $data->user_id     = $USER->id;
+        $data->download_at = time();
+
+        $uid = get_request('uid');
+        $user = get_userInfo(array("id" =>$uid ));
+        $date = get_request("d");
+        $reportname ="Accident_".$user->firstname."_".$user->lastname."_".date("d-M-Y",$date).".pdf";
+
+        save_data($data,"report_download_history");
+        export_pdf('full_new_acc',$reportname);
+
+    }
+    
+    elseif(get_request('cmd') == 'inc_full_pdf' ) {
         $data->report_id   = 2;
         $data->user_id     = $USER->id;
         $data->download_at = time();
