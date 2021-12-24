@@ -1,5 +1,6 @@
 
 DROP TABLE IF EXISTS `mdl_new_accident_report`;
+
 CREATE TABLE `mdl_new_accident_report` (
   `id` bigint(11) NOT NULL,
   `user_id` bigint(11) NOT NULL,
@@ -7,9 +8,9 @@ CREATE TABLE `mdl_new_accident_report` (
   `a_forename` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `a_home_address` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `a_postcode` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `a_tel_no` int(11) DEFAULT NULL,
+  `a_tel_no` varchar(25) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `a_sex` varchar(10) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `a_age` int(11) DEFAULT NULL,
+  `a_age` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `a_following_accident` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `a_resumed_work` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `a_hours` int(11) DEFAULT NULL,
@@ -31,7 +32,7 @@ CREATE TABLE `mdl_new_accident_report` (
   `b_witness_address` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `b_tel_witness` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `c_kind_of_accident` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `c_metres` int(10) DEFAULT NULL,
+  `c_metres` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `d_agents` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `d2_agents` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `d_first_aid` varchar(5) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
