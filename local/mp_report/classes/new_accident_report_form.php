@@ -516,9 +516,8 @@ class new_accident_report_form extends moodleform {
     public function managerPartForm($reportData){
         global $USER, $CFG,$DB;
 
-        $dropdown = get_dropdown_data(1);
+        $dropdown = get_new_dropdown_data(1);
       
-
         $mform = $this->_form;
         
         $mform->addElement('html', '<h3 style="text-align:center;margin-top:30px">Accident Investigation Form</h3>');
