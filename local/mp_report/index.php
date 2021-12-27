@@ -165,6 +165,7 @@ switch ($cmd){
      case 'acc_edit'     : accident_form();        break;
      case 'inc_edit'     : incident_form();        break;
      case 'new_acc_edit' : new_accident_form();    break;
+     case 'register'     : new_accident_register();    break;
      
      default             : home_page();            break;
 

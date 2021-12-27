@@ -54,6 +54,23 @@ function home_page(){
 }
 
 
+function new_accident_register(){
+    global $CFG,$OUTPUT,$homeurl,$successurl;
+
+    //$form = new mp_report_list(null, array());
+
+    $form = new new_accident_register(null, array());
+
+    if ($form->is_cancelled()) {
+        redirect($homeurl);
+    }
+    $form->get_data();
+    $form->display();
+
+
+}
+
+
 function new_accident_page(){
     global $CFG,$OUTPUT,$homeurl,$successurl;
 
