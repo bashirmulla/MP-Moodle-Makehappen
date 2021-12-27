@@ -544,8 +544,8 @@ class new_accident_report_form extends moodleform {
             $mform->addElement('static', 'name1', 'Name',$reportData->a_surname.' '.$reportData->a_forename );
             $mform->addElement('static', 'name2', 'Role & Department','' );
             $mform->addElement('static', 'name3', 'Phone Number',$reportData->a_tel_no );
-            $mform->addElement('static', 'name4', 'Date of Incident',$reportData->b_date );
-            $mform->addElement('static', 'name5', 'Time of Incident',$reportData->b_date );
+            $mform->addElement('static', 'name4', 'Date of Incident',date("d-M-Y",$reportData->b_date ));
+            $mform->addElement('static', 'name5', 'Time of Incident',date("d-M-Y",$reportData->b_date ));
             $mform->addElement('static', 'name7', 'Location of Incident',$reportData->b_exact_location_site );
             $mform->addElement('static', 'name8', 'Supervisor Name',$reportData->a_employers_name );
 
@@ -681,8 +681,8 @@ class new_accident_report_form extends moodleform {
             $mform->addElement('static', 'name1', 'Name',$accidentData->a_surname.' '.$accidentData->a_forename );
             $mform->addElement('static', 'name2', 'Role & Department','' );
             $mform->addElement('static', 'name3', 'Phone Number',$accidentData->a_tel_no );
-            $mform->addElement('static', 'name4', 'Date of Incident',$accidentData->b_date );
-            $mform->addElement('static', 'name5', 'Time of Incident',$accidentData->b_date );
+            $mform->addElement('static', 'name4', 'Date of Incident',date("d-M-Y",$accidentData->b_date ));
+            $mform->addElement('static', 'name5', 'Time of Incident',date("d-M-Y",$accidentData->b_date ));
             $mform->addElement('static', 'name7', 'Location of Incident',$accidentData->b_exact_location_site );
             $mform->addElement('static', 'name8', 'Supervisor Name',$accidentData->a_employers_name );
         $mform->addElement('html', '</fieldset>');
@@ -703,7 +703,7 @@ class new_accident_report_form extends moodleform {
             $mform->addElement('static', 'investigator_nameM', 'Name', $reportData->investigator_name);
             $mform->addElement('static', 'investigator_roleM', 'Role & Department', $reportData->investigator_role);
             $mform->addElement('static', 'investigator_telephoneM', 'Phone Number', $reportData->investigator_telephone);
-            $mform->addElement('static', 'investigation_dateM', 'Date of Investigation', $reportData->investigation_date);
+            $mform->addElement('static', 'investigation_dateM', 'Date of Investigation', date("d-M-Y",$reportData->investigation_date));
         $mform->addElement('html', '</fieldset>');
 
         $mform->addElement('html', '<fieldset class="scheduler-border"><legend class="scheduler-border">Other Information</legend>');

@@ -98,7 +98,7 @@ class new_accident_register extends moodleform {
                   <div class="col-sm-4" style="text-align: right !important;">  
                      <a class="btn btn-dark" style="background-color: #fcc42c; border-color: #fcc42c !important; " href="/local/mp_report/index.php"><i class="fa fa-backward"> </i> Back </a>
                     
-                     <a class="btn btn-dark" style="background-color: #2441e7; border-color: #2441e7 !important;" href="/local/mp_report/index.php?cmd=form3"><i class="fa fa-plus-circle"> </i> Add Accident</a>
+                     <!--<a class="btn btn-dark" style="background-color: #2441e7; border-color: #2441e7 !important;" href="/local/mp_report/index.php?cmd=form3"><i class="fa fa-plus-circle"> </i> Add Accident</a> -->
                  </div>
              </div>    
             <hr>');
@@ -114,18 +114,16 @@ class new_accident_register extends moodleform {
 
         $table->head  = array("Incident Number","Surname","First Name","Incident Date","Summary of Accident details","Action Taken","Findings","Recommendations","Action");
         $table->align = array( 'left','left','left','left','left','left','left','left','center');
-        $table->size  = array( '20%','20%',"25%","25%","10%");
+        //$table->size  = array( '20%','20%',"25%","25%","10%");
 
         $count=0;
         foreach($result as $rec) {
             $editDeleteLink = "<a href='index.php?cmd=new_acc_edit&id=$rec->id'>View</a>";
             $reporter = get_userInfo(array("id" => $rec->user_id));
-            $table->data[] = new html_table_row(array( $rec->id,date("d/m/Y",$rec->b_date),$reporter->firstname." ".$reporter->lastname,$rec->a_surname,$editDeleteLink));
+            $table->data[] = new html_table_row(array( ++$count, $rec->a_surname,$rec->a_forename, date("d/m/Y",$rec->b_date),'','','','',$editDeleteLink));
         }
         $html .= html_writer::table($table);
         $html .= "<hr></br>";
-
-
 
         $mform->addElement('html', $html, 'local_mp_report');
 
@@ -364,11 +362,11 @@ class home_page extends moodleform {
 				</div>
 
                 <div class="col-sm-6 col-md-6 col-lg-4 col-lg-5th-1">
-                <a href="/local/mp_report/index.php?cmd=register" data-ccn-c="color4" data-ccn-co="bg" class="icon_hvr_img_box ccn-color-cat-boxes" style="background:rgba(241, 67, 45, 0.6);">
+                <a href="/local/mp_report/index.php?cmd=register" data-ccn-c="color4" data-ccn-co="bg" class="icon_hvr_img_box ccn-color-cat-boxes" style="background:rgb(50 84 73 / 60%)">
                     <div class="overlay">
                         <div class="icon ccn_icon_2 color-white"><span data-ccn="icon4" class="flaticon-checklist"></span></div>
                         <div class="details">
-                            <h5 class="color-white">Accident Register</h5><p class="color-white">Over 0 incidents</p>
+                            <h5 class="color-white">Accident Register</h5><p class="color-white">Over 0 Register</p>
                         </div>
                     </div>
                 </a>
