@@ -191,12 +191,12 @@ class new_accident_report_form extends moodleform {
          foreach($dropdown['kind_of_occurrence'] as $key=>$value){
             $mform->addElement('checkbox', 'c_kind_of_accident##'.$key, $value);
             $mform->setDefault('c_kind_of_accident##'.$key, '0');
-            if($key==10)
+            if($key==28)
             {
                 
                 $mform->addElement('text', 'c_metres', NULL, 'maxlength="100" size="40" style="width:150px" ');
                 
-                $mform->hideIf('c_metres', 'c_kind_of_accident##10',  'notchecked');
+                $mform->hideIf('c_metres', 'c_kind_of_accident##28',  'notchecked');
             }
 
          } 

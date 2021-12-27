@@ -105,7 +105,19 @@ class new_accident_register extends moodleform {
         $submitter_to_manager = 'Yes';
 
 
-        $result = $DB->get_records($tableName,array('submitter_to_manager' => $submitter_to_manager));
+    
+
+        $result   = $DB->get_records($tableName,array('submitter_to_manager' => $submitter_to_manager));
+        $result2  = $DB->get_records('new_accident_manager_report');
+        $dropdown = get_new_dropdown_data(1);
+
+        $acc_manager = array();
+
+        if(!empty($result2)){
+            foreach($result2 as $item){
+                $acc_manager[$item->new_accident_id] = $item;
+            }
+        }
 
         $table = new html_table();
         $table->attributes['class'] = 'generaltable accident_table';
@@ -118,9 +130,10 @@ class new_accident_register extends moodleform {
 
         $count=0;
         foreach($result as $rec) {
+            if(!isset($acc_manager[$rec->id])) continue;
             $editDeleteLink = "<a href='index.php?cmd=new_acc_edit&id=$rec->id'>View</a>";
             $reporter = get_userInfo(array("id" => $rec->user_id));
-            $table->data[] = new html_table_row(array( ++$count, $rec->a_surname,$rec->a_forename, date("d/m/Y",$rec->b_date),'','','','',$editDeleteLink));
+            $table->data[] = new html_table_row(array( ++$count, $rec->a_surname,$rec->a_forename, date("d/m/Y",$rec->b_date),$acc_manager[$rec->id]->incident_description,$rec->f_action_taken,$acc_manager[$rec->id]->results_investigation,$dropdown['recommended_actions'][$acc_manager[$rec->id]->recommended_actions],$editDeleteLink));
         }
         $html .= html_writer::table($table);
         $html .= "<hr></br>";
@@ -311,8 +324,19 @@ class home_page extends moodleform {
 
     public function definition() {
 
+        global $DB,$USER;
         $mform              = $this->_form;
         $manage_manager_div = "";
+        $arr = array();
+
+        if(!is_admin() && !is_manager()){
+            $arr = array("user_id" => $USER->id);
+        }
+
+        $accidents = $DB->get_records('new_accident_report',$arr);
+        $incidents = $DB->get_records('incident_report',$arr);
+
+        $accident_register = $DB->get_records('new_accident_manager_report');
 
         if(is_admin() || is_complieance() || is_senior_manager()){
             $manage_manager_div ='<div class="col-sm-6 col-md-6 col-lg-4 col-lg-5th-1">
@@ -333,7 +357,7 @@ class home_page extends moodleform {
                         <div class="overlay">
                             <div class="icon ccn_icon_2 color-white"><span data-ccn="icon4" class="flaticon-checklist"></span></div>
                             <div class="details">
-                                <h5 class="color-white">New Accident Report</h5><p class="color-white">Over 0 accident</p>
+                                <h5 class="color-white">Accident Report</h5><p class="color-white">Over '.count($accidents).' accidents</p>
                             </div>
                         </div>
                     </a>
@@ -355,7 +379,7 @@ class home_page extends moodleform {
 						<div class="overlay">
 							<div class="icon ccn_icon_2 color-white"><span data-ccn="icon4" class="flaticon-checklist"></span></div>
 							<div class="details">
-								<h5 class="color-white">Incident Report</h5><p class="color-white">Over 0 incidents</p>
+								<h5 class="color-white">Incident Report</h5><p class="color-white">Over '.count($incidents).' incidents</p>
 							</div>
 						</div>
 					</a>
@@ -366,7 +390,7 @@ class home_page extends moodleform {
                     <div class="overlay">
                         <div class="icon ccn_icon_2 color-white"><span data-ccn="icon4" class="flaticon-checklist"></span></div>
                         <div class="details">
-                            <h5 class="color-white">Accident Register</h5><p class="color-white">Over 0 Register</p>
+                            <h5 class="color-white">Accident Register</h5><p class="color-white">Over '.count($accident_register).' Register</p>
                         </div>
                     </div>
                 </a>

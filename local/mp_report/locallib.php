@@ -514,7 +514,7 @@ function checkWitness($fields)
 function checkNewAccidentValidation($fields)
 {
     $retrunArr = [];
-    if (!empty($fields['c_kind_of_accident##10']) && $fields['c_kind_of_accident##10']==1) {
+    if (!empty($fields['c_kind_of_accident##28']) && $fields['c_kind_of_accident##10']==1) {
         if(empty($fields['c_metres'])) $retrunArr =  array_merge(array('c_metres' => 'Required'));
     }
 
