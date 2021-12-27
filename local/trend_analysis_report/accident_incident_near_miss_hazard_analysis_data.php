@@ -82,9 +82,15 @@ $query_con_str .= " AND (i_date BETWEEN $date_from AND $date_to) ";
 $query_con_str2 .= " AND (accident_date BETWEEN $date_from AND $date_to) ";
 
 $query_con_str3 .= " AND (b_date BETWEEN $date_from AND $date_to) "; /* BM added */
-$agentsIdSql = " SELECT id FROM `mdl_new_standing_table` WHERE `dropdown_name` = 'agent_involved' ";
-$agentsIDArray = $DB->count_records_sql($agentsIdSql);
-echo $agentsIDArray;
+/* BM added */
+$sql = " SELECT id FROM `mdl_new_standing_table` WHERE `dropdown_name` = 'agent_involved' ";
+$agentsIdArray = $DB->get_records_sql($sql);
+foreach ($agentsIdArray as $id => $record) {
+    $agents[] = $record->id;
+}
+$agents_comma_separated = implode(',', $agents);
+//print_r($agents_comma_separated);
+/* EOF BM */
 
 $sql = " SELECT COUNT(id) AS total_hazard FROM mdl_incident_report WHERE $query_con_str AND  (CASE WHEN is_correct_report_category='Yes' OR is_correct_report_category IS NULL  THEN report_category=30 ELSE  correct_report_category=30 END) ";
 $total_hazard = $DB->count_records_sql($sql);
@@ -201,13 +207,13 @@ echo html_writer:: end_tag('div');
 /////$sql = " SELECT COUNT(id) AS total_act_of_physical_violence FROM mdl_accident_report WHERE $query_con_str2 AND accident_category=74 "; /*BM commented-out */
 /////$total_act_of_physical_violence = $DB->count_records_sql($sql); /*BM commented-out */
 
-$sql = " SELECT COUNT(id) AS total_machinery_equipment_lift_conveying FROM mdl_new_accident_report WHERE $query_con_str3 AND d_agents IN (16,17) "; /* BM added */
+$sql = " SELECT COUNT(id) AS total_machinery_equipment_lift_conveying FROM mdl_new_accident_report WHERE $query_con_str3 AND d_agents IN ($agents_comma_separated) "; /* BM added */
 $total_machinery_equipment_lift_conveying = $DB->count_records_sql($sql); /* BM added */
 
 /////$sql = " SELECT COUNT(id) AS total_cuts_and_lacerations FROM mdl_accident_report WHERE $query_con_str2 AND accident_category=75 "; /* BM commented-out */
 /////$total_cuts_and_lacerations = $DB->count_records_sql($sql);
 
-$sql = " SELECT COUNT(id) AS total_material_substance_product_being_handled FROM mdl_new_accident_report WHERE $query_con_str3 AND d_agents IN (16,17) "; /* BM added */
+$sql = " SELECT COUNT(id) AS total_material_substance_product_being_handled FROM mdl_new_accident_report WHERE $query_con_str3 AND d_agents IN ($agents_comma_separated) "; /* BM added */
 $total_material_substance_product_being_handled = $DB->count_records_sql($sql); /* BM added */
 
 
