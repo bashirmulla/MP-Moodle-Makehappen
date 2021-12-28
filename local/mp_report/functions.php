@@ -174,6 +174,26 @@ function accident_edit_form(){
 
 }
 
+function edit_manager_form(){
+
+    global $homeurl,$DB;
+
+    $tableName  = get_string('new_accident_table','local_mp_report');
+    $form = new new_accident_manager_report_form(null, array());
+    if ($form->is_cancelled()) {
+        redirect($homeurl);
+    }
+
+    $select['id']  = get_request('aid');
+
+    $data = $DB->get_record($tableName, $select);
+
+    if(!empty($data))
+        $form->set_data($data);
+
+    $form->display();
+}
+
 
 
 function incident_edit_form(){
@@ -300,7 +320,7 @@ function new_accident_form(){
     $tableName  = get_string('new_accident_table','local_mp_report');
 
 
-
+    
 
     $form = new new_accident_report_form(null, array());
     if ($form->is_cancelled()) {
