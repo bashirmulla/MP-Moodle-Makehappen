@@ -54,6 +54,24 @@ function home_page(){
 }
 
 
+function accident_event(){
+    global $CFG,$OUTPUT,$homeurl,$successurl;
+
+    //$form = new mp_report_list(null, array());
+
+    $form = new accident_event(null, array());
+
+    if ($form->is_cancelled()) {
+        redirect($homeurl);
+    }
+    $form->get_data();
+    $form->display();
+
+
+}
+
+
+
 function new_accident_register(){
     global $CFG,$OUTPUT,$homeurl,$successurl;
 
@@ -178,20 +196,40 @@ function edit_manager_form(){
 
     global $homeurl,$DB;
 
-    $tableName  = get_string('new_accident_table','local_mp_report');
+    $tableName  = get_string('new_accident_manager_table','local_mp_report');
     $form = new new_accident_manager_report_form(null, array());
     if ($form->is_cancelled()) {
         redirect($homeurl);
     }
 
+    $dataobject  = $form->get_submitted_data();
+
+
+
+
     $select['id']  = get_request('aid');
 
     $data = $DB->get_record($tableName, $select);
 
-    if(!empty($data))
-        $form->set_data($data);
 
-    $form->display();
+
+    if(!empty($dataobject) && $form->is_validated()){
+         $id = save_data($dataobject,$tableName);
+        if(!empty($id) ){
+            //echo $OUTPUT->notification("Data has been saved successfully!!...",'notifysuccess');
+            redirect($homeurl,"Data has been saved successfully!!...","6",'success');
+        }
+        else{
+            //echo $OUTPUT->notification("Sorry!!.. unable to save the data");
+            redirect($homeurl,"Sorry!!.. unable to save the data...","6",'error');
+        }
+
+    }
+    else {
+        $form->set_data($data);
+        $form->display();
+    }
+
 }
 
 
@@ -594,6 +632,11 @@ function export_pdf($report_type,$filename) {
     elseif($report_type == 'full_new_acc') {
         echo $pdf_file = new_accident_full_pdf(intval($_REQUEST['id']));
     }
+    elseif($report_type == 'accident_event') {
+        echo $pdf_file = accident_event_pdf(intval($_REQUEST['id']));
+    }
+
+    
 
     if($pdf_file) {
         $fileurl = pdfs_path() . $pdf_file;
@@ -772,6 +815,203 @@ function new_accident_pdf($acc_id) {
 
     return $file_name;
 }
+
+
+function accident_event_pdf($id){
+
+    global $homeurl,$DB, $CFG;
+    
+    $reportData = $DB->get_record("new_accident_report",array("id" => $id));
+
+    ob_start();
+    ?>
+    <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+    <html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Makehappen</title>
+    </head>
+    <style>
+       table tr td{
+           padding: 5px;
+       }
+    </style>
+    
+    <body>
+    
+    <table width="100%">
+    
+    <tr>
+        <td colspan="4"><h1 align="center">Accident Statement of Events</h1></td>
+    </tr>
+    <tr>
+        <td style="background:#090; color:#000" colspan="4"><b>1.  About the person who had the accident</b></td>
+    </tr>
+    <tr>
+        <td width="10%">Name</td>
+        <td>: <?=boldText($reportData->a_surname.' '.$reportData->a_forename)?></td>
+    </tr>
+    <tr>
+        <td width="10%">Address</td>
+        <td>: <?=boldText($reportData->a_home_address)?></td>
+    </tr>
+    <tr>
+        <td width="10%">Postcode</td>
+        <td>: <?=boldText($reportData->a_postcode)?></td>
+    </tr>
+    <tr>
+        <td width="10%">Occupation</td>
+        <td>: <?=boldText($reportData->a_job_title)?></td>
+    </tr>
+    
+    </table>
+    
+    <br />
+    
+    <table width="100%">
+    
+    <tr>
+        <td style="background:#090; color:#000" colspan="4"><b>2.   About you, the person filling in this record</b></td>
+    </tr>
+    <tr>
+        <td colspan="2" style="color:#CCC">If you are the person who had the accident, please state AS ABOVE</td>
+    </tr>
+    <tr>
+        <td width="10%">Name</td>
+        <td>: <?=boldText($reportData->a_surname.' '.$reportData->a_forename)?></td>
+    </tr>
+    <tr>
+        <td width="10%">Address</td>
+        <td>: <?=boldText($reportData->a_home_address)?></td>
+    </tr>
+    <tr>
+        <td width="10%">Postcode</td>
+        <td>: <?=boldText($reportData->a_postcode)?></td>
+    </tr>
+    <tr>
+        <td width="10%">Occupation</td>
+        <td>: <?=boldText($reportData->a_job_title)?></td>
+    </tr>
+    
+    </table>
+    
+    <br />
+    
+    <table width="100%">
+    
+    <tr>
+        <td style="background:#090; color:#000" colspan="4"><b>3.   About the accident (continue on reverse if needed)</b></td>
+    </tr>
+    <tr>
+        <td>Date of Occurrence</td>
+        <td>: <?=boldText(date("d-M-Y",$reportData->b_date))?></td>
+        <td>Time of Occurrence</td>
+        <td>: <?=boldText(date("d-M-Y",$reportData->b_date))?></td>
+    </tr>
+    
+    </table>
+    
+    <table width="100%">
+    
+    <tr>
+        <td>Describe the location (room or place)</td>
+    </tr>
+    <tr>
+        <td> <?=boldText($reportData->b_exact_location_site)?></td>
+    </tr>
+    
+    <tr>
+        <td>Say how and if possible, why the accident occurred</td>
+    </tr>
+    <tr>
+        <td> <?=boldText($reportData->b_dangerous)?></td>
+    </tr>
+    <tr>
+        <td>Please give details of any injury</td>
+    </tr>
+    <tr>
+        <td> <?=boldText($reportData->b_injured)?></td>
+    </tr>
+    </table>
+    
+    <br />
+    <br />
+    <br />
+    <br />
+    
+    <table width="100%">
+    
+    <tr>
+        <td width="50%">Please Sign and Date <br />Signature</td>
+        <td>Date</td>
+        <td></td>
+    </tr>
+    
+    </table>
+    
+    <br />
+    
+    <table width="100%">
+    
+    <tr>
+        <td style="background:#090; color:#000" colspan="3"><b>4.    For the employee only</b></td>
+    </tr>
+    <tr>
+        <td colspan="3">By ticking this box I give consent to my employer to disclose my personal information and details of 
+        the accident which appear on this form to safety representatives and representatives of employee 
+        safety for them to carry out the health and safety functions given to them by law.</td>
+    </tr>
+    
+    </table>
+    
+    <br /><br /><br /><br />
+    
+    <table width="100%">
+    
+    <tr>
+        <td width="10%">Signature</td>
+        <td>Date</td>
+        <td></td>
+    </tr>
+    
+    </table>
+    
+    </body>
+    </html>
+    
+    <?php
+
+    $html = ob_get_contents();
+
+
+    ob_clean();    
+
+
+    require_once($CFG->libdir.'/pdflib.php');
+
+    $file_name = "Accident_Event".$user -> firstname ."-". $user -> lastname .'-'. $data -> id . '.pdf';
+    $file_name = str_replace(" ","-", $file_name);
+
+    $pdf = new pdf();
+    $PDF_HEADER_LOGO       = '/local/mp_report/images/mh_logo_sm.png'; //any image file. check correct path.
+    $PDF_HEADER_LOGO_WIDTH = "60%";
+    $PDF_HEADER_TITLE      = "";
+    $PDF_HEADER_STRING     = "";
+
+    $pdf->SetMargins(15, 20, 15);
+    $pdf->SetHeaderMargin(1);
+    $pdf->SetFooterMargin(0);
+    $pdf->SetHeaderData($PDF_HEADER_LOGO, $PDF_HEADER_LOGO_WIDTH, $PDF_HEADER_TITLE, $PDF_HEADER_STRING);
+
+
+    $pdf -> AddPage();
+    $pdf -> WriteHTML($html);
+    $pdf -> Output( pdfs_path() . $file_name, 'F' );
+
+    return $file_name;
+
+}
+
 
 function new_accident_full_pdf($acc_id) {
 

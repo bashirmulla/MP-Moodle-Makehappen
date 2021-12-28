@@ -146,6 +146,12 @@ if(@$_GET['download'] == '1') {
         export_pdf('full_inc',$reportname);
     }
 
+    elseif(get_request('cmd') == 'accident_event_pdf' ) {
+        export_pdf('accident_event',$reportname);
+    }
+
+    
+
     die();
 }
 
@@ -155,20 +161,20 @@ $cmd = get_request('cmd');
 
 
 switch ($cmd){
-     case 'home'         : home_page();            break;
-     case 'new_accpage'  : new_accident_page();    break;
-     case 'accpage'      : accident_page();        break;
-     case 'incpage'      : incident_page();        break;
-     case 'form1'        : accident_form();        break;
-     case 'form2'        : incident_form();        break;
-     case 'form3'        : new_accident_form();    break;
-     case 'acc_edit'     : accident_form();        break;
-     case 'inc_edit'     : incident_form();        break;
-     case 'new_acc_edit' : new_accident_form();    break;
-     case 'register'     : new_accident_register();    break;
-     case 'edit_manager' : edit_manager_form();    break;
-     
-     default             : home_page();            break;
+     case 'home'          : home_page();             break;
+     case 'new_accpage'   : new_accident_page();     break;
+     case 'accpage'       : accident_page();         break;
+     case 'incpage'       : incident_page();         break;
+     case 'form1'         : accident_form();         break;
+     case 'form2'         : incident_form();         break;
+     case 'form3'         : new_accident_form();     break;
+     case 'acc_edit'      : accident_form();         break;
+     case 'inc_edit'      : incident_form();         break;
+     case 'new_acc_edit'  : new_accident_form();     break;
+     case 'register'      : new_accident_register(); break;
+     case 'edit_manager'  : edit_manager_form();     break;
+     case 'accident_event': accident_event();        break;
+     default              : home_page();              break;
 
 }
 

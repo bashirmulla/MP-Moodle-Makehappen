@@ -791,8 +791,9 @@ class new_accident_report_form extends moodleform {
                 $this->managerPartView($reportDataManager,$reportData);
             }else {
                 $this->managerPartForm($reportData);
+                $btnLavel = get_string('savebutton', 'local_mp_report');
             }
-            $btnLavel = get_string('savebutton', 'local_mp_report');
+           
         }
         else {
             $heading .= '</h3><hr>';
@@ -809,17 +810,19 @@ class new_accident_report_form extends moodleform {
         $mform->addElement('hidden', 'id', !empty($_REQUEST['id']) ? $_REQUEST['id'] : $mform->id);
         $mform->addElement('hidden', 'read_only', $mform->read_only);
 
-        $buttonarray = array();
-        if($reportData->read_only==0) {
-            $buttonarray[] = $mform->createElement('submit', 'save',$btnLavel ,array("id"=>"save","style" =>"margin:8px;background-color:#137D1F !important"));
-        }
-        $buttonarray[] = $mform->createElement('cancel');
-        if ((is_complieance() OR is_admin()) && $report_closed && ($reportData->read_only==0)) {
-            $buttonarray[] = $mform->createElement('submit', 'finalise_report', 'Finalise Report', array("id" => "item-confirm", "style" =>"background-color:#8E0A0A !important"));
-        }
+        if(!empty($btnLavel)){
+            $buttonarray = array();
+            if($reportData->read_only==0) {
+                $buttonarray[] = $mform->createElement('submit', 'save',$btnLavel ,array("id"=>"save","style" =>"margin:8px;background-color:#137D1F !important"));
+            }
+            $buttonarray[] = $mform->createElement('cancel');
+            if ((is_complieance() OR is_admin()) && $report_closed && ($reportData->read_only==0)) {
+                $buttonarray[] = $mform->createElement('submit', 'finalise_report', 'Finalise Report', array("id" => "item-confirm", "style" =>"background-color:#8E0A0A !important"));
+            }
 
-        $mform->addGroup($buttonarray, 'buttonar', '', array(' '), false);
-        $mform->closeHeaderBefore('buttonar');
+            $mform->addGroup($buttonarray, 'buttonar', '', array(' '), false);
+            $mform->closeHeaderBefore('buttonar');
+        }
 
 
     }

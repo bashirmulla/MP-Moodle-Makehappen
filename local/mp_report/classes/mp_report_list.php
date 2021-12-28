@@ -98,7 +98,7 @@ class new_accident_register extends moodleform {
                   <div class="col-sm-4" style="text-align: right !important;">  
                      <a class="btn btn-dark" style="background-color: #fcc42c; border-color: #fcc42c !important; " href="/local/mp_report/index.php"><i class="fa fa-backward"> </i> Back </a>
                     
-                     <!--<a class="btn btn-dark" style="background-color: #2441e7; border-color: #2441e7 !important;" href="/local/mp_report/index.php?cmd=form3"><i class="fa fa-plus-circle"> </i> Add Accident</a> -->
+                     <a class="btn btn-dark" style="background-color: #2441e7; border-color: #2441e7 !important;" href="/local/mp_report/index.php?cmd=form3"><i class="fa fa-plus-circle"> </i> Add Accident</a>
                  </div>
              </div>    
             <hr>');
@@ -129,9 +129,13 @@ class new_accident_register extends moodleform {
         //$table->size  = array( '20%','20%',"25%","25%","10%");
 
         $count=0;
+        
         foreach($result as $rec) {
-            if(!isset($acc_manager[$rec->id])) continue;
-            $editDeleteLink = "<a href='index.php?cmd=new_acc_edit&id=$rec->id'>View</a>";
+            $editDeleteLink = "";
+            if(isset($acc_manager[$rec->id])) {
+                $editDeleteLink = "<a href='index.php?cmd=accident_event&id=$rec->id'>Event</a> | ";
+            }
+            $editDeleteLink .= "<a href='index.php?cmd=new_acc_edit&id=$rec->id'>View</a>";
             $reporter = get_userInfo(array("id" => $rec->user_id));
             $table->data[] = new html_table_row(array( ++$count, $rec->a_surname,$rec->a_forename, date("d/m/Y",$rec->b_date),$acc_manager[$rec->id]->incident_description,$rec->f_action_taken,$acc_manager[$rec->id]->results_investigation,$dropdown['recommended_actions'][$acc_manager[$rec->id]->recommended_actions],$editDeleteLink));
         }
@@ -188,6 +192,7 @@ class new_accident_page extends moodleform {
         $count=0;
         foreach($result as $rec) {
             $editDeleteLink = "<a href='index.php?cmd=new_acc_edit&id=$rec->id'>View</a>";
+            //$editDeleteLink = "<a href='index.php?cmd=new_acc_edit&id=$rec->id'>View</a>";
             $reporter = get_userInfo(array("id" => $rec->user_id));
             $table->data[] = new html_table_row(array( $rec->id,date("d/m/Y",$rec->b_date),$reporter->firstname." ".$reporter->lastname,$rec->a_surname,$editDeleteLink));
         }
@@ -319,6 +324,177 @@ class incident_page extends moodleform {
 }
 
 
+class accident_event extends moodleform{
+
+    public function definition(){
+        global $DB,$USER;
+        $mform = $this->_form;
+
+
+        $id         = $_REQUEST['id'];
+        $reportData = $DB->get_record("new_accident_report",array("id" => $id));
+
+
+        $html ='<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+        <html xmlns="http://www.w3.org/1999/xhtml">
+        <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <title>Makehappen</title>
+        </head>
+        <style>
+           table tr td{
+               padding: 5px;
+           }
+        </style>
+        
+        <body>
+        
+        <table width="100%">
+        
+        <tr>
+            <td colspan="4"><h1 align="center">Accident Statement of Events</h1></td>
+        </tr>
+        <tr>
+            <td style="background:#090; color:#000" colspan="4"><b>1.  About the person who had the accident</b></td>
+        </tr>
+        <tr>
+            <td width="10%">Name</td>
+            <td>: '.boldText($reportData->a_surname.' '.$reportData->a_forename).'</td>
+        </tr>
+        <tr>
+            <td width="10%">Address</td>
+            <td>: '.boldText($reportData->a_home_address).'</td>
+        </tr>
+        <tr>
+            <td width="10%">Postcode</td>
+            <td>: '.boldText($reportData->a_postcode).'</td>
+        </tr>
+        <tr>
+            <td width="10%">Occupation</td>
+            <td>: '.boldText($reportData->a_job_title).'</td>
+        </tr>
+        
+        </table>
+        
+        <br />
+        
+        <table width="100%">
+        
+        <tr>
+            <td style="background:#090; color:#000" colspan="4"><b>2.   About you, the person filling in this record</b></td>
+        </tr>
+        <tr>
+            <td colspan="2" style="color:#CCC">If you are the person who had the accident, please state AS ABOVE</td>
+        </tr>
+        <tr>
+            <td width="10%">Name</td>
+            <td>: '.boldText($reportData->a_surname.' '.$reportData->a_forename).'</td>
+        </tr>
+        <tr>
+            <td width="10%">Address</td>
+            <td>: '.boldText($reportData->a_home_address).'</td>
+        </tr>
+        <tr>
+            <td width="10%">Postcode</td>
+            <td>: '.boldText($reportData->a_postcode).'</td>
+        </tr>
+        <tr>
+            <td width="10%">Occupation</td>
+            <td>: '.boldText($reportData->a_job_title).'</td>
+        </tr>
+        
+        </table>
+        
+        <br />
+        
+        <table width="100%">
+        
+        <tr>
+            <td style="background:#090; color:#000" colspan="4"><b>3.   About the accident (continue on reverse if needed)</b></td>
+        </tr>
+        <tr>
+            <td>Date of Occurrence</td>
+            <td>: '.boldText(date("d-M-Y",$reportData->b_date)).'</td>
+            <td>Time of Occurrence</td>
+            <td>: '.boldText(date("d-M-Y",$reportData->b_date)).'</td>
+        </tr>
+        
+        </table>
+        
+        <table width="100%">
+        
+        <tr>
+            <td>Describe the location (room or place)</td>
+        </tr>
+        <tr>
+            <td> '.boldText($reportData->b_exact_location_site).'</td>
+        </tr>
+        
+        <tr>
+            <td>Say how and if possible, why the accident occurred</td>
+        </tr>
+        <tr>
+            <td> '.boldText($reportData->b_dangerous).'</td>
+        </tr>
+        <tr>
+            <td>Please give details of any injury</td>
+        </tr>
+        <tr>
+            <td> '.boldText($reportData->b_injured).'</td>
+        </tr>
+        </table>
+        
+        <br />
+        <br />
+        <br />
+        <br />
+        
+        <table width="100%">
+        
+        <tr>
+            <td width="50%">Please Sign and Date <br />Signature</td>
+            <td>Date</td>
+            <td></td>
+        </tr>
+        
+        </table>
+        
+        <br />
+        
+        <table width="100%">
+        
+        <tr>
+            <td style="background:#090; color:#000" colspan="3"><b>4.    For the employee only</b></td>
+        </tr>
+        <tr>
+            <td colspan="3">By ticking this box I give consent to my employer to disclose my personal information and details of 
+            the accident which appear on this form to safety representatives and representatives of employee 
+            safety for them to carry out the health and safety functions given to them by law.</td>
+        </tr>
+        
+        </table>
+        
+        <br /><br /><br /><br />
+        
+        <table width="100%">
+        
+        <tr>
+            <td width="10%">Signature</td>
+            <td>Date</td>
+            <td></td>
+        </tr>
+        
+        </table>
+        
+        </body>
+        </html>
+        ';
+
+        $mform->addElement('html',$html);
+    }
+}
+
+
 class home_page extends moodleform {
 
 
@@ -336,7 +512,7 @@ class home_page extends moodleform {
         $accidents = $DB->get_records('new_accident_report',$arr);
         $incidents = $DB->get_records('incident_report',$arr);
 
-        $accident_register = $DB->get_records('new_accident_manager_report');
+        //$accident_register = $DB->get_records('new_accident_manager_report');
 
         if(is_admin() || is_complieance() || is_senior_manager()){
             $manage_manager_div ='<div class="col-sm-6 col-md-6 col-lg-4 col-lg-5th-1">
@@ -352,6 +528,18 @@ class home_page extends moodleform {
         }
 
         $html = '<div class="row justify-content-center" style="text-align: center !important;">
+                
+                <div class="col-sm-6 col-md-6 col-lg-4 col-lg-5th-1">
+                    <a href="/local/mp_report/index.php?cmd=register" data-ccn-c="color4" data-ccn-co="bg" class="icon_hvr_img_box ccn-color-cat-boxes" style="background:rgb(50 84 73 / 60%)">
+                        <div class="overlay">
+                            <div class="icon ccn_icon_2 color-white"><span data-ccn="icon4" class="flaticon-checklist"></span></div>
+                            <div class="details">
+                                <h5 class="color-white">Accident Register</h5><p class="color-white">'.count($accidents).' Register</p>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <!--
                 <div class="col-sm-6 col-md-6 col-lg-4 col-lg-5th-1">
                     <a href="/local/mp_report/index.php?cmd=new_accpage" data-ccn-c="color4" data-ccn-co="bg" class="icon_hvr_img_box ccn-color-cat-boxes" style="background:rgb(0, 97, 255,0.6);">
                         <div class="overlay">
@@ -362,7 +550,7 @@ class home_page extends moodleform {
                         </div>
                     </a>
                 </div>
-                <!--
+                
                 <div class="col-sm-6 col-md-6 col-lg-4 col-lg-5th-1">
 					<a href="/local/mp_report/index.php?cmd=accpage" data-ccn-c="color3" data-ccn-co="bg" class="icon_hvr_img_box ccn-color-cat-boxes" style="background:rgba(0, 97, 255, 0.6);">
 						<div class="overlay">
@@ -385,16 +573,7 @@ class home_page extends moodleform {
 					</a>
 				</div>
 
-                <div class="col-sm-6 col-md-6 col-lg-4 col-lg-5th-1">
-                <a href="/local/mp_report/index.php?cmd=register" data-ccn-c="color4" data-ccn-co="bg" class="icon_hvr_img_box ccn-color-cat-boxes" style="background:rgb(50 84 73 / 60%)">
-                    <div class="overlay">
-                        <div class="icon ccn_icon_2 color-white"><span data-ccn="icon4" class="flaticon-checklist"></span></div>
-                        <div class="details">
-                            <h5 class="color-white">Accident Register</h5><p class="color-white">'.count($accident_register).' Register</p>
-                        </div>
-                    </div>
-                </a>
-            </div>
+                
 				
 				'.$manage_manager_div.'
                 
