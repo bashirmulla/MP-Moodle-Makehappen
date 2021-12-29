@@ -81,15 +81,15 @@ if(empty($filterData['date_btn'])){
 $query_con_str .= " AND (i_date BETWEEN $date_from AND $date_to) ";
 $query_con_str2 .= " AND (accident_date BETWEEN $date_from AND $date_to) ";
 
-$query_con_str3 .= " AND (b_date BETWEEN $date_from AND $date_to) "; /* BM added */
 /* BM added */
-$sql = " SELECT id FROM `mdl_new_standing_table` WHERE `dropdown_name` = 'agent_involved' ";
+$query_con_str3 .= " AND (b_date BETWEEN $date_from AND $date_to) ";
+$sql = " SELECT d_agents FROM `mdl_new_accident_report` WHERE $query_con_str3 ";
 $agentsIdArray = $DB->get_records_sql($sql);
-foreach ($agentsIdArray as $id => $record) {
-    $agents[] = $record->id;
+foreach ($agentsIdArray as $d_agents => $record) {
+    $agents[] = $record->d_agents;
 }
 $agents_comma_separated = implode(',', $agents);
-//print_r($agents_comma_separated);
+echo $agents_comma_separated;
 /* EOF BM */
 
 $sql = " SELECT COUNT(id) AS total_hazard FROM mdl_incident_report WHERE $query_con_str AND  (CASE WHEN is_correct_report_category='Yes' OR is_correct_report_category IS NULL  THEN report_category=30 ELSE  correct_report_category=30 END) ";
@@ -98,17 +98,8 @@ $total_hazard = $DB->count_records_sql($sql);
 $sql = " SELECT COUNT(id) AS total_near_miss FROM mdl_incident_report WHERE $query_con_str  AND (CASE WHEN is_correct_report_category='Yes' OR is_correct_report_category IS NULL  THEN report_category=29 ELSE  correct_report_category=29 END) ";
 $total_near_miss = $DB->count_records_sql($sql);
 
-//////$sql = " SELECT COUNT(id) AS total_riddor_report FROM mdl_accident_report WHERE $query_con_str2 AND s_mgt_rpt_2508_completed='1' "; /* BM commented-out */
-//////$total_riddor_report = $DB->count_records_sql($sql); /* BM commented-out */
-
-//////$sql = " SELECT COUNT(id) AS total_medical_treatment_over_first_aid FROM mdl_accident_report WHERE $query_con_str2 AND accident_treatment='Yes' AND (s_mgt_rpt_2508_completed IS NULL OR s_mgt_rpt_2508_completed IN(2,3))"; /* BM commented-out */
-//////$total_medical_treatment_over_first_aid = $DB->count_records_sql($sql); /* BM commented-out */
-
 $sql = " SELECT COUNT(id) AS total_medical_treatment_over_first_aid FROM mdl_new_accident_report WHERE $query_con_str3 AND d_first_aid='Yes'"; /* BM added */
 $total_medical_treatment_over_first_aid = $DB->count_records_sql($sql); /* BM added */
-
-//////$sql = " SELECT COUNT(id) AS total_minor_injuries FROM mdl_accident_report WHERE $query_con_str2 AND minor_injuries='Yes' AND accident_treatment='No' AND (s_mgt_rpt_2508_completed IS NULL OR s_mgt_rpt_2508_completed IN(2,3))"; /* BM commented-out */
-//////$total_minor_injuries = $DB->count_records_sql($sql); /* BM commented-out */
 
 $sql = " SELECT COUNT(id) AS total_resumed_work FROM mdl_new_accident_report WHERE $query_con_str3 AND a_resumed_work='Yes'"; /* BM added */
 $total_resumed_work = $DB->count_records_sql($sql); /* BM added */
@@ -116,27 +107,22 @@ $total_resumed_work = $DB->count_records_sql($sql); /* BM added */
 $sql = " SELECT COUNT(id) AS total_incidents FROM mdl_incident_report WHERE $query_con_str AND (CASE WHEN is_correct_report_category='Yes' OR is_correct_report_category IS NULL  THEN report_category=31 ELSE  correct_report_category=31 END) ";
 $total_incidents = $DB->count_records_sql($sql);
 
-//////$sql1 = " SELECT COALESCE(SUM(lost_time_days), 0) AS accident_total_lost_time_days FROM mdl_accident_report WHERE $query_con_str2 AND lost_time='Yes' "; /* BM commented-out */
 $sql_hours = " SELECT COALESCE(SUM(a_hours), 0) AS accident_total_lost_time_hours FROM mdl_new_accident_report WHERE $query_con_str3 "; /* BM added */
 $sql_mins = " SELECT COALESCE(SUM(a_mins), 0) AS accident_total_lost_time_mins FROM mdl_new_accident_report WHERE $query_con_str3 "; /* BM added */
 
 $hours = $DB->get_record_sql($sql_hours); /* BM added */
 $mins = $DB->get_record_sql($sql_mins); /* BM added */
 
-$total_lost_time_hours = $hours->accident_total_lost_time_hours + $mins->accident_total_lost_time_mins/60; /* BM added */
-
-////$sql2 = " SELECT COALESCE(SUM(lost_time_days), 0) AS incident_total_lost_time_days FROM mdl_incident_report WHERE $query_con_str AND lost_time='Yes' "; /* BM commented-out */
-
-////$rec1 = $DB->get_record_sql($sql1); /* BM commented-out */
-////$rec2 = $DB->get_record_sql($sql2); /* BM commented-out */
-////$total_lost_time_days = $rec1->accident_total_lost_time_days + $rec2->incident_total_lost_time_days; /* BM commented-out */
+$total_lost_time_hours = round($hours->accident_total_lost_time_hours + $mins->accident_total_lost_time_mins/60, 0); /* BM added */
 
 $sql = " SELECT COALESCE(SUM(lost_time_days), 0) AS incident_total_lost_time_days FROM mdl_incident_report WHERE $query_con_str AND lost_time='Yes' "; /* BM added */
 $incident_lost_days = $DB->get_record_sql($sql);
 $total_lost_time_days_incidents = $incident_lost_days->incident_total_lost_time_days; /* BM added */
 
-//$category = [$total_hazard,$total_near_miss,$total_riddor_report,$total_medical_treatment_over_first_aid,$total_minor_injuries,$total_incidents,$total_lost_time_days]; /* BM commented-out */
-$category = [$total_hazard,$total_near_miss,$total_medical_treatment_over_first_aid,$total_resumed_work,$total_incidents,$total_lost_time_hours,$total_lost_time_days_incidents]; /* BM added */
+$sql = " SELECT COUNT(id) AS total_accidents FROM mdl_new_accident_report WHERE $query_con_str3 "; /* BM added */
+$total_accidents = $DB->count_records_sql($sql); /* BM added */
+
+$category = [$total_hazard,$total_near_miss,$total_medical_treatment_over_first_aid,$total_resumed_work,$total_incidents,$total_lost_time_days_incidents,$total_accidents,$total_lost_time_hours]; /* BM added */
 
 echo html_writer:: start_tag('div',array('class'=>'card mb-4'));
 echo html_writer:: tag('h5',get_string('accident_incident_performance', 'local_trend_analysis_report').' ('.$cur_time.')',array('class'=>'card-header'));
@@ -204,32 +190,45 @@ echo html_writer:: tag('div','',array('style'=>'height: 400px;','id'=>'container
 echo html_writer:: end_tag('div');
 echo html_writer:: end_tag('div');
 
-/////$sql = " SELECT COUNT(id) AS total_act_of_physical_violence FROM mdl_accident_report WHERE $query_con_str2 AND accident_category=74 "; /*BM commented-out */
-/////$total_act_of_physical_violence = $DB->count_records_sql($sql); /*BM commented-out */
+/* BM added */
+$total_machinery_equipment_lift_conveying = substr_count($agents_comma_separated, 1);
+$total_building_services_not_electrical = substr_count($agents_comma_separated, 2);
+$total_building_structure_excavation_underground_working = substr_count($agents_comma_separated, 3);
+$total_carcinogen = substr_count($agents_comma_separated, 4);
+$total_construction_shuttering_false_work = substr_count($agents_comma_separated, 5);
+$total_entertainment_sporting_facilities_equipment = substr_count($agents_comma_separated, 6);
+$total_floor_ground_stairs_any_work_surface = substr_count($agents_comma_separated, 7);
+$total_gas_vapour_dust_fume_oxygen_deficient_atmosphere = substr_count($agents_comma_separated, 8);
+$total_inclement_weather_conditions = substr_count($agents_comma_separated, 9);
+$total_ladder_stepladder_scaffolding = substr_count($agents_comma_separated, 10);
+$total_live_animal = substr_count($agents_comma_separated, 11);
+$total_machinery_Equipment_lifting_conveying = substr_count($agents_comma_separated, 12);
+$total_material_substance_product_being_handled_used_stored = substr_count($agents_comma_separated, 13);
+$total_other_machinery = substr_count($agents_comma_separated, 14);
+$total_pathogen_infected_material = substr_count($agents_comma_separated, 15);
+$total_portable_power_hand_too = substr_count($agents_comma_separated, 16);
+$total_process_plant_pipework_bulk_storage = substr_count($agents_comma_separated, 17);
 
-$sql = " SELECT COUNT(id) AS total_machinery_equipment_lift_conveying FROM mdl_new_accident_report WHERE $query_con_str3 AND d_agents IN ($agents_comma_separated) "; /* BM added */
-$total_machinery_equipment_lift_conveying = $DB->count_records_sql($sql); /* BM added */
-
-/////$sql = " SELECT COUNT(id) AS total_cuts_and_lacerations FROM mdl_accident_report WHERE $query_con_str2 AND accident_category=75 "; /* BM commented-out */
-/////$total_cuts_and_lacerations = $DB->count_records_sql($sql);
-
-$sql = " SELECT COUNT(id) AS total_material_substance_product_being_handled FROM mdl_new_accident_report WHERE $query_con_str3 AND d_agents IN ($agents_comma_separated) "; /* BM added */
-$total_material_substance_product_being_handled = $DB->count_records_sql($sql); /* BM added */
-
-
-$sql = " SELECT COUNT(id) AS total_falls_from_height FROM mdl_accident_report WHERE $query_con_str2 AND accident_category=76 ";
-$total_falls_from_height = $DB->count_records_sql($sql);
-$sql = " SELECT COUNT(id) AS total_manual_handling FROM mdl_accident_report WHERE $query_con_str2 AND accident_category=77 ";
-$total_manual_handling = $DB->count_records_sql($sql);
-$sql = " SELECT COUNT(id) AS total_needlestick_injuries FROM mdl_accident_report WHERE $query_con_str2 AND accident_category=78 ";
-$total_needlestick_injuries = $DB->count_records_sql($sql);
-$sql = " SELECT COUNT(id) AS total_slips_trips_and_falls_on_same_level FROM mdl_accident_report WHERE $query_con_str2 AND accident_category=79 ";
-$total_slips_trips_and_falls_on_same_level = $DB->count_records_sql($sql);
-$sql = " SELECT COUNT(id) AS total_struck_by_an_object FROM mdl_accident_report WHERE $query_con_str2 AND accident_category=80 ";
-$total_total_struck_by_an_object = $DB->count_records_sql($sql);
-/////$accidents = [$total_act_of_physical_violence,$total_cuts_and_lacerations,$total_falls_from_height,$total_manual_handling,$total_needlestick_injuries,$total_slips_trips_and_falls_on_same_level,$total_total_struck_by_an_object]; /*BM commented-out */
-
-$accidents = [$total_machinery_equipment_lift_conveying,$total_material_substance_product_being_handled,$total_falls_from_height,$total_manual_handling,$total_needlestick_injuries,$total_slips_trips_and_falls_on_same_level,$total_total_struck_by_an_object]; /* BM added */
+$accidents = [
+    $total_machinery_equipment_lift_conveying,
+    $total_building_services_not_electrical,
+    $total_building_structure_excavation_underground_working,
+    $total_carcinogen,
+    $total_construction_shuttering_false_work,
+    $total_entertainment_sporting_facilities_equipment,
+    $total_floor_ground_stairs_any_work_surface,
+    $total_gas_vapour_dust_fume_oxygen_deficient_atmosphere,
+    $total_inclement_weather_conditions,
+    $total_ladder_stepladder_scaffolding,
+    $total_live_animal,
+    $total_machinery_Equipment_lifting_conveying,
+    $total_material_substance_product_being_handled_used_stored,
+    $total_other_machinery,
+    $total_pathogen_infected_material,
+    $total_portable_power_hand_too,
+    $total_process_plant_pipework_bulk_storage
+];
+/* BM added */
 
 echo html_writer:: start_tag('div',array('class'=>'card mb-4'));
 echo html_writer:: tag('h5',get_string('accidents_by_category', 'local_trend_analysis_report').' ('.$cur_time.')',array('class'=>'card-header'));
@@ -326,14 +325,12 @@ echo html_writer:: end_tag('div');
             categories: [
                 'Hazard identification',
                 'Near Misses',
-                //'Number of Riddor reports', /* BM commented-out */
                 'Medical Treatment over first aid',
-                //'Minor Injuries', /* BM commented-out */
                 'Resumed Work', /* BM added */
                 'Incidents',
-                //'Total lost days' /* BM commented-out */
-                'Total lost hours for Accidents', /* BM added */
-                'Total lost days for Incidents' /* BM added */
+                'Total lost days for Incidents', /* BM added */
+                'Total Accidents', /* BM added */
+                'Total lost hours for Accidents' /* BM added */
             ],
             crosshair: true,
             labels: {
@@ -471,15 +468,23 @@ echo html_writer:: end_tag('div');
         },
         xAxis: {
             categories: [
-                //'Act of Physical Violence', /* BM commented-out */
+                'Any vehicle or associated equipment / machinery', /* BM added */
+                'Building services – not electrical', /* BM added */
+                'Building, structure or excavation / underground working', /* BM added */
+                'Carcinogen', /* BM added */
+                'Construction, shuttering or false work', /* BM added */
+                'Entertainment, sporting facilities or equipment', /* BM added */
+                'Floor, ground, stairs or any work surface', /* BM added */
+                'Gas, vapour, dust, fume or oxygen deficient atmosphere', /* BM added */
+                'Inclement weather conditions', /* BM added */
+                'Ladder, stepladder or scaffolding', /* BM added */
+                'Live animal', /* BM added */
                 'Machinery / Equipment for lifting and conveying', /* BM added */
-                //'Cuts and Lacerations', /* BM commented-out */
                 'Material, substance or product being handled, used or stored', /* BM added */
-                'Falls from a Height',
-                'Manual Handling',
-                'Needlestick Injuries',
-                'Slips, Trips and Falls on same level',
-                'Struck by an Object'
+                'Other machinery', /* BM added */
+                'Pathogen or infected material', /* BM added */
+                'Portable power / hand too', /* BM added */
+                'Process plant, pipework or bulk storage' /* BM added */
             ],
             crosshair: true,
             labels: {
