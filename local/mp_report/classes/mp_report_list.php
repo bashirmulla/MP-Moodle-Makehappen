@@ -127,7 +127,7 @@ class new_accident_register extends moodleform {
         $table->width = '100%';
 
 
-        $table->head  = array("Incident Number","Surname","First Name","Incident Date","Summary of Accident details","Action Taken","Findings","Recommendations","Action","Status");
+        $table->head  = array("Incident No","Surname","First Name","Incident Date","Summary of Accident details","Action Taken","Findings","Recommendations","Status","Action");
         $table->align = array( 'left','left','left','left','left','left','left','left','center','center');
         //$table->size  = array( '20%','20%',"25%","25%","10%");
 
@@ -136,11 +136,18 @@ class new_accident_register extends moodleform {
         foreach($result as $rec) {
             $editDeleteLink = "";
             if(isset($acc_manager[$rec->id])) {
-                $editDeleteLink = "<a href='index.php?cmd=accident_event&id=$rec->id'>Statement</a> | ";
+                $editDeleteLink = "<a href='index.php?cmd=accident_event&id=$rec->id' style='color:#2441e7'>Statement</a> | ";
             }
-            $editDeleteLink .= "<a href='index.php?cmd=new_acc_edit&id=$rec->id'>View</a>";
+            $editDeleteLink .= "<a href='index.php?cmd=new_acc_edit&id=$rec->id' style='color:#2441e7'>View</a>";
             $reporter = get_userInfo(array("id" => $rec->user_id));
-            $table->data[] = new html_table_row(array( ++$count, $rec->a_surname,$rec->a_forename, date("d/m/Y",$rec->b_date),$acc_manager[$rec->id]->incident_description,$rec->f_action_taken,$acc_manager[$rec->id]->results_investigation,$dropdown['recommended_actions'][$acc_manager[$rec->id]->recommended_actions],$editDeleteLink));
+            $table->data[] = new html_table_row(array( ++$count, $rec->a_surname,
+                                                                 $rec->a_forename, 
+                                                                 date("d/m/Y",$rec->b_date),
+                                                                 $acc_manager[$rec->id]->incident_description,$rec->f_action_taken,
+                                                                 $acc_manager[$rec->id]->results_investigation,
+                                                                 $dropdown['recommended_actions'][$acc_manager[$rec->id]->recommended_actions],
+                                                                 ($rec->status=='Pending') ? '<b style="color:#c10b4e">Pending</b>': '<b style="color:#3aad6d">Confirmed</b>',
+                                                                 $editDeleteLink));
         }
         $html .= html_writer::table($table);
         $html .= "<hr></br>";
