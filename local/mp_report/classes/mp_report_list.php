@@ -105,9 +105,12 @@ class new_accident_register extends moodleform {
         $submitter_to_manager = 'Yes';
 
 
-    
+        $arr = array('submitter_to_manager' => $submitter_to_manager);
 
-        $result   = $DB->get_records($tableName,array('submitter_to_manager' => $submitter_to_manager));
+        if(!is_admin() || !is_manager()){
+            $arr['user_id'] = $USER->id;
+        }
+        $result   = $DB->get_records($tableName);
         $result2  = $DB->get_records('new_accident_manager_report');
         $dropdown = get_new_dropdown_data(1);
 
@@ -124,8 +127,8 @@ class new_accident_register extends moodleform {
         $table->width = '100%';
 
 
-        $table->head  = array("Incident Number","Surname","First Name","Incident Date","Summary of Accident details","Action Taken","Findings","Recommendations","Action");
-        $table->align = array( 'left','left','left','left','left','left','left','left','center');
+        $table->head  = array("Incident Number","Surname","First Name","Incident Date","Summary of Accident details","Action Taken","Findings","Recommendations","Action","Status");
+        $table->align = array( 'left','left','left','left','left','left','left','left','center','center');
         //$table->size  = array( '20%','20%',"25%","25%","10%");
 
         $count=0;
@@ -133,7 +136,7 @@ class new_accident_register extends moodleform {
         foreach($result as $rec) {
             $editDeleteLink = "";
             if(isset($acc_manager[$rec->id])) {
-                $editDeleteLink = "<a href='index.php?cmd=accident_event&id=$rec->id'>Event</a> | ";
+                $editDeleteLink = "<a href='index.php?cmd=accident_event&id=$rec->id'>Statement</a> | ";
             }
             $editDeleteLink .= "<a href='index.php?cmd=new_acc_edit&id=$rec->id'>View</a>";
             $reporter = get_userInfo(array("id" => $rec->user_id));
@@ -383,9 +386,7 @@ class accident_event extends moodleform{
         <tr>
             <td style="background:#090; color:#000" colspan="4"><b>2.   About you, the person filling in this record</b></td>
         </tr>
-        <tr>
-            <td colspan="2" style="color:#CCC">If you are the person who had the accident, please state AS ABOVE</td>
-        </tr>
+       
         <tr>
             <td width="10%">Name</td>
             <td>: '.boldText($reportData->a_surname.' '.$reportData->a_forename).'</td>
@@ -410,7 +411,7 @@ class accident_event extends moodleform{
         <table width="100%">
         
         <tr>
-            <td style="background:#090; color:#000" colspan="4"><b>3.   About the accident (continue on reverse if needed)</b></td>
+            <td style="background:#090; color:#000" colspan="4"><b>3.   About the accident</b></td>
         </tr>
         <tr>
             <td>Date of Occurrence</td>
@@ -446,21 +447,7 @@ class accident_event extends moodleform{
         
         <br />
         <br />
-        <br />
-        <br />
-        
-        <table width="100%">
-        
-        <tr>
-            <td width="50%">Please Sign and Date <br />Signature</td>
-            <td>Date</td>
-            <td></td>
-        </tr>
-        
-        </table>
-        
-        <br />
-        
+      
         <table width="100%">
         
         <tr>
