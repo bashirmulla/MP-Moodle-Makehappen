@@ -34,7 +34,8 @@ require_once($CFG->dirroot.'/local/'.$pluginname.'/locallib.php');  // Include o
 //require_once(dirname(__FILE__).'/classes/'.$pluginname.'_list.php');  // Include form.
 
 
-$homeurl    = new moodle_url('/local/'.$pluginname.'/index.php');
+$homeurl        = new moodle_url('/local/'.$pluginname.'/index.php');
+$accidenturl    = new moodle_url('/local/'.$pluginname.'/index.php?cmd=register');
 
 
 function home_page(){
@@ -51,6 +52,42 @@ function home_page(){
     $form->display();
 
 
+}
+
+
+function save_statement(){
+    
+    global $accidenturl;
+    
+    if(empty($_REQUEST['id'])) die;
+
+   
+
+    if($_REQUEST['confirmed']=='on'){
+        $updateData['id']                    = $_REQUEST['id'];
+        $updateData['status']                = 'Confirmed';
+        $updateData['confirmed_person_name'] = $_REQUEST['confirmed_person_name'];
+        $updateData['confirmed_date']        = time();
+
+    }
+
+    if(isset($_REQUEST['how_reported'])){
+        $updateData = array();
+        $updateData['id']              = $_REQUEST['id'];
+        $updateData['status']          = 'Approved';
+        $updateData['how_reported']    = $_REQUEST['how_reported'];
+        $updateData['approve_date']    = time();
+
+    }
+
+    //echo "<pre>";
+    //print_r($updateData);
+    //die;
+
+
+    $result =  update_data($updateData,'new_accident_report');
+
+    redirect($accidenturl,"Data has been saved successfully!!...","6",'success');
 }
 
 

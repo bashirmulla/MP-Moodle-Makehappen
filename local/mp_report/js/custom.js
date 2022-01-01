@@ -1,5 +1,25 @@
 require(['jquery', 'core/modal_factory', 'core/notification', 'core/modal_events', 'core/templates','core/str'], function ($, ModalFactory, notification, ModalEvents, Templates,str) {
 
+    $(document).on('click', '#saveStatement', function (e) {
+
+        e.preventDefault();
+        if($('#confirmed_person_name').val()==''){
+            $('#confirmed_person_name').addClass('is-invalid');
+            return;
+        }
+        else{
+            $('#confirmed_person_name').removeClass('is-invalid');
+        }
+        if($('#confirmed').is(":checked")==false){
+            notification.alert('Error','You must have to give consent to your employer');
+            return;
+        }
+        $( ".mform").submit();
+            
+       
+    });
+
+
 
     $(document).on('click', '#del_riddor_file', function (e) {
 
@@ -38,9 +58,6 @@ require(['jquery', 'core/modal_factory', 'core/notification', 'core/modal_events
                 });
             }
         );
-
-
-
     });
 
     $(document).on('change', '#riddor_file', function (e) {

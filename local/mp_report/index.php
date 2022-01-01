@@ -174,6 +174,8 @@ switch ($cmd){
      case 'register'      : new_accident_register(); break;
      case 'edit_manager'  : edit_manager_form();     break;
      case 'accident_event': accident_event();        break;
+     case 'savestatement' : save_statement();        break;
+     
      default              : home_page();              break;
 
 }

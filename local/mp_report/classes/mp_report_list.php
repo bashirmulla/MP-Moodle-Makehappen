@@ -136,17 +136,23 @@ class new_accident_register extends moodleform {
         foreach($result as $rec) {
             $editDeleteLink = "";
             if(isset($acc_manager[$rec->id])) {
-                $editDeleteLink = "<a href='index.php?cmd=accident_event&id=$rec->id' style='color:#2441e7'>Statement</a> | ";
+                $editDeleteLink = "<a href='index.php?cmd=accident_event&id=$rec->id' style='color:#5769cf'>Statement</a> | ";
             }
-            $editDeleteLink .= "<a href='index.php?cmd=new_acc_edit&id=$rec->id' style='color:#2441e7'>View</a>";
+            $editDeleteLink .= "<a href='index.php?cmd=new_acc_edit&id=$rec->id' style='color:#5769cf'>View</a>";
             $reporter = get_userInfo(array("id" => $rec->user_id));
+
+            if($rec->status=='Pending')        $status = '<b style="color:#c3ad13">Pending</b>';
+            elseif($rec->status=='Confirmed')  $status = '<b style="color:#3aad6d">Confirmed</b>';
+            elseif($rec->status=='Approved')   $status = '<b style="color:#2441e7">Approved</b>';
+
+
             $table->data[] = new html_table_row(array( ++$count, $rec->a_surname,
                                                                  $rec->a_forename, 
                                                                  date("d/m/Y",$rec->b_date),
                                                                  $acc_manager[$rec->id]->incident_description,$rec->f_action_taken,
                                                                  $acc_manager[$rec->id]->results_investigation,
                                                                  $dropdown['recommended_actions'][$acc_manager[$rec->id]->recommended_actions],
-                                                                 ($rec->status=='Pending') ? '<b style="color:#c10b4e">Pending</b>': '<b style="color:#3aad6d">Confirmed</b>',
+                                                                 $status,
                                                                  $editDeleteLink));
         }
         $html .= html_writer::table($table);
@@ -340,29 +346,64 @@ class accident_event extends moodleform{
         global $DB,$USER;
         $mform = $this->_form;
 
-
+        $button   = ""; 
+        $display  = '';
         $id         = $_REQUEST['id'];
         $reportData = $DB->get_record("new_accident_report",array("id" => $id));
 
+        
+        if(!empty($reportData->confirmed_person_name)) $readonly = "readonly";
+        else                                           $readonly = "";
 
-        $html ='<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-        <html xmlns="http://www.w3.org/1999/xhtml">
-        <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-        <title>Makehappen</title>
-        </head>
+        if($reportData->status!='Pending') $checked = "checked";
+        else                               $checked = "";
+
+        if($reportData->status=='Pending') { 
+            $section5 = ""; 
+            $button   = '<a id="saveStatement" class="btn btn-dark" style="background-color: #137D1F; border-color: #137D1F !important;"><i class="fa fa-check-circle"> </i> Submit </a>'; 
+        }
+        else { 
+            
+            if($reportData->status=='Confirmed') $disabled = "";
+            else                                 $disabled = "readonly";
+            $button   = '<a id="saveStatement" class="btn btn-dark" style="background-color: #c14070; border-color: #c14070 !important;"><i class="fa fa-check-circle"> </i> Approve </a>'; 
+
+            if($reportData->status=='Approved') $display = "none";
+            
+
+            $section5 = ' <br> 
+                            <table width="100%">            
+                                <tr>
+                                    <td style="background:#090; color:#000"><b>5.    For the employee only</b></td>
+                                </tr>
+                                <tr>
+                                    <td>Complete this box if the accident is reportable under the Reporting of Injuries, Diseases and Dangerous Occurrences Regulations 1995 (RIDDOR)</td>            
+                                </tr>
+                                <tr>
+                                    <td>How was it reported<br>
+                                        <textarea name="how_reported" class="form-control" cols=40 rows=3 '.$disabled.'>'.$reportData->how_reported.'</textarea>
+                                    </td>            
+                                </tr>
+                            </table>
+                            ';
+        }   
+        
+
+        
+
+        $html ='
         <style>
            table tr td{
                padding: 5px;
            }
         </style>
         
-        <body>
-        
         <table width="100%">
         
         <tr>
-            <td colspan="4"><h1 align="center">Accident Statement of Events</h1></td>
+            <td colspan="3"><h1 align="center">Accident Statement of Events</h1></td>
+            <td style="text-align:right"><a class="btn btn-dark" style="background-color: #fcc42c; border-color: #fcc42c !important; " onclick="history.back()"><i class="fa fa-backward"> </i> Back</a></td>
+                 
         </tr>
         <tr>
             <td style="background:#090; color:#000" colspan="4"><b>1.  About the person who had the accident</b></td>
@@ -421,18 +462,18 @@ class accident_event extends moodleform{
             <td style="background:#090; color:#000" colspan="4"><b>3.   About the accident</b></td>
         </tr>
         <tr>
-            <td>Date of Occurrence</td>
-            <td>: '.boldText(date("d-M-Y",$reportData->b_date)).'</td>
-            <td>Time of Occurrence</td>
-            <td>: '.boldText(date("d-M-Y",$reportData->b_date)).'</td>
+            <td width="15%">Date of Occurrence</td>
+            <td width="15%">: '.boldText(date("d-M-Y",$reportData->b_date)).'</td>
+            <td width="15%">Time of Occurrence</td>
+            <td width="15%">: '.boldText(date("d-M-Y",$reportData->b_date)).'</td>
         </tr>
-        
+          
         </table>
         
         <table width="100%">
         
         <tr>
-            <td>Describe the location (room or place)</td>
+            <td >Describe the location (room or place)</td>
         </tr>
         <tr>
             <td> '.boldText($reportData->b_exact_location_site).'</td>
@@ -451,39 +492,56 @@ class accident_event extends moodleform{
             <td> '.boldText($reportData->b_injured).'</td>
         </tr>
         </table>
-        
-        <br />
         <br />
       
-        <table width="100%">
         
-        <tr>
-            <td style="background:#090; color:#000" colspan="3"><b>4.    For the employee only</b></td>
-        </tr>
-        <tr>
-            <td colspan="3">By ticking this box I give consent to my employer to disclose my personal information and details of 
-            the accident which appear on this form to safety representatives and representatives of employee 
-            safety for them to carry out the health and safety functions given to them by law.</td>
-        </tr>
-        
-        </table>
-        
-        <br /><br /><br /><br />
-        
-        <table width="100%">
-        
-        <tr>
-            <td width="10%">Signature</td>
-            <td>Date</td>
-            <td></td>
-        </tr>
-        
-        </table>
-        
-        </body>
-        </html>
+            <table width="100%">
+            
+            <tr>
+                <td style="background:#090; color:#000" colspan="3"><b>4.    For the employee only</b></td>
+            </tr>
+            <tr>
+                <td colspan="3">
+                <input type="checkbox" 
+                       name="confirmed" 
+                       id="confirmed" '.$checked.'> 
+                       <a href="javascript:void(0)" onclick="document.getElementById(\'confirmed\').checked=true" >
+                I give consent to my employer to disclose my personal information and details of 
+                the accident which appear on this form to safety representatives and representatives of employee 
+                safety for them to carry out the health and safety functions given to them by law.</a>
+                </td>
+            </tr>
+            
+            </table>
+            <table width="100%">
+            
+            <tr>
+                <td width="25%">Your Full Name: 
+                    <input  tyle="text" name="confirmed_person_name" 
+                            value="'.$reportData->confirmed_person_name.'" 
+                            class="form-control" style="width:250px"; 
+                            '.$readonly.'
+                            id="confirmed_person_name">
+                </td>
+                <td>Date:<br><b>'.Date("d-M-Y").'</b></td>
+            </tr>
+            </table>
+            
+            '.$section5.'
+
+            <hr>
+            </div class="row">
+            
+                <div style="display:'.$display.'" class="col-sm-3" style="text-align: right !important;">     
+                    '.$button.'
+                    <a class="btn btn-dark" style=""><i class="fa fa-plus-circle"> </i> Cancel </a>
+                </div>
+            
+           </div> 
         ';
 
+        $mform->addElement('hidden', 'cmd', 'savestatement' );
+        $mform->addElement('hidden', 'id', !empty($_REQUEST['id']) ? $_REQUEST['id'] : $mform->id);
         $mform->addElement('html',$html);
     }
 }
