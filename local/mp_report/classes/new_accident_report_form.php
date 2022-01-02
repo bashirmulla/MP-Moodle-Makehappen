@@ -288,11 +288,7 @@ class new_accident_report_form extends moodleform {
                 margin: 10px 0px;
             } 
         </style>
-                 <div class="col-sm-12" style="text-align: right !important;">  
-                     <a class="btn btn-dark" style="background-color: #fcc42c; border-color: #fcc42c !important; " href="/local/mp_report/index.php?cmd=register"><i class="fa fa-backward"> </i> Back </a>
-                    
-                     <a class="btn btn-dark" style="background-color: #2441e7; border-color: #2441e7 !important;" href="/local/mp_report/index.php?cmd=new_acc_pdf&id=<?=$reportData->id?>"><i class="fa fa-download"> </i> Accident Report</a>
-                 </div>
+                
             <fieldset class="scheduler-border"><legend class="scheduler-border">A. THE INJURED / INVOLVED PERSON</legend>
          
                 <table id="view_table" width="100%">
@@ -802,7 +798,16 @@ class new_accident_report_form extends moodleform {
            
         }
         else {
-            $heading .= '</h3><hr>';
+            $heading ='<div class="row" >
+                            <div class="col-sm-6">
+                                <h3 id="report_headding">'.get_string('accident', 'local_mp_report').'</h3>
+                            </div>
+                            <div class="col-sm-6" style="text-align: right !important;">    
+                                <a class="btn btn-dark" style="background-color: #fcc42c; border-color: #fcc42c !important;" onclick="history.back()"><i class="fa fa-backward"> </i> Back</a>
+                                <a class="btn btn-dark" style="background-color: #0a4e8a ; border-color: #0a4e8a !important;" href="index.php?cmd=acc_pdf&id='.$_REQUEST['id'].'&download=1&uid='.$reportData->user_id.'&d='.$reportData->accident_date.'"><i class="fa fa-check-circle"> </i> Export Initial Report as PDF </a>
+                            </div>
+                        </div>    
+                        <hr>';
             $mform->addElement('html', $heading);
             if(isset($_REQUEST['id']) && $_REQUEST['cmd']=='new_acc_edit')
             { 
