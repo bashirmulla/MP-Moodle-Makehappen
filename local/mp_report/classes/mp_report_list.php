@@ -107,10 +107,10 @@ class new_accident_register extends moodleform {
 
         $arr = array('submitter_to_manager' => $submitter_to_manager);
 
-        if(!is_admin() || !is_manager()){
+        if(!is_admin() && !is_manager()){
             $arr['user_id'] = $USER->id;
         }
-        $result   = $DB->get_records($tableName);
+        $result   = $DB->get_records($tableName,$arr);
         $result2  = $DB->get_records('new_accident_manager_report');
         $dropdown = get_new_dropdown_data(1);
 
@@ -348,7 +348,8 @@ class accident_event extends moodleform{
 
         $button   = ""; 
         $display  = '';
-        $id         = $_REQUEST['id'];
+        $id       = $_REQUEST['id'];
+        $section5 = ""; 
         $reportData = $DB->get_record("new_accident_report",array("id" => $id));
 
         
@@ -370,7 +371,7 @@ class accident_event extends moodleform{
 
             if($reportData->status=='Approved') $display = "none";
             
-
+            if(is_admin() || is_manager()){
             $section5 = ' <br> 
                             <table width="100%">            
                                 <tr>
@@ -386,6 +387,11 @@ class accident_event extends moodleform{
                                 </tr>
                             </table>
                             ';
+            }
+            else{
+                $display = "none";
+            
+            }                
         }   
         
 
@@ -582,7 +588,7 @@ class home_page extends moodleform {
         $html = '<div class="row justify-content-center" style="text-align: center !important;">
                 
                 <div class="col-sm-6 col-md-6 col-lg-4 col-lg-5th-1">
-                    <a href="/local/mp_report/index.php?cmd=register" data-ccn-c="color4" data-ccn-co="bg" class="icon_hvr_img_box ccn-color-cat-boxes" style="background:rgb(50 84 73 / 60%)">
+                    <a href="/local/mp_report/index.php?cmd=register" data-ccn-c="color4" data-ccn-co="bg" class="icon_hvr_img_box ccn-color-cat-boxes" style="background:rgb(8 37 183 / 60%)">
                         <div class="overlay">
                             <div class="icon ccn_icon_2 color-white"><span data-ccn="icon4" class="flaticon-checklist"></span></div>
                             <div class="details">

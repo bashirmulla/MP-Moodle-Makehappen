@@ -42,7 +42,7 @@ CREATE TABLE `mdl_new_accident_report` (
   `confirmed_person_name` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `confirmed_date` bigint(20) DEFAULT NULL,
   `how_reported` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `approve_date` bigint(20) NOT NULL,
+  `approve_date` bigint(20) DEFAULT NULL,
   `status` enum('Pending','Confirmed','Approved') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'Pending',
   `created_at` bigint(20) DEFAULT NULL,
   `updated_at` bigint(20) DEFAULT NULL

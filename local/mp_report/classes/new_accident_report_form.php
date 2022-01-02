@@ -288,6 +288,11 @@ class new_accident_report_form extends moodleform {
                 margin: 10px 0px;
             } 
         </style>
+                 <div class="col-sm-12" style="text-align: right !important;">  
+                     <a class="btn btn-dark" style="background-color: #fcc42c; border-color: #fcc42c !important; " href="/local/mp_report/index.php?cmd=register"><i class="fa fa-backward"> </i> Back </a>
+                    
+                     <a class="btn btn-dark" style="background-color: #2441e7; border-color: #2441e7 !important;" href="/local/mp_report/index.php?cmd=new_acc_pdf&id=<?=$reportData->id?>"><i class="fa fa-download"> </i> Accident Report</a>
+                 </div>
             <fieldset class="scheduler-border"><legend class="scheduler-border">A. THE INJURED / INVOLVED PERSON</legend>
          
                 <table id="view_table" width="100%">
@@ -756,12 +761,13 @@ class new_accident_report_form extends moodleform {
 
         $mform = $this->_form;
 
+        $reportData        = get_data(array("id"=>$_REQUEST['id']),get_string('new_accident_table','local_mp_report'));
+        $reportDataManager = get_data(array("new_accident_id"=>$reportData->id),get_string('new_accident_manager_table','local_mp_report'));
 
 		$heading = '<h3 style="text-align: center">'.get_string('accident', 'local_mp_report');
         $report_closed = FALSE;
         if(isset($_REQUEST['id']) && $_REQUEST['cmd']=='new_acc_edit' &&( is_senior_manager() || is_complieance() || is_admin() || is_manager()) ) {
-            $reportData        = get_data(array("id"=>$_REQUEST['id']),get_string('new_accident_table','local_mp_report'));
-            $reportDataManager = get_data(array("new_accident_id"=>$reportData->id),get_string('new_accident_manager_table','local_mp_report'));
+           
 
             if ($reportData->s_mgt_rpt_ant_closed_off==1){
                 $report_closed = TRUE;
@@ -798,17 +804,27 @@ class new_accident_report_form extends moodleform {
         else {
             $heading .= '</h3><hr>';
             $mform->addElement('html', $heading);
-            $this->userPartForm();
-            $btnLavel  = get_string('submitbtn', 'local_mp_report');
+            if(isset($_REQUEST['id']) && $_REQUEST['cmd']=='new_acc_edit')
+            { 
+                
+                $btnLavel  = "";
+                $this->userPartViewNew($reportData);
+            }
+            else{
+                $this->userPartForm();
+                $btnLavel  = get_string('submitbtn', 'local_mp_report');
+            }
 
         }
-
+      
 
         //$mform->addFormRule('accidentDateRequired');
 
         $mform->addElement('hidden', 'cmd', !empty($_REQUEST['cmd']) ? $_REQUEST['cmd'] : 'form1' );
         $mform->addElement('hidden', 'id', !empty($_REQUEST['id']) ? $_REQUEST['id'] : $mform->id);
         $mform->addElement('hidden', 'read_only', $mform->read_only);
+
+        
 
         if(!empty($btnLavel)){
             $buttonarray = array();
