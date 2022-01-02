@@ -127,7 +127,7 @@ class new_accident_register extends moodleform {
         $table->width = '100%';
 
 
-        $table->head  = array("Incident No","Surname","First Name","Incident Date","Summary of Accident details","Action Taken","Findings","Recommendations","Status","Action");
+        $table->head  = array("No","Surname","First Name","Incident Date","Summary of Accident details","Action Taken","Findings","Recommendations","Status","Action");
         $table->align = array( 'left','left','left','left','left','left','left','left','center','center');
         //$table->size  = array( '20%','20%',"25%","25%","10%");
 
