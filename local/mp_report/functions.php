@@ -862,12 +862,7 @@ function accident_event_pdf($id){
 
     ob_start();
     ?>
-    <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-    <html xmlns="http://www.w3.org/1999/xhtml">
-    <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>Makehappen</title>
-    </head>
+    
     <style>
        table tr td{
            padding: 5px;
@@ -1350,10 +1345,114 @@ function new_accident_full_pdf($acc_id) {
                     <td><?=boldText($reporManagertData->other_materials) ?></td>
                 </tr>
             </table>
+
+        <?php 
+           
+           if(!empty($reportData->confirmed_person_name)){  
+        ?>
+         <div style="page-break-before:always">&nbsp;</div>      
+        <center><h1 style="text-align: center;">Accident Statement of Events</h1></center>
+         <!-- MANAGER REPORT SECTION -->
+                  
+      
+        <table id="view_table" width="100%">       
+        <tr>
+            <td style="background:#090; color:#000" colspan="2"><b>1.  About the person who had the accident</b></td>
+        </tr>
+        <tr>
+            <td >Name</td>
+            <td>: <?=boldText($reportData->a_surname.' '.$reportData->a_forename)?></td>
+        </tr>
+        <tr>
+            <td >Address</td>
+            <td>: <?=boldText($reportData->a_home_address)?></td>
+        </tr>
+        <tr>
+            <td >Postcode</td>
+            <td>: <?=boldText($reportData->a_postcode)?></td>
+        </tr>
+        <tr>
+            <td>Occupation</td>
+            <td>: <?=boldText($reportData->a_job_title)?></td>
+        </tr>
+        
+        </table>
+        
+        <br />
+        
+        <table id="view_table" width="100%">
+        
+        <tr>
+            <td style="background:#090; color:#000" colspan="2"><b>2.   About you, the person filling in this record</b></td>
+        </tr>
+       
+        <tr>
+            <td >Name</td>
+            <td>: <?=boldText($reportData->a_surname.' '.$reportData->a_forename)?></td>
+        </tr>
+        <tr>
+            <td >Address</td>
+            <td>: <?=boldText($reportData->a_home_address)?></td>
+        </tr>
+        <tr>
+            <td >Postcode</td>
+            <td>: <?=boldText($reportData->a_postcode)?></td>
+        </tr>
+        <tr>
+            <td >Occupation</td>
+            <td>: <?=boldText($reportData->a_job_title)?></td>
+        </tr>
+        
+        </table>
+        
+        <br />
+        
+        <table id="view_table" width="100%">
+        
+        <tr>
+            <td style="background:#090; color:#000" colspan="2"><b>3.   About the accident</b></td>
+        </tr>
+        <tr>
+            <td>Date of Occurrence</td>
+            <td>: <?=boldText(date("d-M-Y",$reportData->b_date))?></td>
+            <td>Time of Occurrence</td>
+            <td>: <?=boldText(date("d-M-Y",$reportData->b_date))?></td>
+        </tr>
+          
+        </table>
+        
+        <table id="view_table" width="100%">
+        
+        <tr>
+            <td >Describe the location (room or place)</td>
+        </tr>
+        <tr>
+            <td> <?=boldText($reportData->b_exact_location_site)?></td>
+        </tr>
+        
+        <tr>
+            <td>Say how and if possible, why the accident occurred</td>
+        </tr>
+        <tr>
+            <td> <?=boldText($reportData->b_dangerous)?></td>
+        </tr>
+        <tr>
+            <td>Please give details of any injury</td>
+        </tr>
+        <tr>
+            <td> <?=boldText($reportData->b_injured)?></td>
+        </tr>
+        </table>
+        <br />
+      
+    
+         
              
-            <?php
+    <?php
+       }
 
       $html = ob_get_contents();
+      
      
    
     ob_clean();    

@@ -578,7 +578,7 @@ class home_page extends moodleform {
 						<div class="overlay">
 							<div class="icon ccn_icon_2 color-white"><span data-ccn="icon3" class="flaticon-add-contact"></span></div>
 							<div class="details">
-								<h5 class="color-white">Manage Managers</h5><p class="color-white">0 manager</p>
+								<h5 class="color-white">Manage Managers</h5><p class="color-white">0 Manager/s</p>
 							</div>
 						</div>
 					</a>
@@ -593,7 +593,7 @@ class home_page extends moodleform {
                         <div class="overlay">
                             <div class="icon ccn_icon_2 color-white"><span data-ccn="icon4" class="flaticon-checklist"></span></div>
                             <div class="details">
-                                <h5 class="color-white">Accident Register</h5><p class="color-white">'.count($accidents).' Register</p>
+                                <h5 class="color-white">Accident Register</h5><p class="color-white">'.count($accidents).' Accident/s</p>
                             </div>
                         </div>
                     </a>
@@ -608,7 +608,7 @@ class home_page extends moodleform {
 						<div class="overlay">
 							<div class="icon ccn_icon_2 color-white"><span data-ccn="icon4" class="flaticon-checklist"></span></div>
 							<div class="details">
-								<h5 class="color-white">Incident Report</h5><p class="color-white">'.count($incidents).' incidents</p>
+								<h5 class="color-white">Incident Report</h5><p class="color-white">'.count($incidents).' Incident/s</p>
 							</div>
 						</div>
 					</a>
