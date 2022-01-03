@@ -191,9 +191,21 @@ require(['jquery', 'core/modal_factory', 'core/notification', 'core/modal_events
         $("#fitem_id_a_mins").show();
     }
  
+    $('#id_c_kind_of_accident28').on('click',function(){
+
+        var yes = $("#id_c_kind_of_accident28").is(":checked");
+
+        if(yes==false){
+            $('#id_c_metres').val('');
+        }
+
+    });
 
     $('#id_a_resumed_work_No').on('click', function() {
         var no = $("#id_a_resumed_work_No").is(":checked");
+
+        $("#id_a_hours").val('');
+        $("#id_a_mins").val('');
 
         if(no == true){
             $("#fitem_id_a_hours").hide();
@@ -239,6 +251,10 @@ require(['jquery', 'core/modal_factory', 'core/notification', 'core/modal_events
  
     $('#id_b_witness_No').on('click', function() {
         var no = $("#id_b_witness_No").is(":checked");
+
+            $("#id_b_witness_name").val('');
+            $("#id_b_witness_address").val('');
+            $("#id_b_tel_witness").val('fff');
 
         if(no == true){
             $("#fitem_id_b_witness_name").hide();

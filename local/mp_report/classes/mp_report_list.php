@@ -585,8 +585,9 @@ class home_page extends moodleform {
 				</div>';
         }
 
-        $html = '<div class="row justify-content-center" style="text-align: center !important;">
-                
+        $html = '
+            <h3> Accident Reports</h3><hr>
+            <div class="row" style="text-align: left !important;">
                 <div class="col-sm-6 col-md-6 col-lg-4 col-lg-5th-1">
                     <a href="/local/mp_report/index.php?cmd=register" data-ccn-c="color4" data-ccn-co="bg" class="icon_hvr_img_box ccn-color-cat-boxes" style="background:rgb(8 37 183 / 60%)">
                         <div class="overlay">
@@ -597,29 +598,11 @@ class home_page extends moodleform {
                         </div>
                     </a>
                 </div>
-                <!--
-                <div class="col-sm-6 col-md-6 col-lg-4 col-lg-5th-1">
-                    <a href="/local/mp_report/index.php?cmd=new_accpage" data-ccn-c="color4" data-ccn-co="bg" class="icon_hvr_img_box ccn-color-cat-boxes" style="background:rgb(0, 97, 255,0.6);">
-                        <div class="overlay">
-                            <div class="icon ccn_icon_2 color-white"><span data-ccn="icon4" class="flaticon-checklist"></span></div>
-                            <div class="details">
-                                <h5 class="color-white">Accident Report</h5><p class="color-white">'.count($accidents).' accidents</p>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-                
-                <div class="col-sm-6 col-md-6 col-lg-4 col-lg-5th-1">
-					<a href="/local/mp_report/index.php?cmd=accpage" data-ccn-c="color3" data-ccn-co="bg" class="icon_hvr_img_box ccn-color-cat-boxes" style="background:rgba(0, 97, 255, 0.6);">
-						<div class="overlay">
-							<div class="icon ccn_icon_2 color-white"><span data-ccn="icon3" class="ccn-flaticon-add-1"></span></div>
-							<div class="details">
-								<h5 class="color-white">Accident Report</h5><p class="color-white">1 reports</p>
-							</div>
-						</div>
-					</a>
-				</div>
-                -->
+            </div>
+            
+            <h3> Incident Reports</h3><hr>
+
+            <div class="row" style="text-align: left !important;">
                 <div class="col-sm-6 col-md-6 col-lg-4 col-lg-5th-1">
 					<a href="/local/mp_report/index.php?cmd=incpage" data-ccn-c="color4" data-ccn-co="bg" class="icon_hvr_img_box ccn-color-cat-boxes" style="background:rgba(241, 67, 45, 0.6);">
 						<div class="overlay">
@@ -630,12 +613,8 @@ class home_page extends moodleform {
 						</div>
 					</a>
 				</div>
-
-                
 				
 				'.$manage_manager_div.'
-                
-             
           </div>';
 
       $mform->addElement('html',$html);
