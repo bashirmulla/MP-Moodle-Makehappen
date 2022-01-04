@@ -366,7 +366,7 @@ class accident_event extends moodleform{
         else { 
             
             if($reportData->status=='Confirmed') $disabled = "";
-            else                                 $disabled = "readonly";
+            else                                 $disabled = "disabled";
             $button   = '<a id="saveStatement" class="btn btn-dark" style="background-color: #c14070; border-color: #c14070 !important;"><i class="fa fa-check-circle"> </i> Approve </a>'; 
 
             if($reportData->status=='Approved') $display = "none";
@@ -393,6 +393,42 @@ class accident_event extends moodleform{
             
             }                
         }   
+
+
+        if(empty($reportData->confirmed_person_name) && $reportData->user_id!=$USER->id && (is_admin() || is_manager())) {  $section4 = "";  $display="none"; }
+
+        else 
+        $section4 = ' <table width="100%">
+            
+        <tr>
+            <td style="background:#090; color:#000" colspan="3"><b>4.    For the employee only</b></td>
+        </tr>
+        <tr>
+            <td colspan="3">
+            <input type="checkbox" 
+                   name="confirmed" 
+                   id="confirmed" '.$checked. ' ' .$disabled.'> 
+                   <a href="javascript:void(0)" onclick="document.getElementById(\'confirmed\').checked=true" >
+            I give consent to my employer to disclose my personal information and details of 
+            the accident which appear on this form to safety representatives and representatives of employee 
+            safety for them to carry out the health and safety functions given to them by law.</a>
+            </td>
+        </tr>
+        
+        </table>
+        <table width="100%">
+        
+        <tr>
+            <td width="25%">Your Full Name: 
+                <input  tyle="text" name="confirmed_person_name" 
+                        value="'.$reportData->confirmed_person_name.'" 
+                        class="form-control" style="width:250px"; 
+                        '.$readonly.'
+                        id="confirmed_person_name">
+            </td>
+            <td>Date:<br><b>'.Date("d-M-Y").'</b></td>
+        </tr>
+        </table>';
         
 
         
@@ -501,37 +537,7 @@ class accident_event extends moodleform{
         <br />
       
         
-            <table width="100%">
-            
-            <tr>
-                <td style="background:#090; color:#000" colspan="3"><b>4.    For the employee only</b></td>
-            </tr>
-            <tr>
-                <td colspan="3">
-                <input type="checkbox" 
-                       name="confirmed" 
-                       id="confirmed" '.$checked.'> 
-                       <a href="javascript:void(0)" onclick="document.getElementById(\'confirmed\').checked=true" >
-                I give consent to my employer to disclose my personal information and details of 
-                the accident which appear on this form to safety representatives and representatives of employee 
-                safety for them to carry out the health and safety functions given to them by law.</a>
-                </td>
-            </tr>
-            
-            </table>
-            <table width="100%">
-            
-            <tr>
-                <td width="25%">Your Full Name: 
-                    <input  tyle="text" name="confirmed_person_name" 
-                            value="'.$reportData->confirmed_person_name.'" 
-                            class="form-control" style="width:250px"; 
-                            '.$readonly.'
-                            id="confirmed_person_name">
-                </td>
-                <td>Date:<br><b>'.Date("d-M-Y").'</b></td>
-            </tr>
-            </table>
+           '.$section4.'
             
             '.$section5.'
 

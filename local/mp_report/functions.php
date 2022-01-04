@@ -1361,19 +1361,19 @@ function new_accident_full_pdf($acc_id) {
         </tr>
         <tr>
             <td >Name</td>
-            <td>: <?=boldText($reportData->a_surname.' '.$reportData->a_forename)?></td>
+            <td> <?=boldText($reportData->a_surname.' '.$reportData->a_forename)?></td>
         </tr>
         <tr>
             <td >Address</td>
-            <td>: <?=boldText($reportData->a_home_address)?></td>
+            <td> <?=boldText($reportData->a_home_address)?></td>
         </tr>
         <tr>
             <td >Postcode</td>
-            <td>: <?=boldText($reportData->a_postcode)?></td>
+            <td> <?=boldText($reportData->a_postcode)?></td>
         </tr>
         <tr>
             <td>Occupation</td>
-            <td>: <?=boldText($reportData->a_job_title)?></td>
+            <td> <?=boldText($reportData->a_job_title)?></td>
         </tr>
         
         </table>
@@ -1388,19 +1388,19 @@ function new_accident_full_pdf($acc_id) {
        
         <tr>
             <td >Name</td>
-            <td>: <?=boldText($reportData->a_surname.' '.$reportData->a_forename)?></td>
+            <td> <?=boldText($reportData->a_surname.' '.$reportData->a_forename)?></td>
         </tr>
         <tr>
             <td >Address</td>
-            <td>: <?=boldText($reportData->a_home_address)?></td>
+            <td> <?=boldText($reportData->a_home_address)?></td>
         </tr>
         <tr>
             <td >Postcode</td>
-            <td>: <?=boldText($reportData->a_postcode)?></td>
+            <td> <?=boldText($reportData->a_postcode)?></td>
         </tr>
         <tr>
             <td >Occupation</td>
-            <td>: <?=boldText($reportData->a_job_title)?></td>
+            <td> <?=boldText($reportData->a_job_title)?></td>
         </tr>
         
         </table>
@@ -1410,13 +1410,13 @@ function new_accident_full_pdf($acc_id) {
         <table id="view_table" width="100%">
         
         <tr>
-            <td style="background:#090; color:#000" colspan="2"><b>3.   About the accident</b></td>
+            <td style="background:#090; color:#000" colspan="4"><b>3.   About the accident</b></td>
         </tr>
         <tr>
             <td>Date of Occurrence</td>
-            <td>: <?=boldText(date("d-M-Y",$reportData->b_date))?></td>
+            <td> <?=boldText(date("d-M-Y",$reportData->b_date))?></td>
             <td>Time of Occurrence</td>
-            <td>: <?=boldText(date("d-M-Y",$reportData->b_date))?></td>
+            <td> <?=boldText(date("d-M-Y",$reportData->b_date))?></td>
         </tr>
           
         </table>
@@ -1444,14 +1444,62 @@ function new_accident_full_pdf($acc_id) {
         </tr>
         </table>
         <br />
-      
+
+        <?php if(!empty($reportData->confirmed_person_name)) { ?>
+            <br />
+        <table  id="view_table" width="100%">
+            
+            <tr>
+                <td style="background:#090; color:#000" colspan="3"><b>4. For the employee only</b></td>
+            </tr>
+            <tr>
+                <td colspan="3">
+                <input type="checkbox" 
+                       name="confirmed" 
+                       id="confirmed" checked disabled> 
+                       
+                I give consent to my employer to disclose my personal information and details of 
+                the accident which appear on this form to safety representatives and representatives of employee 
+                safety for them to carry out the health and safety functions given to them by law.
+                </td>
+            </tr>
+            
+            </table>
+            
+            <table  id="view_table" width="100%">
+            
+            <tr>
+                <td width="50%">Your Full Name: <br><?=$reportData->confirmed_person_name?></td>
+                <td>Date:<br><?=Date("d-M-Y",$reportData->confirmed_date)?></td>
+            </tr>
+            </table>
+         <?php }?>   
+            <br> 
+            <br> 
+
+            <?php if(!empty($reportData->how_reported)) { ?>
+
+            <table  id="view_table"  width="100%">            
+                <tr>
+                    <td style="background:#090; color:#000"><b>5. For the employee only</b></td>
+                </tr>
+                <tr>
+                    <td>Complete this box if the accident is reportable under the Reporting of Injuries, Diseases and Dangerous Occurrences Regulations 1995 (RIDDOR)</td>            
+                </tr>
+                <tr>
+                    <td>How was it reported<br>
+                        <?=$reportData->how_reported?>
+                    </td>            
+                </tr>
+            </table>   
+           <?php } ?> 
     
          
              
     <?php
        }
 
-      $html = ob_get_contents();
+       $html = ob_get_contents();
       
      
    
