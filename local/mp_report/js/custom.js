@@ -11,7 +11,7 @@ require(['jquery', 'core/modal_factory', 'core/notification', 'core/modal_events
             $('#confirmed_person_name').removeClass('is-invalid');
         }
         if($('#confirmed').is(":checked")==false){
-            notification.alert('Error','You must have to give consent to your employer');
+            notification.alert('Confirmation Failure','You must have to give consent to your employer');
             return;
         }
         $( ".mform").submit();
