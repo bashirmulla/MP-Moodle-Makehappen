@@ -350,6 +350,7 @@ class accident_event extends moodleform{
         $display  = '';
         $id       = $_REQUEST['id'];
         $section5 = ""; 
+        $disabled2 =  "";
         $reportData = $DB->get_record("new_accident_report",array("id" => $id));
 
         
@@ -365,11 +366,14 @@ class accident_event extends moodleform{
         }
         else { 
             
-            if($reportData->status=='Confirmed') $disabled = "";
-            else                                 $disabled = "disabled";
+            if($reportData->status=='Confirmed') $disabled = "disabled";
+            else                                 $disabled = "";
+
+            
             $button   = '<a id="saveStatement" class="btn btn-dark" style="background-color: #c14070; border-color: #c14070 !important;"><i class="fa fa-check-circle"> </i> Approve </a>'; 
 
-            if($reportData->status=='Approved') $display = "none";
+            if($reportData->status=='Approved')  {$disabled2= "disabled";  $display = "none";}
+            else { $disabled2= "";}
             
             if(is_admin() || is_manager()){
             $section5 = ' <br> 
@@ -382,7 +386,7 @@ class accident_event extends moodleform{
                                 </tr>
                                 <tr>
                                     <td>How was it reported<br>
-                                        <textarea name="how_reported" class="form-control" cols=40 rows=3 '.$disabled.'>'.$reportData->how_reported.'</textarea>
+                                        <textarea name="how_reported" class="form-control" cols=40 rows=3 '.$disabled2.'>'.$reportData->how_reported.'</textarea>
                                     </td>            
                                 </tr>
                             </table>
@@ -397,39 +401,41 @@ class accident_event extends moodleform{
 
         if(empty($reportData->confirmed_person_name) && $reportData->user_id!=$USER->id && (is_admin() || is_manager())) {  $section4 = "";  $display="none"; }
 
-        else 
+        else {
+
+            if($reportData->status=='Approved')  {$disabled= "disabled";}    
         $section4 = ' <table width="100%">
             
-        <tr>
-            <td style="background:#090; color:#000" colspan="3"><b>4.    For the employee only</b></td>
-        </tr>
-        <tr>
-            <td colspan="3">
-            <input type="checkbox" 
-                   name="confirmed" 
-                   id="confirmed" '.$checked. ' ' .$disabled.'> 
-                   <a href="javascript:void(0)" onclick="document.getElementById(\'confirmed\').checked=true" >
-            I give consent to my employer to disclose my personal information and details of 
-            the accident which appear on this form to safety representatives and representatives of employee 
-            safety for them to carry out the health and safety functions given to them by law.</a>
-            </td>
-        </tr>
-        
-        </table>
-        <table width="100%">
-        
-        <tr>
-            <td width="25%">Your Full Name: 
-                <input  tyle="text" name="confirmed_person_name" 
-                        value="'.$reportData->confirmed_person_name.'" 
-                        class="form-control" style="width:250px"; 
-                        '.$readonly.'
-                        id="confirmed_person_name">
-            </td>
-            <td>Date:<br><b>'.Date("d-M-Y").'</b></td>
-        </tr>
-        </table>';
-        
+                            <tr>
+                                <td style="background:#090; color:#000" colspan="3"><b>4.    For the employee only</b></td>
+                            </tr>
+                            <tr>
+                                <td colspan="3">
+                                <input type="checkbox" 
+                                    name="confirmed" 
+                                    id="confirmed" '.$checked. ' ' .$disabled.'> 
+                                    <a href="javascript:void(0)" onclick="document.getElementById(\'confirmed\').checked=true" >
+                                I give consent to my employer to disclose my personal information and details of 
+                                the accident which appear on this form to safety representatives and representatives of employee 
+                                safety for them to carry out the health and safety functions given to them by law.</a>
+                                </td>
+                            </tr>
+                            
+                            </table>
+                            <table width="100%">
+                            
+                            <tr>
+                                <td width="25%">Your Full Name: 
+                                    <input  tyle="text" name="confirmed_person_name" 
+                                            value="'.$reportData->confirmed_person_name.'" 
+                                            class="form-control" style="width:250px"; 
+                                            '.$readonly.'
+                                            id="confirmed_person_name">
+                                </td>
+                                <td>Date:<br><b>'.Date("d-M-Y").'</b></td>
+                            </tr>
+                            </table>';
+        }
 
         
 
