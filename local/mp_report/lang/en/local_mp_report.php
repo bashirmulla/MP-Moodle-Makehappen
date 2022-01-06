@@ -187,31 +187,31 @@ $string['a_tel_no']                   = 'Telephone';
 $string['a_sex']                      = 'Sex';
 $string['a_age']                      = 'Age';
 
-$string['a_following_accident']     = 'Operative Now At';
-$string['a_resumed_work']           = 'Resumed Work';
+$string['a_following_accident']     = 'The Operative is now at';
+$string['a_resumed_work']           = 'Resumed Work?';
 
 $string['a_hours']                  = 'Hours';
 $string['a_mins']                   = 'Minutes';
 $string['time_lost_none']           = 'None';
-$string['a_temp_address']           = 'Temporary Address';
+$string['a_temp_address']           = 'Temporary Address (if applicable)';
 $string['a_status']                 = 'Employment Status';
-$string['a_job_title']              = 'Occupation';
-$string['a_injury_condition']       = 'Nature of Injury';
-$string['a_body_affected']          = 'Body Affected';
+$string['a_job_title']              = 'Occupation or Job Title';
+$string['a_injury_condition']       = 'Nature of Injury or Condition';
+$string['a_body_affected']          = 'Part of Body Affected';
 
 
-$string['a_employers_name']       = 'Employee Name';
+$string['a_employers_name']       = 'Employers Name and Address';
 
-$string['b_date']                = 'Occurence Date';
-$string['b_name_address_site']   = 'Name address of site';
+$string['b_date']                = 'Occurence Date and Time';
+$string['b_name_address_site']   = 'Name & Address of Site';
 $string['b_exact_location_site'] = 'Exect location on site';
-$string['b_dangerous']           = 'Type of Work at Occurrence';
-$string['b2_date']              = 'Reported Date';
-$string['b_injured']            = 'Person believe';
+$string['b_dangerous']           = 'On what work was the operative engaged upon at the time and/or what was the dangerous occurrence?';
+$string['b2_date']              = 'Reported Date & Time';
+$string['b_injured']            = 'What Does the Injured Person Believe Caused the Accident?';
 $string['b_witness']            = 'Witness?';
-$string['b_witness_name']       = 'Witness name';
-$string['b_witness_address']    = 'Witness address';
-$string['b_tel_witness']        = 'Witness telephone';
+$string['b_witness_name']       = 'Witness Names';
+$string['b_witness_address']    = 'Witness Addresses';
+$string['b_tel_witness']        = 'Witness Telephones';
 $string['c_kind_of_accident']   = 'Witness name & address';
 $string['c_metres']             = 'Metres';
 $string['d_agents']             = 'Agents';
