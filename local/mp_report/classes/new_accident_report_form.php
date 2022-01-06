@@ -194,8 +194,7 @@ class new_accident_report_form extends moodleform {
             if($key==28)
             {
                 
-                $mform->addElement('text', 'c_metres', NULL, 'maxlength="100" size="40" style="width:150px" ');
-                
+                $mform->addElement('text', 'c_metres', NULL, 'maxlength="100" size="40" style="width:150px" ');                
                 $mform->hideIf('c_metres', 'c_kind_of_accident##28',  'notchecked');
             }
 
@@ -223,7 +222,9 @@ class new_accident_report_form extends moodleform {
         $mform->addElement('html', '</fieldset>');
 
         $mform->addElement('html', '<fieldset class="scheduler-border"><legend class="scheduler-border">E. ACCOUNT OF INCIDENT/DANGEROUS OCCURRENCE</legend>');
+        $mform->addElement('html', '<p>Describe what happened and how (in the case of an accident state, what the injured person was doing at the time)</p>');
        
+
         $mform->addElement('textarea', 'e_accident_state', get_string('e_accident_state', 'local_mp_report'), 'wrap="virtual" rows="3" cols="40"');
         $mform->setType('e_accident_state', PARAM_TEXT);
         $mform->addRule('e_accident_state', get_string('required'), 'required','','client');
@@ -349,8 +350,12 @@ class new_accident_report_form extends moodleform {
                 <?php
                    $ids = explode(',',$reportData->c_kind_of_accident);
                    foreach($dropdown['kind_of_occurrence'] as $key=>$value){
-                       if(in_array($key,$ids))
-                       echo "<tr> <td style='border:0px'> &#10157; ".$value."<br>";
+                    if(in_array($key,$ids))
+                    {  echo "&#10157; ".$value;
+ 
+                         if($key==28) { echo ' ('.$reportData->c_metres. ' Metres )';}
+                         echo "<br>";
+                    }
                    } 
                 ?>    
                
@@ -722,8 +727,8 @@ class new_accident_report_form extends moodleform {
             $mform->addElement('static', 'interviewee2_statementM', 'Interviewee 2 Statement', $reportData->interviewee2_statement);
             $mform->addElement('static', 'contributors_incidentM', 'Contributors to Incident', @$dropdown['contributors_incident'][$reportData->contributors_incident]);
             $mform->addElement('static', 'results_investigationM', 'Results of Investigation', $reportData->results_investigation);
-            $mform->addElement('static', 'receive_medical_treatmentM', $reportData->receive_medical_treatment);
-            $mform->addElement('static', 'lost_time_reportM', $reportData->lost_time_report);
+            $mform->addElement('static', 'receive_medical_treatmentM', 'Did the employee receive medical treatment?(give details)', $reportData->receive_medical_treatment);
+            $mform->addElement('static', 'lost_time_reportM', 'Is there any lost time to report?(give details)', $reportData->lost_time_report);
             $mform->addElement('static', 'recommended_actionsM', 'Recommended Corrective Actions', @$dropdown['recommended_actions'][$reportData->recommended_actions]);
             $mform->addElement('static', 'specifice_corrective_actionsM', 'Please provide additional Information regarding specific corrective actions:', $reportData->specifice_corrective_actions);
             $mform->addElement('static', 'corrective_actions_completedM', 'Please provide details of when the corrective actions have been completed', $reportData->corrective_actions_completed);

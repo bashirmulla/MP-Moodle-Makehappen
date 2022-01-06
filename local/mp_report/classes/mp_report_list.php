@@ -513,7 +513,7 @@ class accident_event extends moodleform{
             <td width="15%">Date of Occurrence</td>
             <td width="15%">: '.boldText(date("d-M-Y",$reportData->b_date)).'</td>
             <td width="15%">Time of Occurrence</td>
-            <td width="15%">: '.boldText(date("d-M-Y",$reportData->b_date)).'</td>
+            <td width="15%">: '.boldText(date("g:i A",$reportData->b_date)).'</td>
         </tr>
           
         </table>

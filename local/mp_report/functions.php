@@ -773,7 +773,11 @@ function new_accident_pdf($acc_id) {
                $ids = explode(',',$reportData->c_kind_of_accident);
                foreach($dropdown['kind_of_occurrence'] as $key=>$value){
                    if(in_array($key,$ids))
-                   echo "&#10157; ".$value."<br>";
+                   {  echo "&#10157; ".$value;
+
+                        if($key==28) { echo ' ('.$reportData->c_metres. ' Metres )';}
+                        echo "<br>";
+                   }
                } 
             ?>    
            
@@ -938,7 +942,7 @@ function accident_event_pdf($id){
         <td>Date of Occurrence</td>
         <td>: <?=boldText(date("d-M-Y",$reportData->b_date))?></td>
         <td>Time of Occurrence</td>
-        <td>: <?=boldText(date("d-M-Y",$reportData->b_date))?></td>
+        <td>: <?=boldText(date("g:i A",$reportData->b_date))?></td>
     </tr>
     
     </table>
@@ -1416,7 +1420,7 @@ function new_accident_full_pdf($acc_id) {
             <td>Date of Occurrence</td>
             <td> <?=boldText(date("d-M-Y",$reportData->b_date))?></td>
             <td>Time of Occurrence</td>
-            <td> <?=boldText(date("d-M-Y",$reportData->b_date))?></td>
+            <td> <?=boldText(date("g:i A",$reportData->b_date))?></td>
         </tr>
           
         </table>
