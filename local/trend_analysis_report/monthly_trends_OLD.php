@@ -91,12 +91,10 @@ echo html_writer:: end_tag('div');
 echo html_writer:: end_tag('div');
 echo html_writer:: end_tag('div');
 
-/* BM added */
-$sql       = "SELECT    FROM_UNIXTIME(b_date,'%c')-1 as rowid,COUNT(id) as total ,FROM_UNIXTIME(b_date,'%c')-1 as month  
-              FROM      mdl_new_accident_report 
-              WHERE     FROM_UNIXTIME(b_date,'%Y')=".$cur_year." 
-              GROUP by  FROM_UNIXTIME(b_date,'%m')";
-/* EOF BM */
+$sql       = "SELECT    FROM_UNIXTIME(accident_date,'%c')-1 as rowid,COUNT(id) as total ,FROM_UNIXTIME(accident_date,'%c')-1 as month  
+              FROM      mdl_accident_report 
+              WHERE     FROM_UNIXTIME(accident_date,'%Y')=".$cur_year." 
+              GROUP by  FROM_UNIXTIME(accident_date,'%m')";
 $result    = $DB->get_records_sql($sql);
 $accidents = array(0=>0,1=>0,2=>0,3=>0,4=>0,5=>0,6=>0,7=>0,8=>0,9=>0,10=>0,11=>0);
 if(!empty($result)){
@@ -561,238 +559,98 @@ echo html_writer:: tag('div','',array('style'=>'height: 400px;','id'=>'container
 echo html_writer:: end_tag('div');
 echo html_writer:: end_tag('div');
 
-/*BM commented-out */
-/*
-$sql       = "SELECT FROM_UNIXTIME(accident_date,'%c')-1 as rowid,COUNT(id) as total ,FROM_UNIXTIME(accident_date,'%c')-1 as month
-              FROM      mdl_accident_report
-              WHERE     FROM_UNIXTIME(accident_date,'%Y')=".$cur_year."  AND accident_category=74
+
+$sql       = "SELECT FROM_UNIXTIME(accident_date,'%c')-1 as rowid,COUNT(id) as total ,FROM_UNIXTIME(accident_date,'%c')-1 as month  
+              FROM      mdl_accident_report 
+              WHERE     FROM_UNIXTIME(accident_date,'%Y')=".$cur_year."  AND accident_category=74 
               GROUP by  FROM_UNIXTIME(accident_date,'%m')";
-*/
-/* EOF BM */
-
-/* BM added */
-$sql       = "SELECT FROM_UNIXTIME(b_date,'%c')-1 as rowid,COUNT(id) as total ,FROM_UNIXTIME(b_date,'%c')-1 as month  
-              FROM      mdl_new_accident_report 
-              WHERE     FROM_UNIXTIME(b_date,'%Y')=".$cur_year."  AND find_in_set('1', d_agents) > 0
-              GROUP by  FROM_UNIXTIME(b_date,'%m')";
-/* EOF BM */
-
 $result    = $DB->get_records_sql($sql);
-$any_vehicle_associated_equipment_machinery = array(0=>0,1=>0,2=>0,3=>0,4=>0,5=>0,6=>0,7=>0,8=>0,9=>0,10=>0,11=>0);
+$act_of_physical_violence = array(0=>0,1=>0,2=>0,3=>0,4=>0,5=>0,6=>0,7=>0,8=>0,9=>0,10=>0,11=>0);
 if(!empty($result)){
     foreach ($result as $data)
-        //$act_of_physical_violence[$data->month] = $data->total;
-        $any_vehicle_associated_equipment_machinery[$data->month] = $data->total;
+        $act_of_physical_violence[$data->month] = $data->total;
 }
 
 
-$sql       = "SELECT FROM_UNIXTIME(b_date,'%c')-1 as rowid,COUNT(id) as total ,FROM_UNIXTIME(b_date,'%c')-1 as month  
-              FROM      mdl_new_accident_report 
-              WHERE     FROM_UNIXTIME(b_date,'%Y')=".$cur_year."  AND find_in_set('2', d_agents) > 0 
-              GROUP by  FROM_UNIXTIME(b_date,'%m')";
+$sql       = "SELECT FROM_UNIXTIME(accident_date,'%c')-1 as rowid,COUNT(id) as total ,FROM_UNIXTIME(accident_date,'%c')-1 as month  
+              FROM      mdl_accident_report 
+              WHERE     FROM_UNIXTIME(accident_date,'%Y')=".$cur_year."  AND accident_category=75 
+              GROUP by  FROM_UNIXTIME(accident_date,'%m')";
 $result    = $DB->get_records_sql($sql);
-$building_services_not_electrical = array(0=>0,1=>0,2=>0,3=>0,4=>0,5=>0,6=>0,7=>0,8=>0,9=>0,10=>0,11=>0);
+$cuts_and_lacerations = array(0=>0,1=>0,2=>0,3=>0,4=>0,5=>0,6=>0,7=>0,8=>0,9=>0,10=>0,11=>0);
 if(!empty($result)){
     foreach ($result as $data)
-        //$cuts_and_lacerations[$data->month] = $data->total;
-        $building_services_not_electrical[$data->month] = $data->total;
+        $cuts_and_lacerations[$data->month] = $data->total;
 }
 
 //$DB->set_debug(false);
 //$DB->set_debug(true);
 
-$sql       = "SELECT FROM_UNIXTIME(b_date,'%c')-1 as rowid,COUNT(id) as total ,FROM_UNIXTIME(b_date,'%c')-1 as month  
-              FROM      mdl_new_accident_report 
-              WHERE     FROM_UNIXTIME(b_date,'%Y')=".$cur_year."  AND find_in_set('3', d_agents) > 0
-              GROUP by  FROM_UNIXTIME(b_date,'%m')";
+$sql       = "SELECT FROM_UNIXTIME(accident_date,'%c')-1 as rowid,COUNT(id) as total ,FROM_UNIXTIME(accident_date,'%c')-1 as month  
+              FROM      mdl_accident_report 
+              WHERE     FROM_UNIXTIME(accident_date,'%Y')=".$cur_year."  AND accident_category=76 
+              GROUP by  FROM_UNIXTIME(accident_date,'%m')";
 $result    = $DB->get_records_sql($sql);
-$building_structure_excavation_underground_working = array(0=>0,1=>0,2=>0,3=>0,4=>0,5=>0,6=>0,7=>0,8=>0,9=>0,10=>0,11=>0);
+$falls_from_height = array(0=>0,1=>0,2=>0,3=>0,4=>0,5=>0,6=>0,7=>0,8=>0,9=>0,10=>0,11=>0);
 if(!empty($result)){
     foreach ($result as $data)
-        //$falls_from_height[$data->month] = $data->total;
-        $building_structure_excavation_underground_working[$data->month] = $data->total;
+        $falls_from_height[$data->month] = $data->total;
 }
 
 
 //$DB->set_debug(false);
 //$DB->set_debug(true);
 
-$sql       = "SELECT FROM_UNIXTIME(b_date,'%c')-1 as rowid,COUNT(id) as total ,FROM_UNIXTIME(b_date,'%c')-1 as month  
-              FROM      mdl_new_accident_report 
-              WHERE     FROM_UNIXTIME(b_date,'%Y')=".$cur_year."  AND find_in_set('4', d_agents) > 0 
-              GROUP by  FROM_UNIXTIME(b_date,'%m')";
+$sql       = "SELECT FROM_UNIXTIME(accident_date,'%c')-1 as rowid,COUNT(id) as total ,FROM_UNIXTIME(accident_date,'%c')-1 as month  
+              FROM      mdl_accident_report 
+              WHERE     FROM_UNIXTIME(accident_date,'%Y')=".$cur_year."  AND accident_category=77 
+              GROUP by  FROM_UNIXTIME(accident_date,'%m')";
 $result    = $DB->get_records_sql($sql);
-$carcinogen = array(0=>0,1=>0,2=>0,3=>0,4=>0,5=>0,6=>0,7=>0,8=>0,9=>0,10=>0,11=>0);
+$manual_handling = array(0=>0,1=>0,2=>0,3=>0,4=>0,5=>0,6=>0,7=>0,8=>0,9=>0,10=>0,11=>0);
 if(!empty($result)){
     foreach ($result as $data)
-        //$manual_handling[$data->month] = $data->total;
-        $carcinogen[$data->month] = $data->total;
+        $manual_handling[$data->month] = $data->total;
 }
 
 //$DB->set_debug(false);
 //$DB->set_debug(true);
 
-$sql       = "SELECT FROM_UNIXTIME(b_date,'%c')-1 as rowid,COUNT(id) as total ,FROM_UNIXTIME(b_date,'%c')-1 as month  
-              FROM      mdl_new_accident_report 
-              WHERE     FROM_UNIXTIME(b_date,'%Y')=".$cur_year."  AND find_in_set('5', d_agents) > 0 
-              GROUP by  FROM_UNIXTIME(b_date,'%m')";
+$sql       = "SELECT FROM_UNIXTIME(accident_date,'%c')-1 as rowid,COUNT(id) as total ,FROM_UNIXTIME(accident_date,'%c')-1 as month  
+              FROM      mdl_accident_report 
+              WHERE     FROM_UNIXTIME(accident_date,'%Y')=".$cur_year."  AND accident_category=78 
+              GROUP by  FROM_UNIXTIME(accident_date,'%m')";
 $result    = $DB->get_records_sql($sql);
-$Construction_shuttering_false_work = array(0=>0,1=>0,2=>0,3=>0,4=>0,5=>0,6=>0,7=>0,8=>0,9=>0,10=>0,11=>0);
+$needlestick_injuries = array(0=>0,1=>0,2=>0,3=>0,4=>0,5=>0,6=>0,7=>0,8=>0,9=>0,10=>0,11=>0);
 if(!empty($result)){
     foreach ($result as $data)
-        //$needlestick_injuries[$data->month] = $data->total;
-        $Construction_shuttering_false_work[$data->month] = $data->total;
+        $needlestick_injuries[$data->month] = $data->total;
 }
 
 //$DB->set_debug(false);
 //$DB->set_debug(true);
-$sql       = "SELECT FROM_UNIXTIME(b_date,'%c')-1 as rowid,COUNT(id) as total ,FROM_UNIXTIME(b_date,'%c')-1 as month  
-              FROM      mdl_new_accident_report 
-              WHERE     FROM_UNIXTIME(b_date,'%Y')=".$cur_year."  AND find_in_set('6', d_agents) > 0 
-              GROUP by  FROM_UNIXTIME(b_date,'%m')";
+$sql       = "SELECT FROM_UNIXTIME(accident_date,'%c')-1 as rowid,COUNT(id) as total ,FROM_UNIXTIME(accident_date,'%c')-1 as month  
+              FROM      mdl_accident_report 
+              WHERE     FROM_UNIXTIME(accident_date,'%Y')=".$cur_year."  AND accident_category=79 
+              GROUP by  FROM_UNIXTIME(accident_date,'%m')";
 $result    = $DB->get_records_sql($sql);
-$entertainment_sporting_facilities_equipment = array(0=>0,1=>0,2=>0,3=>0,4=>0,5=>0,6=>0,7=>0,8=>0,9=>0,10=>0,11=>0);
+$slips_trips_and_falls_on_same_level = array(0=>0,1=>0,2=>0,3=>0,4=>0,5=>0,6=>0,7=>0,8=>0,9=>0,10=>0,11=>0);
 if(!empty($result)){
     foreach ($result as $data)
-        //$slips_trips_and_falls_on_same_level[$data->month] = $data->total;
-        $entertainment_sporting_facilities_equipment[$data->month] = $data->total;
+        $slips_trips_and_falls_on_same_level[$data->month] = $data->total;
 }
 
 //$DB->set_debug(false);
 //$DB->set_debug(true);
-$sql       = "SELECT FROM_UNIXTIME(b_date,'%c')-1 as rowid,COUNT(id) as total ,FROM_UNIXTIME(b_date,'%c')-1 as month  
-              FROM      mdl_new_accident_report 
-              WHERE     FROM_UNIXTIME(b_date,'%Y')=".$cur_year."  AND find_in_set('7', d_agents) > 0
-              GROUP by  FROM_UNIXTIME(b_date,'%m')";
+$sql       = "SELECT FROM_UNIXTIME(accident_date,'%c')-1 as rowid,COUNT(id) as total ,FROM_UNIXTIME(accident_date,'%c')-1 as month  
+              FROM      mdl_accident_report 
+              WHERE     FROM_UNIXTIME(accident_date,'%Y')=".$cur_year."  AND accident_category=80 
+              GROUP by  FROM_UNIXTIME(accident_date,'%m')";
 $result    = $DB->get_records_sql($sql);
-$floor_ground_stairs_any_work_surface = array(0=>0,1=>0,2=>0,3=>0,4=>0,5=>0,6=>0,7=>0,8=>0,9=>0,10=>0,11=>0);
+$struck_by_an_object = array(0=>0,1=>0,2=>0,3=>0,4=>0,5=>0,6=>0,7=>0,8=>0,9=>0,10=>0,11=>0);
 if(!empty($result)){
     foreach ($result as $data)
-        //$struck_by_an_object[$data->month] = $data->total;
-        $floor_ground_stairs_any_work_surface[$data->month] = $data->total;
+        $struck_by_an_object[$data->month] = $data->total;
 }
-
-$sql       = "SELECT FROM_UNIXTIME(b_date,'%c')-1 as rowid,COUNT(id) as total ,FROM_UNIXTIME(b_date,'%c')-1 as month  
-              FROM      mdl_new_accident_report 
-              WHERE     FROM_UNIXTIME(b_date,'%Y')=".$cur_year."  AND find_in_set('8', d_agents) > 0
-              GROUP by  FROM_UNIXTIME(b_date,'%m')";
-$result    = $DB->get_records_sql($sql);
-$gas_vapour_dust_fume_oxygen_deficient_atmosphere = array(0=>0,1=>0,2=>0,3=>0,4=>0,5=>0,6=>0,7=>0,8=>0,9=>0,10=>0,11=>0);
-if(!empty($result)){
-    foreach ($result as $data)
-        //$struck_by_an_object[$data->month] = $data->total;
-        $gas_vapour_dust_fume_oxygen_deficient_atmosphere[$data->month] = $data->total;
-}
-
-$sql       = "SELECT FROM_UNIXTIME(b_date,'%c')-1 as rowid,COUNT(id) as total ,FROM_UNIXTIME(b_date,'%c')-1 as month  
-              FROM      mdl_new_accident_report 
-              WHERE     FROM_UNIXTIME(b_date,'%Y')=".$cur_year."  AND find_in_set('9', d_agents) > 0
-              GROUP by  FROM_UNIXTIME(b_date,'%m')";
-$result    = $DB->get_records_sql($sql);
-$inclement_weather_conditions = array(0=>0,1=>0,2=>0,3=>0,4=>0,5=>0,6=>0,7=>0,8=>0,9=>0,10=>0,11=>0);
-if(!empty($result)){
-    foreach ($result as $data)
-        //$struck_by_an_object[$data->month] = $data->total;
-        $inclement_weather_conditions[$data->month] = $data->total;
-}
-
-$sql       = "SELECT FROM_UNIXTIME(b_date,'%c')-1 as rowid,COUNT(id) as total ,FROM_UNIXTIME(b_date,'%c')-1 as month  
-              FROM      mdl_new_accident_report 
-              WHERE     FROM_UNIXTIME(b_date,'%Y')=".$cur_year."  AND find_in_set('10', d_agents) > 0
-              GROUP by  FROM_UNIXTIME(b_date,'%m')";
-$result    = $DB->get_records_sql($sql);
-$ladder_stepladder_scaffolding = array(0=>0,1=>0,2=>0,3=>0,4=>0,5=>0,6=>0,7=>0,8=>0,9=>0,10=>0,11=>0);
-if(!empty($result)){
-    foreach ($result as $data)
-        //$struck_by_an_object[$data->month] = $data->total;
-        $ladder_stepladder_scaffolding[$data->month] = $data->total;
-}
-
-$sql       = "SELECT FROM_UNIXTIME(b_date,'%c')-1 as rowid,COUNT(id) as total ,FROM_UNIXTIME(b_date,'%c')-1 as month  
-              FROM      mdl_new_accident_report 
-              WHERE     FROM_UNIXTIME(b_date,'%Y')=".$cur_year."  AND find_in_set('11', d_agents) > 0
-              GROUP by  FROM_UNIXTIME(b_date,'%m')";
-$result    = $DB->get_records_sql($sql);
-$live_animal = array(0=>0,1=>0,2=>0,3=>0,4=>0,5=>0,6=>0,7=>0,8=>0,9=>0,10=>0,11=>0);
-if(!empty($result)){
-    foreach ($result as $data)
-        //$struck_by_an_object[$data->month] = $data->total;
-        $live_animal[$data->month] = $data->total;
-}
-
-$sql       = "SELECT FROM_UNIXTIME(b_date,'%c')-1 as rowid,COUNT(id) as total ,FROM_UNIXTIME(b_date,'%c')-1 as month  
-              FROM      mdl_new_accident_report 
-              WHERE     FROM_UNIXTIME(b_date,'%Y')=".$cur_year."  AND find_in_set('12', d_agents) > 0
-              GROUP by  FROM_UNIXTIME(b_date,'%m')";
-$result    = $DB->get_records_sql($sql);
-$machinery_equipment_lifting_conveying = array(0=>0,1=>0,2=>0,3=>0,4=>0,5=>0,6=>0,7=>0,8=>0,9=>0,10=>0,11=>0);
-if(!empty($result)){
-    foreach ($result as $data)
-        //$struck_by_an_object[$data->month] = $data->total;
-        $machinery_equipment_lifting_conveying[$data->month] = $data->total;
-}
-
-$sql       = "SELECT FROM_UNIXTIME(b_date,'%c')-1 as rowid,COUNT(id) as total ,FROM_UNIXTIME(b_date,'%c')-1 as month  
-              FROM      mdl_new_accident_report 
-              WHERE     FROM_UNIXTIME(b_date,'%Y')=".$cur_year."  AND find_in_set('13', d_agents) > 0
-              GROUP by  FROM_UNIXTIME(b_date,'%m')";
-$result    = $DB->get_records_sql($sql);
-$material_substance_product_being_handled_used_stored = array(0=>0,1=>0,2=>0,3=>0,4=>0,5=>0,6=>0,7=>0,8=>0,9=>0,10=>0,11=>0);
-if(!empty($result)){
-    foreach ($result as $data)
-        //$struck_by_an_object[$data->month] = $data->total;
-        $material_substance_product_being_handled_used_stored[$data->month] = $data->total;
-}
-
-$sql       = "SELECT FROM_UNIXTIME(b_date,'%c')-1 as rowid,COUNT(id) as total ,FROM_UNIXTIME(b_date,'%c')-1 as month  
-              FROM      mdl_new_accident_report 
-              WHERE     FROM_UNIXTIME(b_date,'%Y')=".$cur_year."  AND find_in_set('14', d_agents) > 0
-              GROUP by  FROM_UNIXTIME(b_date,'%m')";
-$result    = $DB->get_records_sql($sql);
-$other_machinery = array(0=>0,1=>0,2=>0,3=>0,4=>0,5=>0,6=>0,7=>0,8=>0,9=>0,10=>0,11=>0);
-if(!empty($result)){
-    foreach ($result as $data)
-        //$struck_by_an_object[$data->month] = $data->total;
-        $other_machinery[$data->month] = $data->total;
-}
-
-$sql       = "SELECT FROM_UNIXTIME(b_date,'%c')-1 as rowid,COUNT(id) as total ,FROM_UNIXTIME(b_date,'%c')-1 as month  
-              FROM      mdl_new_accident_report 
-              WHERE     FROM_UNIXTIME(b_date,'%Y')=".$cur_year."  AND find_in_set('15', d_agents) > 0
-              GROUP by  FROM_UNIXTIME(b_date,'%m')";
-$result    = $DB->get_records_sql($sql);
-$pathogen_infected_material = array(0=>0,1=>0,2=>0,3=>0,4=>0,5=>0,6=>0,7=>0,8=>0,9=>0,10=>0,11=>0);
-if(!empty($result)){
-    foreach ($result as $data)
-        //$struck_by_an_object[$data->month] = $data->total;
-        $pathogen_infected_material[$data->month] = $data->total;
-}
-
-$sql       = "SELECT FROM_UNIXTIME(b_date,'%c')-1 as rowid,COUNT(id) as total ,FROM_UNIXTIME(b_date,'%c')-1 as month  
-              FROM      mdl_new_accident_report 
-              WHERE     FROM_UNIXTIME(b_date,'%Y')=".$cur_year."  AND find_in_set('16', d_agents) > 0
-              GROUP by  FROM_UNIXTIME(b_date,'%m')";
-$result    = $DB->get_records_sql($sql);
-$portable_power_hand_tool = array(0=>0,1=>0,2=>0,3=>0,4=>0,5=>0,6=>0,7=>0,8=>0,9=>0,10=>0,11=>0);
-if(!empty($result)){
-    foreach ($result as $data)
-        //$struck_by_an_object[$data->month] = $data->total;
-        $portable_power_hand_tool[$data->month] = $data->total;
-}
-
-$sql       = "SELECT FROM_UNIXTIME(b_date,'%c')-1 as rowid,COUNT(id) as total ,FROM_UNIXTIME(b_date,'%c')-1 as month  
-              FROM      mdl_new_accident_report 
-              WHERE     FROM_UNIXTIME(b_date,'%Y')=".$cur_year."  AND find_in_set('17', d_agents) > 0
-              GROUP by  FROM_UNIXTIME(b_date,'%m')";
-$result    = $DB->get_records_sql($sql);
-$process_plant_pipework_bulk_storage = array(0=>0,1=>0,2=>0,3=>0,4=>0,5=>0,6=>0,7=>0,8=>0,9=>0,10=>0,11=>0);
-if(!empty($result)){
-    foreach ($result as $data)
-        //$struck_by_an_object[$data->month] = $data->total;
-        $process_plant_pipework_bulk_storage[$data->month] = $data->total;
-}
-
-
 
 //$DB->set_debug(false);
 
@@ -803,11 +661,9 @@ echo html_writer:: tag('div','',array('style'=>'height: 400px;','id'=>'container
 echo html_writer:: end_tag('div');
 echo html_writer:: end_tag('div');
 
-/* BM commented-out RIDDOR */
-/*
 $sql       = "SELECT concat(s_mgt_rpt_riddor_event_clf,'_',FROM_UNIXTIME(accident_date,'%c')-1) as rowid,COUNT(id) as total ,FROM_UNIXTIME(accident_date,'%c')-1 as month , s_mgt_rpt_riddor_event_clf as ridder_event
-              FROM      mdl_accident_report
-              WHERE     FROM_UNIXTIME(accident_date,'%Y')=".$cur_year."
+              FROM      mdl_accident_report 
+              WHERE     FROM_UNIXTIME(accident_date,'%Y')=".$cur_year." 
               GROUP by  FROM_UNIXTIME(accident_date,'%m'),s_mgt_rpt_riddor_event_clf";
 $result    = $DB->get_records_sql($sql);
 
@@ -834,8 +690,8 @@ if(!empty($result)){
 
 
 $sql       = "SELECT concat(RIDDOR_subcategory,'_',FROM_UNIXTIME(accident_date,'%c')-1) as rowid,COUNT(id) as total ,FROM_UNIXTIME(accident_date,'%c')-1 as month , riddor_subcategory
-              FROM      mdl_accident_report
-              WHERE     FROM_UNIXTIME(accident_date,'%Y')=".$cur_year."
+              FROM      mdl_accident_report 
+              WHERE     FROM_UNIXTIME(accident_date,'%Y')=".$cur_year." 
               GROUP by  FROM_UNIXTIME(accident_date,'%m'),RIDDOR_subcategory";
 $result    = $DB->get_records_sql($sql);
 
@@ -871,8 +727,6 @@ echo html_writer:: start_tag('div',array('class'=>'card-body'));
 echo html_writer:: tag('div','',array('style'=>'height: 400px;','id'=>'container5'));
 echo html_writer:: end_tag('div');
 echo html_writer:: end_tag('div');
-*/
-/* EOF BM RIDDOR */
 
 echo $OUTPUT->footer();
 ?>
@@ -1217,61 +1071,29 @@ echo $OUTPUT->footer();
             }
         },
         series: [{
-            name: 'Any vehicle or associated equipment / machinery', //BM changed
-            data: [<?=implode(",", $any_vehicle_associated_equipment_machinery)?>] // BM changed
+            name: 'Act of Physical Violence',
+            data: [<?=implode(",", $act_of_physical_violence)?>]
         },{
-            name: 'Building services – not electrical', //BM changed
-            data: [<?=implode(",", $building_services_not_electrical)?>] //BM changed
+            name: 'Cuts and Lacerations',
+            data: [<?=implode(",", $cuts_and_lacerations)?>]
         },{
-            name: 'Building, structure or excavation / underground working',
-            data: [<?=implode(",", $building_structure_excavation_underground_working)?>]
+            name: 'Falls from a Height',
+            data: [<?=implode(",", $falls_from_height)?>]
         },{
-            name: 'Carcinogen',
-            data: [<?=implode(",", $carcinogen)?>]
+            name: 'Manual Handling',
+            data: [<?=implode(",", $manual_handling)?>]
         },{
-            name: 'Construction, shuttering or false work',
-            data: [<?=implode(",", $Construction_shuttering_false_work)?>]
+            name: 'Needlestick Injuries',
+            data: [<?=implode(",", $needlestick_injuries)?>]
         },{
-            name: 'Entertainment, sporting facilities or equipment',
-            data: [<?=implode(",", $entertainment_sporting_facilities_equipment)?>]
+            name: 'Slips, Trips and Falls on same level',
+            data: [<?=implode(",", $slips_trips_and_falls_on_same_level)?>]
         },{
-            name: 'Floor, ground, stairs or any work surface',
-            data: [<?=implode(",", $floor_ground_stairs_any_work_surface)?>]
-        },{
-            name: 'Gas, vapour, dust, fume or oxygen deficient atmosphere',
-            data: [<?=implode(",", $gas_vapour_dust_fume_oxygen_deficient_atmosphere)?>]
-        },{
-            name: 'Inclement weather conditions',
-            data: [<?=implode(",", $inclement_weather_conditions)?>]
-        },{
-            name: 'Ladder, stepladder or scaffolding',
-            data: [<?=implode(",", $ladder_stepladder_scaffolding)?>]
-        },{
-            name: 'Live animal',
-            data: [<?=implode(",", $live_animal)?>]
-        },{
-            name: 'Machinery / Equipment for lifting and conveying',
-            data: [<?=implode(",", $machinery_equipment_lifting_conveying)?>]
-        },{
-            name: 'Material, substance or product being handled, used or stored',
-            data: [<?=implode(",", $material_substance_product_being_handled_used_stored)?>]
-        },{
-            name: 'Other machinery',
-            data: [<?=implode(",", $other_machinery)?>]
-        },{
-            name: 'Pathogen or infected material',
-            data: [<?=implode(",", $pathogen_infected_material)?>]
-        },{
-            name: 'Portable power / hand tool',
-            data: [<?=implode(",", $portable_power_hand_tool)?>]
-        },{
-            name: 'Process plant, pipework or bulk storage',
-            data: [<?=implode(",", $process_plant_pipework_bulk_storage)?>]
+            name: 'Struck by an Object',
+            data: [<?=implode(",", $struck_by_an_object)?>]
         }]
     });
 
-    /* BM commented-out RIDDOR */
-    /*
     Highcharts.chart('container5', {
         chart: {
             type: 'column'
@@ -1380,6 +1202,4 @@ echo $OUTPUT->footer();
             data: [<?=implode(",", $injury_from_working_in_an_enclosed_space)?>]
         }]
     });
-    */
-    /* EOF BM RIDDOR */
 </script>
