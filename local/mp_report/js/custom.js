@@ -198,6 +198,10 @@ require(['jquery', 'core/modal_factory', 'core/notification', 'core/modal_events
         if(yes==false){
             $('#id_c_metres').val('');
         }
+        else{
+            $('#id_error_c_metres').removeClass('invalid-feedback');
+            $('#id_error_c_metres').html('<p style="margin:12px; padding-left:5px;">Metres</p>');
+        }
 
     });
 

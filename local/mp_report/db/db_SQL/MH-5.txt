@@ -1,0 +1,8 @@
+ALTER TABLE `mdl_new_accident_report` CHANGE `a_employers_name` `a_employers_name` TEXT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL, 
+                                      CHANGE `b_name_address_site` `b_name_address_site` TEXT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL, 
+									  CHANGE `b_exact_location_site` `b_exact_location_site` TEXT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL, 
+									  CHANGE `b_dangerous` `b_dangerous` TEXT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL;
+									  
+									  
+									  
+									  

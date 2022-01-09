@@ -122,7 +122,7 @@ class new_accident_report_form extends moodleform {
         $mform->setType('a_body_affected', PARAM_TEXT);
         $mform->addRule('a_body_affected', get_string('required'), 'required','','client');
 
-        $mform->addElement('text', 'a_employers_name', get_string('a_employers_name', 'local_mp_report'), 'maxlength="100" size="40" width="40px" ');
+        $mform->addElement('textarea', 'a_employers_name', get_string('a_employers_name', 'local_mp_report'), 'wrap="virtual" rows="3" cols="40"');
         $mform->setType('a_employers_name', PARAM_TEXT);
         $mform->addRule('a_employers_name', get_string('required'), 'required','','client');
         
@@ -135,17 +135,17 @@ class new_accident_report_form extends moodleform {
         $mform->setType('b_date', PARAM_TEXT);
         $mform->addRule('b_date', get_string('required'), 'required','','client');
 
-        $mform->addElement('text', 'b_name_address_site', get_string('b_name_address_site', 'local_mp_report'), 'maxlength="100" size="40" ');
+        $mform->addElement('textarea', 'b_name_address_site', get_string('b_name_address_site', 'local_mp_report'), 'wrap="virtual" rows="3" cols="40"');
         $mform->setType('b_name_address_site', PARAM_TEXT);
         $mform->addRule('b_name_address_site', get_string('required'), 'required','','client');
 
-        $mform->addElement('text', 'b_exact_location_site', get_string('b_exact_location_site', 'local_mp_report'), 'maxlength="100" size="40" ');
+        $mform->addElement('textarea', 'b_exact_location_site', get_string('b_exact_location_site', 'local_mp_report'), 'wrap="virtual" rows="3" cols="40"');
         $mform->setType('b_exact_location_site', PARAM_TEXT);
         $mform->addRule('b_exact_location_site', get_string('required'), 'required','','client');
 
         
 
-        $mform->addElement('text', 'b_dangerous', get_string('b_dangerous', 'local_mp_report'), 'maxlength="100" size="40" ');
+        $mform->addElement('textarea', 'b_dangerous', get_string('b_dangerous', 'local_mp_report'), 'wrap="virtual" rows="3" cols="40"');
         $mform->setType('b_dangerous', PARAM_TEXT);
         $mform->addRule('b_dangerous', get_string('required'), 'required','','client');
 
@@ -155,7 +155,7 @@ class new_accident_report_form extends moodleform {
         $mform->setType('b2_date', PARAM_TEXT);
         $mform->addRule('b2_date', get_string('required'), 'required','','client');
 
-        $mform->addElement('text', 'b_injured', get_string('b_injured', 'local_mp_report'), 'maxlength="100" size="40" ');
+        $mform->addElement('text', 'b_injured', get_string('b_injured', 'local_mp_report'), 'maxlength="200" size="40" ');
         $mform->setType('b_injured', PARAM_TEXT);
         $mform->addRule('b_injured', get_string('required'), 'required','','client');
 
@@ -171,7 +171,7 @@ class new_accident_report_form extends moodleform {
         $mform->setType('b_witness_name', PARAM_TEXT);
         //$mform->addRule('b_witness_name', get_string('required'), 'required','','client');
 
-        $mform->addElement('text', 'b_witness_address', get_string('b_witness_address', 'local_mp_report'), 'maxlength="100" size="40" ');
+        $mform->addElement('textarea', 'b_witness_address', get_string('b_witness_address', 'local_mp_report'), 'wrap="virtual" rows="3" cols="40"');
         $mform->setType('b_witness_address', PARAM_TEXT);
         //$mform->addRule('b_witness_address', get_string('required'), 'required','','client');
 
