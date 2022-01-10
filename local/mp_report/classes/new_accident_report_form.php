@@ -611,15 +611,15 @@ class new_accident_report_form extends moodleform {
 
         $mform->addElement('html', '<fieldset class="scheduler-border"><legend class="scheduler-border">Other Information</legend>');
 
-            $mform->addElement('textarea', 'incident_description', 'Incident Description', 'maxlength="100" size="40" width="40px" ');
+            $mform->addElement('textarea', 'incident_description', 'Incident Description', 'wrap="virtual" rows="3" cols="40"');
             $mform->setType('incident_description', PARAM_TEXT);
             $mform->addRule('incident_description', get_string('required'), 'required','','client');
 
-            $mform->addElement('textarea', 'interviewee1_statement', 'Interviewee 1 Statement', 'maxlength="100" size="40" width="40px" ');
+            $mform->addElement('textarea', 'interviewee1_statement', 'Interviewee 1 Statement', 'wrap="virtual" rows="3" cols="40"');
             $mform->setType('interviewee1_statement', PARAM_TEXT);
             $mform->addRule('interviewee1_statement', get_string('required'), 'required','','client');
 
-            $mform->addElement('textarea', 'interviewee2_statement', 'Interviewee 2 Statement', 'maxlength="100" size="40" width="40px" ');
+            $mform->addElement('textarea', 'interviewee2_statement', 'Interviewee 2 Statement', 'wrap="virtual" rows="3" cols="40"');
             $mform->setType('interviewee2_statement', PARAM_TEXT);
             $mform->addRule('interviewee2_statement', get_string('required'), 'required','','client');
 
@@ -627,7 +627,7 @@ class new_accident_report_form extends moodleform {
             $mform->setType('contributors_incident', PARAM_TEXT);
             $mform->addRule('contributors_incident', get_string('required'), 'required','','client');
 
-            $mform->addElement('textarea', 'results_investigation', 'Results of Investigation', 'maxlength="100" size="40" width="40px" ');
+            $mform->addElement('textarea', 'results_investigation', 'Results of Investigation', 'wrap="virtual" rows="3" cols="40"');
             $mform->setType('results_investigation', PARAM_TEXT);
             $mform->addRule('results_investigation', get_string('required'), 'required','','client');
 
@@ -649,15 +649,15 @@ class new_accident_report_form extends moodleform {
             $mform->addRule('recommended_actions', get_string('required'), 'required','','client');
 
 
-            $mform->addElement('textarea', 'specifice_corrective_actions', 'Please provide additional Information regarding specific corrective actions:', 'maxlength="100" size="40" width="40px" ');
+            $mform->addElement('textarea', 'specifice_corrective_actions', 'Please provide additional Information regarding specific corrective actions:', 'wrap="virtual" rows="3" cols="40"');
             $mform->setType('specifice_corrective_actions', PARAM_TEXT);
             $mform->addRule('specifice_corrective_actions', get_string('required'), 'required','','client');
 
-            $mform->addElement('textarea', 'corrective_actions_completed', 'Please provide details of when the corrective actions have been completed', 'maxlength="100" size="40" width="40px" ');
+            $mform->addElement('textarea', 'corrective_actions_completed', 'Please provide details of when the corrective actions have been completed', 'wrap="virtual" rows="3" cols="40"');
             $mform->setType('corrective_actions_completed', PARAM_TEXT);
             $mform->addRule('corrective_actions_completed', get_string('required'), 'required','','client');
             
-            $mform->addElement('textarea', 'other_materials', 'Please detail any other materials including photographs', 'maxlength="100" size="40" width="40px" ');
+            $mform->addElement('textarea', 'other_materials', 'Please detail any other materials including photographs', 'wrap="virtual" rows="3" cols="40"');
             $mform->setType('other_materials', PARAM_TEXT);
             $mform->addRule('other_materials', get_string('required'), 'required','','client');
 
