@@ -204,14 +204,14 @@ $string['a_employers_name']       = 'Employers Name and Address';
 
 $string['b_date']                = 'Occurence Date and Time';
 $string['b_name_address_site']   = 'Name & Address of Site';
-$string['b_exact_location_site'] = 'Exect location on site';
+$string['b_exact_location_site'] = 'Exact Location on Site';
 $string['b_dangerous']           = 'On what work was the operative engaged upon at the time and/or what was the dangerous occurrence?';
 $string['b2_date']              = 'Reported Date & Time';
 $string['b_injured']            = 'What Does the Injured Person Believe Caused the Accident?';
 $string['b_witness']            = 'Witness?';
 $string['b_witness_name']       = 'Witness Names';
 $string['b_witness_address']    = 'Witness Addresses';
-$string['b_tel_witness']        = 'Witness Telephones';
+$string['b_tel_witness']        = 'Witness Telephone';
 $string['c_kind_of_accident']   = 'Witness name & address';
 $string['c_metres']             = 'Metres';
 $string['d_agents']             = 'Agents';
