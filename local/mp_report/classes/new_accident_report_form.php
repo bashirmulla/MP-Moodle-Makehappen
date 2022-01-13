@@ -265,6 +265,8 @@ class new_accident_report_form extends moodleform {
         $managerList  = get_com_manager_list();
         $dropdown     = get_new_dropdown_data(1);
         $user         = get_userInfo(array("id" => $reportData->user_id));
+
+      
         ob_start();
         ?>
         <style>
@@ -318,7 +320,7 @@ class new_accident_report_form extends moodleform {
                 </tr>
                 <tr>
                     <td style="border: none !important;">Occupation or Job Title: <br><?=boldText($reportData->a_job_title   ) ?></td>
-                    <td style="border: none !important;">(If Applicable) Employers Name and Address: </td>
+                    <td style="border: none !important;">(If Applicable) Employers Name and Address: <br><?=boldText($reportData->a_employers_name) ?></td>
                 </tr>
                 </table>
             </fieldset>
@@ -327,8 +329,8 @@ class new_accident_report_form extends moodleform {
                 
                 <table id="view_table" width="100%">
                 <tr>
-                    <td>Date: <br><?=boldText(date("d-M-Y",$reportData->b_date)   ) ?></td>
-                    <td>Time: <br><?=boldText(date("H:m",$reportData->b_date)   ) ?></td>
+                    <td>Date: <br><?=boldText(date("d-M-Y",$reportData->b_date))?></td>
+                    <td>Time: <br><?=boldText(date("H",$reportData->b_date)) ?> hours <?=boldText(date("m",$reportData->b_date)) ?> mins</td>
                 </tr>
                 <tr>
                     <td>Name & Address of Site: <br><?=boldText($reportData->b_name_address_site   ) ?></td>

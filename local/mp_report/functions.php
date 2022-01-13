@@ -743,7 +743,7 @@ function new_accident_pdf($acc_id) {
             </tr>
             <tr>
                 <td>Occupation or Job Title: <br><?=boldText($reportData->a_job_title   ) ?></td>
-                <td>(If Applicable) Employers Name and Address: </td>
+                <td>(If Applicable) Employers Name and Address:  <br><?=boldText($reportData->a_employers_name) ?></td>
             </tr>
             </table>
             
