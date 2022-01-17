@@ -311,7 +311,7 @@ class new_accident_report_form extends moodleform {
                     <td>Following the accident, the Operative is now at:<br> <?=boldText($dropdown['operative_at_now'][$reportData->a_following_accident]   ) ?></td>
                     <td>If resumed work on the day of the accident state time lost: <br>
 
-                    <?=($reportData->a_resumed_work=='No')? boldText('None'): boldText($reportData->a_hours).''. boldText($reportData->a_mins) ?>
+                    <?=($reportData->a_resumed_work=='No')? boldText('None'): boldText($reportData->a_hours).' hours '. boldText($reportData->a_mins).' minutes' ?>
                     </td>
                 </tr>
                 <tr>
