@@ -751,7 +751,7 @@ function new_accident_pdf($acc_id) {
             <table id="view_table" width="100%">
             <tr>
                 <td>Date: <br><?=boldText(date("d-M-Y",$reportData->b_date)   ) ?></td>
-                <td>Time: <br><?=boldText(date("H:m",$reportData->b_date)   ) ?></td>
+                <td>Time: <br><?=boldText(date("h:i A",$reportData->b_date)   ) ?></td>
             </tr>
             <tr>
                 <td>Name & Address of Site: <br><?=boldText($reportData->b_name_address_site   ) ?></td>
@@ -942,7 +942,7 @@ function accident_event_pdf($id){
         <td>Date of Occurrence</td>
         <td>: <?=boldText(date("d-M-Y",$reportData->b_date))?></td>
         <td>Time of Occurrence</td>
-        <td>: <?=boldText(date("g:i A",$reportData->b_date))?></td>
+        <td>: <?=boldText(date("h:i A",$reportData->b_date))?></td>
     </tr>
     
     </table>
@@ -1115,7 +1115,7 @@ function new_accident_full_pdf($acc_id) {
             <table id="view_table" width="100%">
             <tr>
                 <td>Date: <br><?=boldText(date("d-M-Y",$reportData->b_date)   ) ?></td>
-                <td>Time: <br><?=boldText(date("H:m",$reportData->b_date)   ) ?></td>
+                <td>Time: <br><?=boldText(date("h:i A",$reportData->b_date)   ) ?></td>
             </tr>
             <tr>
                 <td>Name & Address of Site: <br><?=boldText($reportData->b_name_address_site   ) ?></td>
@@ -1219,7 +1219,7 @@ function new_accident_full_pdf($acc_id) {
                 </tr>
                 <tr>
                     <td>Time of Incident:</td>
-                    <td><?=boldText(date("d-M-Y",$reportData->b_date)) ?></td>
+                    <td><?=boldText(date("h:i A",$reportData->b_date)) ?></td>
                 </tr>
                 <tr>
                     <td>Location of Incident:</td>
@@ -1420,7 +1420,7 @@ function new_accident_full_pdf($acc_id) {
             <td>Date of Occurrence</td>
             <td> <?=boldText(date("d-M-Y",$reportData->b_date))?></td>
             <td>Time of Occurrence</td>
-            <td> <?=boldText(date("g:i A",$reportData->b_date))?></td>
+            <td> <?=boldText(date("h:i A",$reportData->b_date))?></td>
         </tr>
           
         </table>

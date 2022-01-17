@@ -330,7 +330,7 @@ class new_accident_report_form extends moodleform {
                 <table id="view_table" width="100%">
                 <tr>
                     <td>Date: <br><?=boldText(date("d-M-Y",$reportData->b_date))?></td>
-                    <td>Time: <br><?=boldText(date("H",$reportData->b_date)) ?> hours <?=boldText(date("m",$reportData->b_date)) ?> mins</td>
+                    <td>Time: <br><?=boldText(date("h:i A",$reportData->b_date)) ?></td>
                 </tr>
                 <tr>
                     <td>Name & Address of Site: <br><?=boldText($reportData->b_name_address_site   ) ?></td>
@@ -553,7 +553,7 @@ class new_accident_report_form extends moodleform {
             $mform->addElement('static', 'name2', 'Role & Department','' );
             $mform->addElement('static', 'name3', 'Phone Number',$reportData->a_tel_no );
             $mform->addElement('static', 'name4', 'Date of Incident',date("d-M-Y",$reportData->b_date ));
-            $mform->addElement('static', 'name5', 'Time of Incident',date("d-M-Y",$reportData->b_date ));
+            $mform->addElement('static', 'name5', 'Time of Incident',date("h:i A",$reportData->b_date ));
             $mform->addElement('static', 'name7', 'Location of Incident',$reportData->b_exact_location_site );
             $mform->addElement('static', 'name8', 'Supervisor Name',$reportData->a_employers_name );
 
@@ -898,7 +898,7 @@ class new_accident_manager_report_form extends moodleform {
             $mform->addElement('static', 'name2', 'Role & Department','' );
             $mform->addElement('static', 'name3', 'Phone Number',$reportData->a_tel_no );
             $mform->addElement('static', 'name4', 'Date of Incident',date("d-M-Y",$reportData->b_date ));
-            $mform->addElement('static', 'name5', 'Time of Incident',date("d-M-Y",$reportData->b_date ));
+            $mform->addElement('static', 'name5', 'Time of Incident',date("h:i A",$reportData->b_date ));
             $mform->addElement('static', 'name7', 'Location of Incident',$reportData->b_exact_location_site );
             $mform->addElement('static', 'name8', 'Supervisor Name',$reportData->a_employers_name );
 
