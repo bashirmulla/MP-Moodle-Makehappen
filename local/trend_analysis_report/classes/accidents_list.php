@@ -45,7 +45,7 @@ class accidents_list extends moodleform {
 
         $mform->_formname = "accident_report_list";
 
-        $dropdown = get_dropdown_data(1);
+        $dropdown = get_new_dropdown_data(1);
 
         $html ='<div class="row" >
                 <div class="col-sm-6"> </div>
@@ -73,8 +73,8 @@ class accidents_list extends moodleform {
         $mform->addElement('html', html_writer:: end_tag('div'));
 
         $mform->addElement('html', html_writer:: start_tag('div',array('class'=>'form-group col-md-5 col-lg-3 form-group-ele')));
-        $mform->addElement('html', html_writer:: tag('label','Report Number',array('for'=>'report_number','class'=>'col-md-12')));
-        $mform->addElement('html', html_writer:: empty_tag('input',array('type'=>'text','name'=>'report_number','class'=>'form-control')));
+        $mform->addElement('html', html_writer:: tag('label','Surname',array('for'=>'surname','class'=>'col-md-12')));
+        $mform->addElement('html', html_writer:: empty_tag('input',array('type'=>'text','name'=>'surname','class'=>'form-control')));
         $mform->addElement('html', html_writer:: end_tag('div'));
 
         $mform->addElement('html', html_writer:: start_tag('div',array('class'=>'form-group col-lg-3 form-group-ele')));
@@ -87,61 +87,30 @@ class accidents_list extends moodleform {
         $mform->addElement('html', html_writer::select(createDropdown(get_system_user_list()), 'submitter', '', array(),array('class'=>'form-control')));
         $mform->addElement('html', html_writer:: end_tag('div'));
 
-        $mform->addElement('html', html_writer:: start_tag('div',array('class'=>'form-group col-lg-3 form-group-ele')));
-        $mform->addElement('html', html_writer:: tag('label','Contract',array('for'=>'contract','class'=>'col-md-12')));
-        $mform->addElement('html', html_writer::select(createDropdown($dropdown['contract']), 'contract', '', array(),array('class'=>'form-control')));
-        $mform->addElement('html', html_writer:: end_tag('div'));
-
-//        $mform->addElement('html', html_writer:: end_tag('div'));
-        //end row
-        //start row
-//        $mform->addElement('html', html_writer:: start_tag('div',array('class'=>'form-row')));
-
+     
         $mform->addElement('html', html_writer:: start_tag('div',array('class'=>'form-group col-lg-3 form-group-ele')));
         $mform->addElement('html', html_writer:: tag('label','Status',array('for'=>'status','class'=>'col-md-12')));
         $mform->addElement('html', html_writer::select(createDropdown(accident_status()), 'status', '', array(),array('class'=>'form-control')));
         $mform->addElement('html', html_writer:: end_tag('div'));
 
         $mform->addElement('html', html_writer:: start_tag('div',array('class'=>'form-group col-lg-3 form-group-ele')));
-        $mform->addElement('html', html_writer:: tag('label','Category',array('for'=>'category','class'=>'col-md-12')));
-        $mform->addElement('html', html_writer::select(createDropdown($dropdown['category']), 'category', '', array(),array('class'=>'form-control')));
+        $mform->addElement('html', html_writer:: tag('label','The Operative is now at',array('for'=>'a_following_accident','class'=>'col-md-12')));
+        $mform->addElement('html', html_writer::select(createDropdown($dropdown['operative_at_now']), 'a_following_accident', '', array(),array('class'=>'form-control')));
         $mform->addElement('html', html_writer:: end_tag('div'));
 
-        $mform->addElement('html', html_writer:: start_tag('div',array('class'=>'form-group col-lg-3 form-group-ele')));
-        $mform->addElement('html', html_writer:: tag('label','RIDDOR Reportable?',array('for'=>'riddor_reportable','class'=>'col-md-12')));
-        $mform->addElement('html', html_writer::select(createDropdown(yes_no_status()), 'riddor_reportable', '', array(),array('class'=>'form-control')));
-        $mform->addElement('html', html_writer:: end_tag('div'));
-
-        $mform->addElement('html', html_writer:: start_tag('div',array('class'=>'form-group col-lg-3 form-group-ele')));
-        $mform->addElement('html', html_writer:: tag('label','RIDDOR event classification',array('for'=>'riddor_event_classification','class'=>'col-md-12')));
-        $mform->addElement('html', html_writer::select(createDropdown($dropdown['riddor_classification']), 'riddor_event_classification', '', array(),array('class'=>'form-control')));
-        $mform->addElement('html', html_writer:: end_tag('div'));
+      
 
 //        $mform->addElement('html', html_writer:: end_tag('div'));
         //end row
         //start row
 //        $mform->addElement('html', html_writer:: start_tag('div',array('class'=>'form-row')));
 
-        $mform->addElement('html', html_writer:: start_tag('div',array('class'=>'form-group col-lg-3')));
-        $mform->addElement('html', html_writer:: tag('label','RIDDOR subcategory',array('for'=>'riddor_subcategory','class'=>'col-md-12')));
-        $mform->addElement('html', html_writer::select(createDropdown($dropdown['RIDDOR_subcategory']), 'riddor_subcategory', '', array(),array('class'=>'form-control')));
-        $mform->addElement('html', html_writer:: end_tag('div'));
 
         $mform->addElement('html', html_writer:: start_tag('div',array('class'=>'form-group col-lg-3')));
-        $mform->addElement('html', html_writer:: tag('label','Medical Treatment over First Aid?',array('for'=>'medical_treatment_over_first_aid','class'=>'col-md-12')));
-        $mform->addElement('html', html_writer::select(createDropdown(yes_no_status()), 'medical_treatment_over_first_aid', '', array(),array('class'=>'form-control')));
+        $mform->addElement('html', html_writer:: tag('label','Employment Status',array('for'=>'a_status','class'=>'col-md-12')));
+        $mform->addElement('html', html_writer::select(createDropdown($dropdown['employment_status']), 'a_status', '', array(),array('class'=>'form-control')));
         $mform->addElement('html', html_writer:: end_tag('div'));
-
-        $mform->addElement('html', html_writer:: start_tag('div',array('class'=>'form-group col-lg-3')));
-        $mform->addElement('html', html_writer:: tag('label','Minor Injuries?',array('for'=>'minor_injuries','class'=>'col-md-12')));
-        $mform->addElement('html', html_writer::select(createDropdown(yes_no_status()), 'minor_injuries', '', array(),array('class'=>'form-control')));
-        $mform->addElement('html', html_writer:: end_tag('div'));
-
-        $mform->addElement('html', html_writer:: start_tag('div',array('class'=>'form-group col-lg-3')));
-        $mform->addElement('html', html_writer:: tag('label','Lost days?',array('for'=>'lost_days','class'=>'col-md-12')));
-        $mform->addElement('html', html_writer::select(createDropdown(yes_no_status()), 'lost_days', '', array(),array('class'=>'form-control')));
-        $mform->addElement('html', html_writer:: end_tag('div'));
-
+        
         $mform->addElement('html', html_writer:: div('','col-md-5 col-lg-9 form-group-ele'));
         $mform->addElement('html', html_writer:: start_tag('div',array('class'=>'form-group col-md-7 col-lg-3 form-group-ele','style'=>'text-align:center;')));
         $mform->addElement('html', html_writer:: tag('button','Search',array('type'=>'button','id'=>'accident_report','class'=>'btn btn-primary','style' =>'margin-right:5px')));

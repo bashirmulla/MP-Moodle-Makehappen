@@ -772,10 +772,6 @@ class new_accident_report_form extends moodleform {
         if(isset($_REQUEST['id']) && $_REQUEST['cmd']=='new_acc_edit' &&( is_senior_manager() || is_complieance() || is_admin() || is_manager()) ) {
            
 
-            if ($reportData->s_mgt_rpt_ant_closed_off==1){
-                $report_closed = TRUE;
-            }
-
             if( is_senior_manager() || is_complieance() || is_admin() || is_manager()) {
 
                 $heading ='<div class="row" >

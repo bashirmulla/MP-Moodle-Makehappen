@@ -138,9 +138,8 @@ $table = new html_table();
 $table->attributes['class'] = 'generaltable list-accident';
 $table->width = '100%';
 
-$table->head  = array("Date of Accident","Report Number","Manager","Submitter","Status","Contract","Category","RIDDOR Reportable?",wordwrap("RIDDOR event..",12),"RIDDOR subcategory","Medical Treatment..","Minor Injuries","Lost days?","Lost days","Action");
-$table->align = array( 'left','left','left','left','left','left','left','left','left','left','left','left','left');
-$table->size  = array( '20%','20%','20%','20%',"20%","20%","20%","20%","20%","30%","20%","20%","20%");
+$table->head  = array("No","Surname","First Name","Incident Date","Summary of Accident details","Action Taken","Findings","Recommendations","Status","Action");
+$table->align = array( 'left','left','left','left','left','left','left','left','center','center');
 
 $count=0;
 $managerList  = get_all_manager_list();

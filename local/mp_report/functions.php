@@ -465,7 +465,7 @@ function new_accident_form(){
                     $report_title = "Accident Report";
                     $subject = "Notification of Accident Report";
                     $message = "A new accident report has been submitted. Please see the attached report.";
-                    //send_email_to_manager($dataobject->user_manager,"Makehappen", $subject, $message, pdfs_email_attachment().$pdf_file, $pdf_file,$report_title);
+                    send_email_to_manager($USER->manager_id,"Makehappen", $subject, $message, pdfs_email_attachment().$pdf_file, $pdf_file,$report_title);
                     //send_mp_report_email("Makehappen", $subject, $message, pdfs_email_attachment() . $pdf_file, $pdf_file,$report_title);
 
                 }
