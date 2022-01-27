@@ -102,23 +102,93 @@ $date->setDate($year, $month + 1, 0); //PHP will fix this date for you
 $Q1_end=$date->format('Y-m-d');
 
 //$DB->set_debug(true);
-$sql = " SELECT COUNT(id) AS Q1_total_Fatalities FROM mdl_accident_report WHERE s_mgt_rpt_riddor_event_clf=16 AND (DATE(FROM_UNIXTIME(accident_date)) BETWEEN '$Q1_start' AND '$Q1_end') ";
-$Q1_Fatalities = $DB->count_records_sql($sql);
-$Q1_Specific_Injuries = $DB->count_records_sql(" SELECT COUNT(id) AS Q1_total_Specific_Injuries FROM mdl_accident_report WHERE s_mgt_rpt_riddor_event_clf=17 AND (DATE(FROM_UNIXTIME(accident_date)) BETWEEN '$Q1_start' AND '$Q1_end') ");
-$Q1_Over_7_Day_Incapacity = $DB->count_records_sql(" SELECT COUNT(id) AS Q1_total_Over_7_Day_Incapacity FROM mdl_accident_report WHERE s_mgt_rpt_riddor_event_clf=18 AND (DATE(FROM_UNIXTIME(accident_date)) BETWEEN '$Q1_start' AND '$Q1_end') ");
-$Q1_Non_Fatal_Accidents_to_non_workers = $DB->count_records_sql(" SELECT COUNT(id) AS Q1_total_Non_Fatal_Accidents_to_non_workers FROM mdl_accident_report WHERE s_mgt_rpt_riddor_event_clf=19 AND (DATE(FROM_UNIXTIME(accident_date)) BETWEEN '$Q1_start' AND '$Q1_end') ");
-$Q1_Occupational_Disease = $DB->count_records_sql(" SELECT COUNT(id) AS Q1_total_Occupational_Disease FROM mdl_accident_report WHERE s_mgt_rpt_riddor_event_clf=20 AND (DATE(FROM_UNIXTIME(accident_date)) BETWEEN '$Q1_start' AND '$Q1_end') ");
-$Q1_Dangerous_Occurrence = $DB->count_records_sql(" SELECT COUNT(id) AS Q1_total_Dangerous_Occurrence FROM mdl_accident_report WHERE s_mgt_rpt_riddor_event_clf=21 AND (DATE(FROM_UNIXTIME(accident_date)) BETWEEN '$Q1_start' AND '$Q1_end') ");
-$Q1_Gas_Incidents = $DB->count_records_sql(" SELECT COUNT(id) AS Q1_total_Gas_Incidents FROM mdl_accident_report WHERE s_mgt_rpt_riddor_event_clf=22 AND (DATE(FROM_UNIXTIME(accident_date)) BETWEEN '$Q1_start' AND '$Q1_end') ");
-$Q1_medical_treatment_over_first_aid = $DB->count_records_sql(" SELECT COUNT(id) AS Q1_total_medical_treatment_over_first_aid FROM mdl_accident_report WHERE accident_treatment='Yes' AND (s_mgt_rpt_2508_completed IS NULL OR s_mgt_rpt_2508_completed IN(2,3))  AND (DATE(FROM_UNIXTIME(accident_date)) BETWEEN '$Q1_start' AND '$Q1_end') ");
-$Q1_Minor_Injuries = $DB->count_records_sql(" SELECT COUNT(id) AS Q1_total_Minor_Injuries FROM mdl_accident_report WHERE minor_injuries ='Yes' AND accident_treatment='No' AND (s_mgt_rpt_2508_completed IN(2,3) OR s_mgt_rpt_2508_completed IS NULL)  AND (DATE(FROM_UNIXTIME(accident_date)) BETWEEN '$Q1_start' AND '$Q1_end') ");
 
-$Q1_lost_days_accident = $DB->count_records_sql(" SELECT COALESCE(SUM(lost_time_days),0) AS Q1_total_lost_days FROM mdl_accident_report WHERE (DATE(FROM_UNIXTIME(accident_date)) BETWEEN '$Q1_start' AND '$Q1_end') ");
+$Q1_Report_Only = $DB->count_records_sql(
+    "SELECT COUNT(ACC.id) AS Q1_Report_Only FROM mdl_new_accident_report AS ACC 
+     LEFT JOIN mdl_new_accident_manager_report AS MACC ON (ACC.id=MACC.new_accident_id)
+     WHERE MACC.incident_type=70 AND (DATE(FROM_UNIXTIME(ACC.b_date)) BETWEEN '$Q1_start' AND '$Q1_end')
+    ");
+
+$Q1_Acc_Injury = $DB->count_records_sql(
+    "SELECT COUNT(ACC.id) AS Q1_Acc_Injury FROM mdl_new_accident_report AS ACC 
+     LEFT JOIN mdl_new_accident_manager_report AS MACC ON (ACC.id=MACC.new_accident_id)
+     WHERE MACC.incident_type=71 AND (DATE(FROM_UNIXTIME(ACC.b_date)) BETWEEN '$Q1_start' AND '$Q1_end')
+    ");
+
+$Q1_Serious_Injury = $DB->count_records_sql(
+    "SELECT COUNT(ACC.id) AS Q1_Serious_Injury FROM mdl_new_accident_report AS ACC 
+     LEFT JOIN mdl_new_accident_manager_report AS MACC ON (ACC.id=MACC.new_accident_id)
+     WHERE MACC.incident_type=72 AND (DATE(FROM_UNIXTIME(ACC.b_date)) BETWEEN '$Q1_start' AND '$Q1_end')
+    ");
+
+
+$Q1_Others = $DB->count_records_sql(
+    "SELECT COUNT(ACC.id) AS Q1_Others FROM mdl_new_accident_report AS ACC 
+     LEFT JOIN mdl_new_accident_manager_report AS MACC ON (ACC.id=MACC.new_accident_id)
+     WHERE MACC.incident_type=73 AND (DATE(FROM_UNIXTIME(ACC.b_date)) BETWEEN '$Q1_start' AND '$Q1_end')
+     ");
+
+
+$Q1_Employees = $DB->count_records_sql(
+    "SELECT COUNT(ACC.id) AS Q1_Employees FROM mdl_new_accident_report AS ACC 
+     LEFT JOIN mdl_new_accident_manager_report AS MACC ON (ACC.id=MACC.new_accident_id)
+     WHERE MACC.affecting=74 AND (DATE(FROM_UNIXTIME(ACC.b_date)) BETWEEN '$Q1_start' AND '$Q1_end')
+     ");
+
+$Q1_Sub_Contractor = $DB->count_records_sql(
+    "SELECT COUNT(ACC.id) AS Q1_Sub_Contractor FROM mdl_new_accident_report AS ACC 
+     LEFT JOIN mdl_new_accident_manager_report AS MACC ON (ACC.id=MACC.new_accident_id)
+     WHERE MACC.affecting=75 AND (DATE(FROM_UNIXTIME(ACC.b_date)) BETWEEN '$Q1_start' AND '$Q1_end')
+     ");
+
+$Q1_Client_Employee = $DB->count_records_sql(
+    "SELECT COUNT(ACC.id) AS Q1_Client_Employee FROM mdl_new_accident_report AS ACC 
+     LEFT JOIN mdl_new_accident_manager_report AS MACC ON (ACC.id=MACC.new_accident_id)
+     WHERE MACC.affecting=76 AND (DATE(FROM_UNIXTIME(ACC.b_date)) BETWEEN '$Q1_start' AND '$Q1_end')
+     ");
+ 
+
+ $Q1_Member_of_the_public = $DB->count_records_sql(
+    "SELECT COUNT(ACC.id) AS Q1_Member_of_the_public FROM mdl_new_accident_report AS ACC 
+     LEFT JOIN mdl_new_accident_manager_report AS MACC ON (ACC.id=MACC.new_accident_id)
+     WHERE MACC.affecting=77 AND (DATE(FROM_UNIXTIME(ACC.b_date)) BETWEEN '$Q1_start' AND '$Q1_end')
+     ");
+
+$Q1_Children = $DB->count_records_sql(
+    "SELECT COUNT(ACC.id) AS Q1_Children FROM mdl_new_accident_report AS ACC 
+     LEFT JOIN mdl_new_accident_manager_report AS MACC ON (ACC.id=MACC.new_accident_id)
+     WHERE MACC.affecting=78 AND (DATE(FROM_UNIXTIME(ACC.b_date)) BETWEEN '$Q1_start' AND '$Q1_end')
+     ");
+
+$Q1_Animals_Environmental = $DB->count_records_sql(
+    "SELECT COUNT(ACC.id) AS Q1_Animals_Environmental FROM mdl_new_accident_report AS ACC 
+     LEFT JOIN mdl_new_accident_manager_report AS MACC ON (ACC.id=MACC.new_accident_id)
+     WHERE MACC.affecting=79 AND (DATE(FROM_UNIXTIME(ACC.b_date)) BETWEEN '$Q1_start' AND '$Q1_end')
+     ");
+
+$Q1_receive_medical_treatment = $DB->count_records_sql(
+    "SELECT COUNT(ACC.id) AS Q1_receive_medical_treatment FROM mdl_new_accident_report AS ACC 
+     LEFT JOIN mdl_new_accident_manager_report AS MACC ON (ACC.id=MACC.new_accident_id)
+     WHERE MACC.receive_medical_treatment='Yes' AND (DATE(FROM_UNIXTIME(ACC.b_date)) BETWEEN '$Q1_start' AND '$Q1_end')
+     ");     
+
+$Q1_lost_time_report = $DB->count_records_sql(
+    "SELECT COUNT(ACC.id) AS Q1_lost_time_report FROM mdl_new_accident_report AS ACC 
+     LEFT JOIN mdl_new_accident_manager_report AS MACC ON (ACC.id=MACC.new_accident_id)
+     WHERE MACC.lost_time_report='Yes' AND (DATE(FROM_UNIXTIME(ACC.b_date)) BETWEEN '$Q1_start' AND '$Q1_end')
+     ");     
+
+
 $Q1_lost_days_incident = $DB->count_records_sql(" SELECT COALESCE(SUM(lost_time_days),0) AS Q1_total_lost_days FROM mdl_incident_report WHERE (DATE(FROM_UNIXTIME(i_date)) BETWEEN '$Q1_start' AND '$Q1_end') ");
 
-$Q1_lost_days = $Q1_lost_days_accident + $Q1_lost_days_incident;
+$Q1_lost_days = $Q1_lost_time_report + $Q1_lost_days_incident;
 
-$Q1 = [$Q1_Fatalities, $Q1_Specific_Injuries, $Q1_Over_7_Day_Incapacity, $Q1_Non_Fatal_Accidents_to_non_workers, $Q1_Occupational_Disease, $Q1_Dangerous_Occurrence, $Q1_Gas_Incidents, $Q1_medical_treatment_over_first_aid, $Q1_Minor_Injuries, $Q1_lost_days];
+$Q1 = [ $Q1_Report_Only + $Q1_Acc_Injury +
+        $Q1_Serious_Injury + $Q1_Others  +
+        $Q1_Employees  + $Q1_Sub_Contractor + 
+        $Q1_Client_Employee + $Q1_Member_of_the_public +
+        $Q1_Children + $Q1_Animals_Environmental + 
+        $Q1_receive_medical_treatment  + $Q1_lost_days];
 
 list ($year, $month, $day) = explode('-', $Q2_start);
 $month = $month % 3 ? $month + 3 - ($month % 3) : $month;
@@ -126,25 +196,96 @@ $date = new DateTime();
 $date->setDate($year, $month + 1, 0); //PHP will fix this date for you
 $Q2_end=$date->format('Y-m-d');
 
-//$DB->set_debug(true);
-$Q2_Fatalities = $DB->count_records_sql(" SELECT COUNT(id) AS Q2_total_Fatalities FROM mdl_accident_report WHERE s_mgt_rpt_riddor_event_clf=16 AND (DATE(FROM_UNIXTIME(accident_date)) BETWEEN '$Q2_start' AND '$Q2_end') ");
-$Q2_Specific_Injuries = $DB->count_records_sql(" SELECT COUNT(id) AS Q2_total_Specific_Injuries FROM mdl_accident_report WHERE s_mgt_rpt_riddor_event_clf=17 AND (DATE(FROM_UNIXTIME(accident_date)) BETWEEN '$Q2_start' AND '$Q2_end') ");
-$Q2_Over_7_Day_Incapacity = $DB->count_records_sql(" SELECT COUNT(id) AS Q2_total_Over_7_Day_Incapacity FROM mdl_accident_report WHERE s_mgt_rpt_riddor_event_clf=18 AND (DATE(FROM_UNIXTIME(accident_date)) BETWEEN '$Q2_start' AND '$Q2_end') ");
-$Q2_Non_Fatal_Accidents_to_non_workers = $DB->count_records_sql(" SELECT COUNT(id) AS Q2_total_Non_Fatal_Accidents_to_non_workers FROM mdl_accident_report WHERE s_mgt_rpt_riddor_event_clf=19 AND (DATE(FROM_UNIXTIME(accident_date)) BETWEEN '$Q2_start'  AND '$Q2_end') ");
-$Q2_Occupational_Disease = $DB->count_records_sql(" SELECT COUNT(id) AS Q2_total_Occupational_Disease FROM mdl_accident_report WHERE s_mgt_rpt_riddor_event_clf=20 AND (DATE(FROM_UNIXTIME(accident_date)) BETWEEN '$Q2_start'  AND '$Q2_end') ");
-$Q2_Dangerous_Occurrence = $DB->count_records_sql(" SELECT COUNT(id) AS Q2_total_Dangerous_Occurrence FROM mdl_accident_report WHERE s_mgt_rpt_riddor_event_clf=21 AND (DATE(FROM_UNIXTIME(accident_date)) BETWEEN '$Q2_start'  AND '$Q2_end') ");
-$Q2_Gas_Incidents = $DB->count_records_sql(" SELECT COUNT(id) AS Q2_total_Gas_Incidents FROM mdl_accident_report WHERE s_mgt_rpt_riddor_event_clf=22 AND (DATE(FROM_UNIXTIME(accident_date)) BETWEEN '$Q2_start'  AND '$Q2_end') ");
 
-$Q2_medical_treatment_over_first_aid = $DB->count_records_sql(" SELECT COUNT(id) AS Q2_total_medical_treatment_over_first_aid FROM mdl_accident_report WHERE accident_treatment='Yes' AND (s_mgt_rpt_2508_completed IS NULL OR s_mgt_rpt_2508_completed IN(2,3))  AND (DATE(FROM_UNIXTIME(accident_date)) BETWEEN '$Q2_start' AND '$Q2_end') ");
-$Q2_Minor_Injuries = $DB->count_records_sql(" SELECT COUNT(id) AS Q2_total_Minor_Injuries FROM mdl_accident_report WHERE minor_injuries ='Yes' AND accident_treatment='No' AND (s_mgt_rpt_2508_completed IN(2,3) OR s_mgt_rpt_2508_completed IS NULL) AND (DATE(FROM_UNIXTIME(accident_date)) BETWEEN '$Q2_start' AND '$Q2_end') ");
-//$DB->set_debug(false);
-$Q2_lost_days_accident = $DB->count_records_sql(" SELECT COALESCE(SUM(lost_time_days),0) AS Q2_total_lost_days FROM mdl_accident_report WHERE (DATE(FROM_UNIXTIME(accident_date)) BETWEEN '$Q2_start' AND '$Q2_end') ");
+$Q2_Report_Only = $DB->count_records_sql(
+    "SELECT COUNT(ACC.id) AS Q2_Report_Only FROM mdl_new_accident_report AS ACC 
+     LEFT JOIN mdl_new_accident_manager_report AS MACC ON (ACC.id=MACC.new_accident_id)
+     WHERE MACC.incident_type=70 AND (DATE(FROM_UNIXTIME(ACC.b_date)) BETWEEN '$Q2_start' AND '$Q2_end')
+    ");
+
+$Q2_Acc_Injury = $DB->count_records_sql(
+    "SELECT COUNT(ACC.id) AS Q2_Acc_Injury FROM mdl_new_accident_report AS ACC 
+     LEFT JOIN mdl_new_accident_manager_report AS MACC ON (ACC.id=MACC.new_accident_id)
+     WHERE MACC.incident_type=71 AND (DATE(FROM_UNIXTIME(ACC.b_date)) BETWEEN '$Q2_start' AND '$Q2_end')
+    ");
+
+$Q2_Serious_Injury = $DB->count_records_sql(
+    "SELECT COUNT(ACC.id) AS Q2_Serious_Injury FROM mdl_new_accident_report AS ACC 
+     LEFT JOIN mdl_new_accident_manager_report AS MACC ON (ACC.id=MACC.new_accident_id)
+     WHERE MACC.incident_type=72 AND (DATE(FROM_UNIXTIME(ACC.b_date)) BETWEEN '$Q2_start' AND '$Q2_end')
+    ");
+
+
+$Q2_Others = $DB->count_records_sql(
+    "SELECT COUNT(ACC.id) AS Q2_Others FROM mdl_new_accident_report AS ACC 
+     LEFT JOIN mdl_new_accident_manager_report AS MACC ON (ACC.id=MACC.new_accident_id)
+     WHERE MACC.incident_type=73 AND (DATE(FROM_UNIXTIME(ACC.b_date)) BETWEEN '$Q2_start' AND '$Q2_end')
+     ");
+
+
+$Q2_Employees = $DB->count_records_sql(
+    "SELECT COUNT(ACC.id) AS Q2_Employees FROM mdl_new_accident_report AS ACC 
+     LEFT JOIN mdl_new_accident_manager_report AS MACC ON (ACC.id=MACC.new_accident_id)
+     WHERE MACC.affecting=74 AND (DATE(FROM_UNIXTIME(ACC.b_date)) BETWEEN '$Q2_start' AND '$Q2_end')
+     ");
+
+$Q2_Sub_Contractor = $DB->count_records_sql(
+    "SELECT COUNT(ACC.id) AS Q2_Sub_Contractor FROM mdl_new_accident_report AS ACC 
+     LEFT JOIN mdl_new_accident_manager_report AS MACC ON (ACC.id=MACC.new_accident_id)
+     WHERE MACC.affecting=75 AND (DATE(FROM_UNIXTIME(ACC.b_date)) BETWEEN '$Q2_start' AND '$Q2_end')
+     ");
+
+$Q2_Client_Employee = $DB->count_records_sql(
+    "SELECT COUNT(ACC.id) AS Q2_Client_Employee FROM mdl_new_accident_report AS ACC 
+     LEFT JOIN mdl_new_accident_manager_report AS MACC ON (ACC.id=MACC.new_accident_id)
+     WHERE MACC.affecting=76 AND (DATE(FROM_UNIXTIME(ACC.b_date)) BETWEEN '$Q2_start' AND '$Q2_end')
+     ");
+ 
+
+ $Q2_Member_of_the_public = $DB->count_records_sql(
+    "SELECT COUNT(ACC.id) AS Q2_Member_of_the_public FROM mdl_new_accident_report AS ACC 
+     LEFT JOIN mdl_new_accident_manager_report AS MACC ON (ACC.id=MACC.new_accident_id)
+     WHERE MACC.affecting=77 AND (DATE(FROM_UNIXTIME(ACC.b_date)) BETWEEN '$Q2_start' AND '$Q2_end')
+     ");
+
+$Q2_Children = $DB->count_records_sql(
+    "SELECT COUNT(ACC.id) AS Q2_Children FROM mdl_new_accident_report AS ACC 
+     LEFT JOIN mdl_new_accident_manager_report AS MACC ON (ACC.id=MACC.new_accident_id)
+     WHERE MACC.affecting=78 AND (DATE(FROM_UNIXTIME(ACC.b_date)) BETWEEN '$Q2_start' AND '$Q2_end')
+     ");
+
+$Q2_Animals_Environmental = $DB->count_records_sql(
+    "SELECT COUNT(ACC.id) AS Q2_Animals_Environmental FROM mdl_new_accident_report AS ACC 
+     LEFT JOIN mdl_new_accident_manager_report AS MACC ON (ACC.id=MACC.new_accident_id)
+     WHERE MACC.affecting=79 AND (DATE(FROM_UNIXTIME(ACC.b_date)) BETWEEN '$Q2_start' AND '$Q2_end')
+     ");
+
+$Q2_receive_medical_treatment = $DB->count_records_sql(
+    "SELECT COUNT(ACC.id) AS Q2_receive_medical_treatment FROM mdl_new_accident_report AS ACC 
+     LEFT JOIN mdl_new_accident_manager_report AS MACC ON (ACC.id=MACC.new_accident_id)
+     WHERE MACC.receive_medical_treatment='Yes' AND (DATE(FROM_UNIXTIME(ACC.b_date)) BETWEEN '$Q2_start' AND '$Q2_end')
+     ");     
+
+$Q2_lost_time_report = $DB->count_records_sql(
+    "SELECT COUNT(ACC.id) AS Q2_lost_time_report FROM mdl_new_accident_report AS ACC 
+     LEFT JOIN mdl_new_accident_manager_report AS MACC ON (ACC.id=MACC.new_accident_id)
+     WHERE MACC.lost_time_report='Yes' AND (DATE(FROM_UNIXTIME(ACC.b_date)) BETWEEN '$Q2_start' AND '$Q2_end')
+     ");     
+
+
 $Q2_lost_days_incident = $DB->count_records_sql(" SELECT COALESCE(SUM(lost_time_days),0) AS Q2_total_lost_days FROM mdl_incident_report WHERE (DATE(FROM_UNIXTIME(i_date)) BETWEEN '$Q2_start' AND '$Q2_end') ");
 
-$Q2_lost_days = $Q2_lost_days_accident + $Q2_lost_days_incident;
+$Q2_lost_days = $Q2_lost_time_report + $Q2_lost_days_incident;
+
+$Q2 = [ $Q2_Report_Only + $Q2_Acc_Injury +
+        $Q2_Serious_Injury + $Q2_Others  +
+        $Q2_Employees  + $Q2_Sub_Contractor + 
+        $Q2_Client_Employee + $Q2_Member_of_the_public +
+        $Q2_Children + $Q2_Animals_Environmental + 
+        $Q2_receive_medical_treatment  + $Q2_lost_days];
 
 
-$Q2 = [$Q2_Fatalities, $Q2_Specific_Injuries, $Q2_Over_7_Day_Incapacity, $Q2_Non_Fatal_Accidents_to_non_workers, $Q2_Occupational_Disease, $Q2_Dangerous_Occurrence, $Q2_Gas_Incidents, $Q2_medical_treatment_over_first_aid, $Q2_Minor_Injuries, $Q2_lost_days];
+
 
 list ($year, $month, $day) = explode('-', $Q3_start);
 $month = $month % 3 ? $month + 3 - ($month % 3) : $month;
@@ -153,23 +294,95 @@ $date->setDate($year, $month + 1, 0); //PHP will fix this date for you
 $Q3_end=$date->format('Y-m-d');
 
 //$DB->set_debug(true);
-$Q3_Fatalities = $DB->count_records_sql(" SELECT COUNT(id) AS Q3_total_Fatalities FROM mdl_accident_report WHERE s_mgt_rpt_riddor_event_clf=16 AND (DATE(FROM_UNIXTIME(accident_date)) BETWEEN '$Q3_start'  AND '$Q3_end') ");
-$Q3_Specific_Injuries = $DB->count_records_sql(" SELECT COUNT(id) AS Q3_total_Specific_Injuries FROM mdl_accident_report WHERE s_mgt_rpt_riddor_event_clf=17 AND (DATE(FROM_UNIXTIME(accident_date)) BETWEEN '$Q3_start'  AND '$Q3_end') ");
-$Q3_Over_7_Day_Incapacity = $DB->count_records_sql(" SELECT COUNT(id) AS Q3_total_Over_7_Day_Incapacity FROM mdl_accident_report WHERE s_mgt_rpt_riddor_event_clf=18 AND (DATE(FROM_UNIXTIME(accident_date)) BETWEEN '$Q3_start'  AND '$Q3_end') ");
-$Q3_Non_Fatal_Accidents_to_non_workers = $DB->count_records_sql(" SELECT COUNT(id) AS Q3_total_Non_Fatal_Accidents_to_non_workers FROM mdl_accident_report WHERE s_mgt_rpt_riddor_event_clf=19 AND (DATE(FROM_UNIXTIME(accident_date)) BETWEEN '$Q3_start'  AND '$Q3_end') ");
-$Q3_Occupational_Disease = $DB->count_records_sql(" SELECT COUNT(id) AS Q3_total_Occupational_Disease FROM mdl_accident_report WHERE s_mgt_rpt_riddor_event_clf=20 AND (DATE(FROM_UNIXTIME(accident_date)) BETWEEN '$Q3_start'  AND '$Q3_end') ");
-$Q3_Dangerous_Occurrence = $DB->count_records_sql(" SELECT COUNT(id) AS Q3_total_Dangerous_Occurrence FROM mdl_accident_report WHERE s_mgt_rpt_riddor_event_clf=21 AND (DATE(FROM_UNIXTIME(accident_date)) BETWEEN '$Q3_start'  AND '$Q3_end') ");
-$Q3_Gas_Incidents = $DB->count_records_sql(" SELECT COUNT(id) AS Q3_total_Gas_Incidents FROM mdl_accident_report WHERE s_mgt_rpt_riddor_event_clf=22 AND (DATE(FROM_UNIXTIME(accident_date)) BETWEEN '$Q3_start'  AND '$Q3_end') ");
 
-$Q3_medical_treatment_over_first_aid = $DB->count_records_sql(" SELECT COUNT(id) AS Q3_total_medical_treatment_over_first_aid FROM mdl_accident_report WHERE accident_treatment='Yes' AND (s_mgt_rpt_2508_completed IS NULL OR s_mgt_rpt_2508_completed IN(2,3)) AND (DATE(FROM_UNIXTIME(accident_date)) BETWEEN '$Q3_start' AND '$Q3_end') ");
-$Q3_Minor_Injuries = $DB->count_records_sql(" SELECT COUNT(id) AS Q3_total_Minor_Injuries FROM mdl_accident_report WHERE minor_injuries ='Yes' AND accident_treatment='No' AND (s_mgt_rpt_2508_completed IN(2,3) OR s_mgt_rpt_2508_completed IS NULL) AND (DATE(FROM_UNIXTIME(accident_date)) BETWEEN '$Q3_start' AND '$Q3_end') ");
+$Q3_Report_Only = $DB->count_records_sql(
+    "SELECT COUNT(ACC.id) AS Q3_Report_Only FROM mdl_new_accident_report AS ACC 
+     LEFT JOIN mdl_new_accident_manager_report AS MACC ON (ACC.id=MACC.new_accident_id)
+     WHERE MACC.incident_type=70 AND (DATE(FROM_UNIXTIME(ACC.b_date)) BETWEEN '$Q3_start' AND '$Q3_end')
+    ");
 
-$Q3_lost_days_accident = $DB->count_records_sql(" SELECT COALESCE(SUM(lost_time_days),0) AS Q3_total_lost_days FROM mdl_accident_report WHERE (DATE(FROM_UNIXTIME(accident_date)) BETWEEN '$Q3_start' AND '$Q3_end') ");
+$Q3_Acc_Injury = $DB->count_records_sql(
+    "SELECT COUNT(ACC.id) AS Q3_Acc_Injury FROM mdl_new_accident_report AS ACC 
+     LEFT JOIN mdl_new_accident_manager_report AS MACC ON (ACC.id=MACC.new_accident_id)
+     WHERE MACC.incident_type=71 AND (DATE(FROM_UNIXTIME(ACC.b_date)) BETWEEN '$Q3_start' AND '$Q3_end')
+    ");
+
+$Q3_Serious_Injury = $DB->count_records_sql(
+    "SELECT COUNT(ACC.id) AS Q3_Serious_Injury FROM mdl_new_accident_report AS ACC 
+     LEFT JOIN mdl_new_accident_manager_report AS MACC ON (ACC.id=MACC.new_accident_id)
+     WHERE MACC.incident_type=72 AND (DATE(FROM_UNIXTIME(ACC.b_date)) BETWEEN '$Q3_start' AND '$Q3_end')
+    ");
+
+
+$Q3_Others = $DB->count_records_sql(
+    "SELECT COUNT(ACC.id) AS Q3_Others FROM mdl_new_accident_report AS ACC 
+     LEFT JOIN mdl_new_accident_manager_report AS MACC ON (ACC.id=MACC.new_accident_id)
+     WHERE MACC.incident_type=73 AND (DATE(FROM_UNIXTIME(ACC.b_date)) BETWEEN '$Q3_start' AND '$Q3_end')
+     ");
+
+
+$Q3_Employees = $DB->count_records_sql(
+    "SELECT COUNT(ACC.id) AS Q3_Employees FROM mdl_new_accident_report AS ACC 
+     LEFT JOIN mdl_new_accident_manager_report AS MACC ON (ACC.id=MACC.new_accident_id)
+     WHERE MACC.affecting=74 AND (DATE(FROM_UNIXTIME(ACC.b_date)) BETWEEN '$Q3_start' AND '$Q3_end')
+     ");
+
+$Q3_Sub_Contractor = $DB->count_records_sql(
+    "SELECT COUNT(ACC.id) AS Q3_Sub_Contractor FROM mdl_new_accident_report AS ACC 
+     LEFT JOIN mdl_new_accident_manager_report AS MACC ON (ACC.id=MACC.new_accident_id)
+     WHERE MACC.affecting=75 AND (DATE(FROM_UNIXTIME(ACC.b_date)) BETWEEN '$Q3_start' AND '$Q3_end')
+     ");
+
+$Q3_Client_Employee = $DB->count_records_sql(
+    "SELECT COUNT(ACC.id) AS Q3_Client_Employee FROM mdl_new_accident_report AS ACC 
+     LEFT JOIN mdl_new_accident_manager_report AS MACC ON (ACC.id=MACC.new_accident_id)
+     WHERE MACC.affecting=76 AND (DATE(FROM_UNIXTIME(ACC.b_date)) BETWEEN '$Q3_start' AND '$Q3_end')
+     ");
+ 
+
+ $Q3_Member_of_the_public = $DB->count_records_sql(
+    "SELECT COUNT(ACC.id) AS Q3_Member_of_the_public FROM mdl_new_accident_report AS ACC 
+     LEFT JOIN mdl_new_accident_manager_report AS MACC ON (ACC.id=MACC.new_accident_id)
+     WHERE MACC.affecting=77 AND (DATE(FROM_UNIXTIME(ACC.b_date)) BETWEEN '$Q3_start' AND '$Q3_end')
+     ");
+
+$Q3_Children = $DB->count_records_sql(
+    "SELECT COUNT(ACC.id) AS Q3_Children FROM mdl_new_accident_report AS ACC 
+     LEFT JOIN mdl_new_accident_manager_report AS MACC ON (ACC.id=MACC.new_accident_id)
+     WHERE MACC.affecting=78 AND (DATE(FROM_UNIXTIME(ACC.b_date)) BETWEEN '$Q3_start' AND '$Q3_end')
+     ");
+
+$Q3_Animals_Environmental = $DB->count_records_sql(
+    "SELECT COUNT(ACC.id) AS Q3_Animals_Environmental FROM mdl_new_accident_report AS ACC 
+     LEFT JOIN mdl_new_accident_manager_report AS MACC ON (ACC.id=MACC.new_accident_id)
+     WHERE MACC.affecting=79 AND (DATE(FROM_UNIXTIME(ACC.b_date)) BETWEEN '$Q3_start' AND '$Q3_end')
+     ");
+
+$Q3_receive_medical_treatment = $DB->count_records_sql(
+    "SELECT COUNT(ACC.id) AS Q3_receive_medical_treatment FROM mdl_new_accident_report AS ACC 
+     LEFT JOIN mdl_new_accident_manager_report AS MACC ON (ACC.id=MACC.new_accident_id)
+     WHERE MACC.receive_medical_treatment='Yes' AND (DATE(FROM_UNIXTIME(ACC.b_date)) BETWEEN '$Q3_start' AND '$Q3_end')
+     ");     
+
+$Q3_lost_time_report = $DB->count_records_sql(
+    "SELECT COUNT(ACC.id) AS Q3_lost_time_report FROM mdl_new_accident_report AS ACC 
+     LEFT JOIN mdl_new_accident_manager_report AS MACC ON (ACC.id=MACC.new_accident_id)
+     WHERE MACC.lost_time_report='Yes' AND (DATE(FROM_UNIXTIME(ACC.b_date)) BETWEEN '$Q3_start' AND '$Q3_end')
+     ");     
+
+
 $Q3_lost_days_incident = $DB->count_records_sql(" SELECT COALESCE(SUM(lost_time_days),0) AS Q3_total_lost_days FROM mdl_incident_report WHERE (DATE(FROM_UNIXTIME(i_date)) BETWEEN '$Q3_start' AND '$Q3_end') ");
 
-$Q3_lost_days = $Q3_lost_days_accident + $Q3_lost_days_incident;
+$Q3_lost_days = $Q3_lost_time_report + $Q3_lost_days_incident;
 
-$Q3 = [$Q3_Fatalities, $Q3_Specific_Injuries, $Q3_Over_7_Day_Incapacity, $Q3_Non_Fatal_Accidents_to_non_workers, $Q3_Occupational_Disease, $Q3_Dangerous_Occurrence, $Q3_Gas_Incidents, $Q3_medical_treatment_over_first_aid, $Q3_Minor_Injuries, $Q3_lost_days];
+$Q3 = [ $Q3_Report_Only + $Q3_Acc_Injury +
+        $Q3_Serious_Injury + $Q3_Others  +
+        $Q3_Employees  + $Q3_Sub_Contractor + 
+        $Q3_Client_Employee + $Q3_Member_of_the_public +
+        $Q3_Children + $Q3_Animals_Environmental + 
+        $Q3_receive_medical_treatment  + $Q3_lost_days];
+
+
 
 list ($year, $month, $day) = explode('-', $Q4_start);
 $month = $month % 3 ? $month + 3 - ($month % 3) : $month;
@@ -178,50 +391,181 @@ $date->setDate($year, $month + 1, 0); //PHP will fix this date for you
 $Q4_end=$date->format('Y-m-d');
 
 //$DB->set_debug(true);
-$Q4_Fatalities = $DB->count_records_sql(" SELECT COUNT(id) AS Q4_total_Fatalities FROM mdl_accident_report WHERE s_mgt_rpt_riddor_event_clf=16 AND (DATE(FROM_UNIXTIME(accident_date)) BETWEEN '$Q4_start'  AND '$Q4_end') ");
-$Q4_Specific_Injuries = $DB->count_records_sql(" SELECT COUNT(id) AS Q4_total_Specific_Injuries FROM mdl_accident_report WHERE s_mgt_rpt_riddor_event_clf=17 AND (DATE(FROM_UNIXTIME(accident_date)) BETWEEN '$Q4_start'  AND '$Q4_end') ");
-$Q4_Over_7_Day_Incapacity = $DB->count_records_sql(" SELECT COUNT(id) AS Q4_total_Over_7_Day_Incapacity FROM mdl_accident_report WHERE s_mgt_rpt_riddor_event_clf=18 AND (DATE(FROM_UNIXTIME(accident_date)) BETWEEN '$Q4_start'  AND '$Q4_end') ");
-$Q4_Non_Fatal_Accidents_to_non_workers = $DB->count_records_sql(" SELECT COUNT(id) AS Q4_total_Non_Fatal_Accidents_to_non_workers FROM mdl_accident_report WHERE s_mgt_rpt_riddor_event_clf=19 AND (DATE(FROM_UNIXTIME(accident_date)) BETWEEN '$Q4_start'  AND '$Q4_end') ");
-$Q4_Occupational_Disease = $DB->count_records_sql(" SELECT COUNT(id) AS Q4_total_Occupational_Disease FROM mdl_accident_report WHERE s_mgt_rpt_riddor_event_clf=20 AND (DATE(FROM_UNIXTIME(accident_date)) BETWEEN '$Q4_start'  AND '$Q4_end') ");
-$Q4_Dangerous_Occurrence = $DB->count_records_sql(" SELECT COUNT(id) AS Q4_total_Dangerous_Occurrence FROM mdl_accident_report WHERE s_mgt_rpt_riddor_event_clf=21 AND (DATE(FROM_UNIXTIME(accident_date)) BETWEEN '$Q4_start'  AND '$Q4_end') ");
-$Q4_Gas_Incidents = $DB->count_records_sql(" SELECT COUNT(id) AS Q4_total_Gas_Incidents FROM mdl_accident_report WHERE s_mgt_rpt_riddor_event_clf=22 AND (DATE(FROM_UNIXTIME(accident_date)) BETWEEN '$Q4_start'  AND '$Q4_end') ");
 
-$Q4_medical_treatment_over_first_aid = $DB->count_records_sql(" SELECT COUNT(id) AS Q4_total_medical_treatment_over_first_aid FROM mdl_accident_report WHERE accident_treatment='Yes' AND (s_mgt_rpt_2508_completed IS NULL OR s_mgt_rpt_2508_completed IN(2,3)) AND (DATE(FROM_UNIXTIME(accident_date)) BETWEEN '$Q4_start' AND '$Q4_end') ");
-$Q4_Minor_Injuries = $DB->count_records_sql(" SELECT COUNT(id) AS Q4_total_Minor_Injuries FROM mdl_accident_report WHERE minor_injuries ='Yes' AND accident_treatment='No' AND (s_mgt_rpt_2508_completed IN(2,3) OR s_mgt_rpt_2508_completed IS NULL) AND (DATE(FROM_UNIXTIME(accident_date)) BETWEEN '$Q4_start' AND '$Q4_end') ");
-$Q4_lost_days = $DB->count_records_sql(" SELECT COALESCE(SUM(lost_time_days),0) AS Q4_total_lost_days FROM mdl_accident_report WHERE (DATE(FROM_UNIXTIME(accident_date)) BETWEEN '$Q4_start'  AND '$Q4_end') ");
+$Q4_Report_Only = $DB->count_records_sql(
+    "SELECT COUNT(ACC.id) AS Q4_Report_Only FROM mdl_new_accident_report AS ACC 
+     LEFT JOIN mdl_new_accident_manager_report AS MACC ON (ACC.id=MACC.new_accident_id)
+     WHERE MACC.incident_type=70 AND (DATE(FROM_UNIXTIME(ACC.b_date)) BETWEEN '$Q4_start' AND '$Q4_end')
+    ");
 
-$Q4_lost_days_accident = $DB->count_records_sql(" SELECT COALESCE(SUM(lost_time_days),0) AS Q4_total_lost_days FROM mdl_accident_report WHERE (DATE(FROM_UNIXTIME(accident_date)) BETWEEN '$Q4_start' AND '$Q4_end') ");
+$Q4_Acc_Injury = $DB->count_records_sql(
+    "SELECT COUNT(ACC.id) AS Q4_Acc_Injury FROM mdl_new_accident_report AS ACC 
+     LEFT JOIN mdl_new_accident_manager_report AS MACC ON (ACC.id=MACC.new_accident_id)
+     WHERE MACC.incident_type=71 AND (DATE(FROM_UNIXTIME(ACC.b_date)) BETWEEN '$Q4_start' AND '$Q4_end')
+    ");
+
+$Q4_Serious_Injury = $DB->count_records_sql(
+    "SELECT COUNT(ACC.id) AS Q4_Serious_Injury FROM mdl_new_accident_report AS ACC 
+     LEFT JOIN mdl_new_accident_manager_report AS MACC ON (ACC.id=MACC.new_accident_id)
+     WHERE MACC.incident_type=72 AND (DATE(FROM_UNIXTIME(ACC.b_date)) BETWEEN '$Q4_start' AND '$Q4_end')
+    ");
+
+
+$Q4_Others = $DB->count_records_sql(
+    "SELECT COUNT(ACC.id) AS Q4_Others FROM mdl_new_accident_report AS ACC 
+     LEFT JOIN mdl_new_accident_manager_report AS MACC ON (ACC.id=MACC.new_accident_id)
+     WHERE MACC.incident_type=73 AND (DATE(FROM_UNIXTIME(ACC.b_date)) BETWEEN '$Q4_start' AND '$Q4_end')
+     ");
+
+
+$Q4_Employees = $DB->count_records_sql(
+    "SELECT COUNT(ACC.id) AS Q4_Employees FROM mdl_new_accident_report AS ACC 
+     LEFT JOIN mdl_new_accident_manager_report AS MACC ON (ACC.id=MACC.new_accident_id)
+     WHERE MACC.affecting=74 AND (DATE(FROM_UNIXTIME(ACC.b_date)) BETWEEN '$Q4_start' AND '$Q4_end')
+     ");
+
+$Q4_Sub_Contractor = $DB->count_records_sql(
+    "SELECT COUNT(ACC.id) AS Q4_Sub_Contractor FROM mdl_new_accident_report AS ACC 
+     LEFT JOIN mdl_new_accident_manager_report AS MACC ON (ACC.id=MACC.new_accident_id)
+     WHERE MACC.affecting=75 AND (DATE(FROM_UNIXTIME(ACC.b_date)) BETWEEN '$Q4_start' AND '$Q4_end')
+     ");
+
+$Q4_Client_Employee = $DB->count_records_sql(
+    "SELECT COUNT(ACC.id) AS Q4_Client_Employee FROM mdl_new_accident_report AS ACC 
+     LEFT JOIN mdl_new_accident_manager_report AS MACC ON (ACC.id=MACC.new_accident_id)
+     WHERE MACC.affecting=76 AND (DATE(FROM_UNIXTIME(ACC.b_date)) BETWEEN '$Q4_start' AND '$Q4_end')
+     ");
+ 
+
+ $Q4_Member_of_the_public = $DB->count_records_sql(
+    "SELECT COUNT(ACC.id) AS Q4_Member_of_the_public FROM mdl_new_accident_report AS ACC 
+     LEFT JOIN mdl_new_accident_manager_report AS MACC ON (ACC.id=MACC.new_accident_id)
+     WHERE MACC.affecting=77 AND (DATE(FROM_UNIXTIME(ACC.b_date)) BETWEEN '$Q4_start' AND '$Q4_end')
+     ");
+
+$Q4_Children = $DB->count_records_sql(
+    "SELECT COUNT(ACC.id) AS Q4_Children FROM mdl_new_accident_report AS ACC 
+     LEFT JOIN mdl_new_accident_manager_report AS MACC ON (ACC.id=MACC.new_accident_id)
+     WHERE MACC.affecting=78 AND (DATE(FROM_UNIXTIME(ACC.b_date)) BETWEEN '$Q4_start' AND '$Q4_end')
+     ");
+
+$Q4_Animals_Environmental = $DB->count_records_sql(
+    "SELECT COUNT(ACC.id) AS Q4_Animals_Environmental FROM mdl_new_accident_report AS ACC 
+     LEFT JOIN mdl_new_accident_manager_report AS MACC ON (ACC.id=MACC.new_accident_id)
+     WHERE MACC.affecting=79 AND (DATE(FROM_UNIXTIME(ACC.b_date)) BETWEEN '$Q4_start' AND '$Q4_end')
+     ");
+
+$Q4_receive_medical_treatment = $DB->count_records_sql(
+    "SELECT COUNT(ACC.id) AS Q4_receive_medical_treatment FROM mdl_new_accident_report AS ACC 
+     LEFT JOIN mdl_new_accident_manager_report AS MACC ON (ACC.id=MACC.new_accident_id)
+     WHERE MACC.receive_medical_treatment='Yes' AND (DATE(FROM_UNIXTIME(ACC.b_date)) BETWEEN '$Q4_start' AND '$Q4_end')
+     ");     
+
+$Q4_lost_time_report = $DB->count_records_sql(
+    "SELECT COUNT(ACC.id) AS Q4_lost_time_report FROM mdl_new_accident_report AS ACC 
+     LEFT JOIN mdl_new_accident_manager_report AS MACC ON (ACC.id=MACC.new_accident_id)
+     WHERE MACC.lost_time_report='Yes' AND (DATE(FROM_UNIXTIME(ACC.b_date)) BETWEEN '$Q4_start' AND '$Q4_end')
+     ");     
+
+
 $Q4_lost_days_incident = $DB->count_records_sql(" SELECT COALESCE(SUM(lost_time_days),0) AS Q4_total_lost_days FROM mdl_incident_report WHERE (DATE(FROM_UNIXTIME(i_date)) BETWEEN '$Q4_start' AND '$Q4_end') ");
 
-$Q4_lost_days = $Q4_lost_days_accident + $Q4_lost_days_incident;
+$Q4_lost_days = $Q4_lost_time_report + $Q4_lost_days_incident;
 
-$Q4 = [$Q4_Fatalities, $Q4_Specific_Injuries, $Q4_Over_7_Day_Incapacity, $Q4_Non_Fatal_Accidents_to_non_workers, $Q4_Occupational_Disease, $Q4_Dangerous_Occurrence, $Q4_Gas_Incidents, $Q4_medical_treatment_over_first_aid, $Q4_Minor_Injuries, $Q4_lost_days];
-
-//$DB->set_debug(true);
-$YTD_Fatalities = $DB->count_records_sql(" SELECT COUNT(id) AS YTD_total_Fatalities FROM mdl_accident_report WHERE s_mgt_rpt_riddor_event_clf=16 AND (DATE(FROM_UNIXTIME(accident_date)) BETWEEN '$Q1_start'  AND '$Q4_end') ");
-$YTD_Specific_Injuries = $DB->count_records_sql(" SELECT COUNT(id) AS YTD_total_Specific_Injuries FROM mdl_accident_report WHERE s_mgt_rpt_riddor_event_clf=17 AND (DATE(FROM_UNIXTIME(accident_date)) BETWEEN '$Q1_start'  AND '$Q4_end') ");
-$YTD_Over_7_Day_Incapacity = $DB->count_records_sql(" SELECT COUNT(id) AS YTD_total_Over_7_Day_Incapacity FROM mdl_accident_report WHERE s_mgt_rpt_riddor_event_clf=18 AND (DATE(FROM_UNIXTIME(accident_date)) BETWEEN '$Q1_start'  AND '$Q4_end') ");
-$YTD_Non_Fatal_Accidents_to_non_workers = $DB->count_records_sql(" SELECT COUNT(id) AS YTD_total_Non_Fatal_Accidents_to_non_workers FROM mdl_accident_report WHERE s_mgt_rpt_riddor_event_clf=19 AND (DATE(FROM_UNIXTIME(accident_date)) BETWEEN '$Q1_start'  AND '$Q4_end') ");
-$YTD_Occupational_Disease = $DB->count_records_sql(" SELECT COUNT(id) AS YTD_total_Occupational_Disease FROM mdl_accident_report WHERE s_mgt_rpt_riddor_event_clf=20 AND (DATE(FROM_UNIXTIME(accident_date)) BETWEEN '$Q1_start'  AND '$Q4_end') ");
-$YTD_Dangerous_Occurrence = $DB->count_records_sql(" SELECT COUNT(id) AS YTD_total_Dangerous_Occurrence FROM mdl_accident_report WHERE s_mgt_rpt_riddor_event_clf=21 AND (DATE(FROM_UNIXTIME(accident_date)) BETWEEN '$Q1_start'  AND '$Q4_end') ");
-$YTD_Gas_Incidents = $DB->count_records_sql(" SELECT COUNT(id) AS YTD_total_Gas_Incidents FROM mdl_accident_report WHERE s_mgt_rpt_riddor_event_clf=22 AND (DATE(FROM_UNIXTIME(accident_date)) BETWEEN '$Q1_start'  AND '$Q4_end') ");
-
-//echo "SELECT COUNT(id) AS YTD_total_Minor_Injuries FROM mdl_accident_report WHERE s_mgt_rpt_2508_completed IS NULL AND (accident_treatment='No' OR accident_treatment IS NULL) AND minor_injuries='Yes' AND (DATE(FROM_UNIXTIME(accident_date)) BETWEEN '$Q4_start' AND '$Q4_end') ";
-
-$YTD_medical_treatment_over_first_aid = $DB->count_records_sql(" SELECT COUNT(id) AS YTD_total_medical_treatment_over_first_aid FROM mdl_accident_report WHERE accident_treatment='Yes' AND (s_mgt_rpt_2508_completed IS NULL OR s_mgt_rpt_2508_completed IN(2,3)) AND (DATE(FROM_UNIXTIME(accident_date)) BETWEEN '$Q1_start' AND '$Q4_end') ");
-$YTD_Minor_Injuries = $DB->count_records_sql(" SELECT COUNT(id) AS YTD_total_Minor_Injuries FROM mdl_accident_report WHERE minor_injuries ='Yes' AND accident_treatment='No' AND (s_mgt_rpt_2508_completed IN(2,3) OR s_mgt_rpt_2508_completed IS NULL) AND (DATE(FROM_UNIXTIME(accident_date)) BETWEEN '$Q1_start' AND '$Q4_end') ");
+$Q4 = [ $Q4_Report_Only + $Q4_Acc_Injury +
+        $Q4_Serious_Injury + $Q4_Others  +
+        $Q4_Employees  + $Q4_Sub_Contractor + 
+        $Q4_Client_Employee + $Q4_Member_of_the_public +
+        $Q4_Children + $Q4_Animals_Environmental + 
+        $Q4_receive_medical_treatment  + $Q4_lost_days];
 
 
-//$YTD_medical_treatment_over_first_aid = $DB->count_records_sql(" SELECT COUNT(id) AS YTD_total_medical_treatment_over_first_aid FROM mdl_accident_report WHERE accident_treatment='Yes' AND (DATE(FROM_UNIXTIME(accident_date)) BETWEEN '$Q1_start'  AND '$Q4_end') ");
-//$YTD_Minor_Injuries = $DB->count_records_sql(" SELECT COUNT(id) AS YTD_total_Minor_Injuries FROM mdl_accident_report WHERE minor_injuries='Yes' AND (DATE(FROM_UNIXTIME(accident_date)) BETWEEN '$Q1_start'  AND '$Q4_end') ");
-$YTD_lost_days_accident = $DB->count_records_sql(" SELECT COALESCE(SUM(lost_time_days),0) AS YTD_total_lost_days FROM mdl_accident_report WHERE (DATE(FROM_UNIXTIME(accident_date)) BETWEEN '$Q1_start'  AND '$Q4_end') ");
-$YTD_lost_days_incident = $DB->count_records_sql(" SELECT COALESCE(SUM(lost_time_days),0) AS YTD_total_lost_days FROM mdl_incident_report WHERE (DATE(FROM_UNIXTIME(i_date)) BETWEEN '$Q1_start'  AND '$Q4_end') ");
+$YTD_Report_Only = $DB->count_records_sql(
+    "SELECT COUNT(ACC.id) AS YTD_Report_Only FROM mdl_new_accident_report AS ACC 
+     LEFT JOIN mdl_new_accident_manager_report AS MACC ON (ACC.id=MACC.new_accident_id)
+     WHERE MACC.incident_type=70 AND (DATE(FROM_UNIXTIME(ACC.b_date)) BETWEEN '$Q1_start' AND '$YTD_end')
+    ");
 
-$YTD_lost_days = $YTD_lost_days_accident + $YTD_lost_days_incident;
+$YTD_Acc_Injury = $DB->count_records_sql(
+    "SELECT COUNT(ACC.id) AS YTD_Acc_Injury FROM mdl_new_accident_report AS ACC 
+     LEFT JOIN mdl_new_accident_manager_report AS MACC ON (ACC.id=MACC.new_accident_id)
+     WHERE MACC.incident_type=71 AND (DATE(FROM_UNIXTIME(ACC.b_date)) BETWEEN '$Q1_start' AND '$YTD_end')
+    ");
 
-//$DB->set_debug(false);
-$YTD = [$YTD_Fatalities, $YTD_Specific_Injuries, $YTD_Over_7_Day_Incapacity, $YTD_Non_Fatal_Accidents_to_non_workers, $YTD_Occupational_Disease, $YTD_Dangerous_Occurrence, $YTD_Gas_Incidents, $YTD_medical_treatment_over_first_aid, $YTD_Minor_Injuries, $YTD_lost_days];
+$YTD_Serious_Injury = $DB->count_records_sql(
+    "SELECT COUNT(ACC.id) AS YTD_Serious_Injury FROM mdl_new_accident_report AS ACC 
+     LEFT JOIN mdl_new_accident_manager_report AS MACC ON (ACC.id=MACC.new_accident_id)
+     WHERE MACC.incident_type=72 AND (DATE(FROM_UNIXTIME(ACC.b_date)) BETWEEN '$Q1_start' AND '$YTD_end')
+    ");
 
+
+$YTD_Others = $DB->count_records_sql(
+    "SELECT COUNT(ACC.id) AS YTD_Others FROM mdl_new_accident_report AS ACC 
+     LEFT JOIN mdl_new_accident_manager_report AS MACC ON (ACC.id=MACC.new_accident_id)
+     WHERE MACC.incident_type=73 AND (DATE(FROM_UNIXTIME(ACC.b_date)) BETWEEN '$Q1_start' AND '$YTD_end')
+     ");
+
+
+$YTD_Employees = $DB->count_records_sql(
+    "SELECT COUNT(ACC.id) AS YTD_Employees FROM mdl_new_accident_report AS ACC 
+     LEFT JOIN mdl_new_accident_manager_report AS MACC ON (ACC.id=MACC.new_accident_id)
+     WHERE MACC.affecting=74 AND (DATE(FROM_UNIXTIME(ACC.b_date)) BETWEEN '$Q1_start' AND '$YTD_end')
+     ");
+
+$YTD_Sub_Contractor = $DB->count_records_sql(
+    "SELECT COUNT(ACC.id) AS YTD_Sub_Contractor FROM mdl_new_accident_report AS ACC 
+     LEFT JOIN mdl_new_accident_manager_report AS MACC ON (ACC.id=MACC.new_accident_id)
+     WHERE MACC.affecting=75 AND (DATE(FROM_UNIXTIME(ACC.b_date)) BETWEEN '$Q1_start' AND '$YTD_end')
+     ");
+
+$YTD_Client_Employee = $DB->count_records_sql(
+    "SELECT COUNT(ACC.id) AS YTD_Client_Employee FROM mdl_new_accident_report AS ACC 
+     LEFT JOIN mdl_new_accident_manager_report AS MACC ON (ACC.id=MACC.new_accident_id)
+     WHERE MACC.affecting=76 AND (DATE(FROM_UNIXTIME(ACC.b_date)) BETWEEN '$Q1_start' AND '$YTD_end')
+     ");
+ 
+
+ $YTD_Member_of_the_public = $DB->count_records_sql(
+    "SELECT COUNT(ACC.id) AS YTD_Member_of_the_public FROM mdl_new_accident_report AS ACC 
+     LEFT JOIN mdl_new_accident_manager_report AS MACC ON (ACC.id=MACC.new_accident_id)
+     WHERE MACC.affecting=77 AND (DATE(FROM_UNIXTIME(ACC.b_date)) BETWEEN '$Q1_start' AND '$YTD_end')
+     ");
+
+$YTD_Children = $DB->count_records_sql(
+    "SELECT COUNT(ACC.id) AS YTD_Children FROM mdl_new_accident_report AS ACC 
+     LEFT JOIN mdl_new_accident_manager_report AS MACC ON (ACC.id=MACC.new_accident_id)
+     WHERE MACC.affecting=78 AND (DATE(FROM_UNIXTIME(ACC.b_date)) BETWEEN '$Q1_start' AND '$YTD_end')
+     ");
+
+$YTD_Animals_Environmental = $DB->count_records_sql(
+    "SELECT COUNT(ACC.id) AS YTD_Animals_Environmental FROM mdl_new_accident_report AS ACC 
+     LEFT JOIN mdl_new_accident_manager_report AS MACC ON (ACC.id=MACC.new_accident_id)
+     WHERE MACC.affecting=79 AND (DATE(FROM_UNIXTIME(ACC.b_date)) BETWEEN '$Q1_start' AND '$YTD_end')
+     ");
+
+$YTD_receive_medical_treatment = $DB->count_records_sql(
+    "SELECT COUNT(ACC.id) AS YTD_receive_medical_treatment FROM mdl_new_accident_report AS ACC 
+     LEFT JOIN mdl_new_accident_manager_report AS MACC ON (ACC.id=MACC.new_accident_id)
+     WHERE MACC.receive_medical_treatment='Yes' AND (DATE(FROM_UNIXTIME(ACC.b_date)) BETWEEN '$Q1_start' AND '$YTD_end')
+     ");     
+
+$YTD_lost_time_report = $DB->count_records_sql(
+    "SELECT COUNT(ACC.id) AS YTD_lost_time_report FROM mdl_new_accident_report AS ACC 
+     LEFT JOIN mdl_new_accident_manager_report AS MACC ON (ACC.id=MACC.new_accident_id)
+     WHERE MACC.lost_time_report='Yes' AND (DATE(FROM_UNIXTIME(ACC.b_date)) BETWEEN '$Q1_start' AND '$YTD_end')
+     ");     
+
+
+$YTD_lost_days_incident = $DB->count_records_sql(" SELECT COALESCE(SUM(lost_time_days),0) AS YTD_total_lost_days FROM mdl_incident_report WHERE (DATE(FROM_UNIXTIME(i_date)) BETWEEN '$Q1_start' AND '$YTD_end') ");
+
+$YTD_lost_days = $YTD_lost_time_report + $YTD_lost_days_incident;
+
+$YTD = [ $YTD_Report_Only + $YTD_Acc_Injury +
+        $YTD_Serious_Injury + $YTD_Others  +
+        $YTD_Employees  + $YTD_Sub_Contractor + 
+        $YTD_Client_Employee + $YTD_Member_of_the_public +
+        $YTD_Children + $YTD_Animals_Environmental + 
+        $YTD_receive_medical_treatment  + $YTD_lost_days];
 
 echo html_writer:: start_tag('div',array('class'=>'card mb-4'));
 echo html_writer:: tag('h5',get_string('accidents_incidents_chart', 'local_trend_analysis_report').' ('.$cur_year.')',array('class'=>'card-header'));
@@ -428,15 +772,16 @@ echo $OUTPUT->footer();
         xAxis: {
 
     categories: [
-                'Fatalities',
-                'Specific Injuries',
-                'Over 7 day injury',
-                'Non Fatal Accidents to non workers',
-                'Occupational Disease',
-                'Dangerous Occurrence',
-                'Gas Incidents',
-                'No of medical treatment over first aid',
-                'No of minor injuries',
+                'Report Only',
+                'Accident Injury',
+                'Serious Injury',
+                'Others',
+                'Employees',
+                'Sub-Contractor(s)',
+                'Client Employee(s)',
+                'Member(s) of the public',
+                'Children',
+                'Animals / Environmental',
                 'Total lost days'
             ],
             crosshair: true,
