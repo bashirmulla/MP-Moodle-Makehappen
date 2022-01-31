@@ -43,6 +43,8 @@ $string['trend_analysis_reporting'] = 'Trend Analysis Reporting';
 $string['accident']    = 'Accident Reports';
 $string['incident']    = 'Incident, Near Miss or Hazard Report';
 $string['accident_table']   = 'accident_report';
+$string['new_accident_table']   = 'new_accident_report';
+
 $string['incident_table']   = 'incident_report';
 $string['assign_manager']   = 'Manage Managers';
 
