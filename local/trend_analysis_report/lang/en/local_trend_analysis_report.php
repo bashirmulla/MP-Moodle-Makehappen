@@ -60,7 +60,8 @@ $string['monthly_trends']                 = 'Monthly Analysis';
 $string['overview_by_category']           = 'Overview by Category';
 $string['hazard_by_classification']       = 'Hazard Identification by Classification';
 $string['near_misses_by_classification']  = 'Near Misses by Classification';
-$string['accidents_by_category']          = 'Accidents by Category';
+/////$string['accidents_by_category']          = 'Accidents by Category'; /*BM commented-out */
+$string['accidents_by_category']          = 'Accidents by Categories of Agents or Factors'; /* BM added */
 $string['riddor_by_event_classification'] = 'RIDDOR by Event Classification';
 
 
@@ -68,7 +69,8 @@ $string['riddor_by_event_classification'] = 'RIDDOR by Event Classification';
 $string['accident_incident_analysis']       = 'H&S Analysis';
 $string['accident_incident_performance']    = 'Accident and Incident Performance';
 $string['hazard_identification_near_misses_by_classification']    = 'Hazard Identification & Near Misses by classification';
-$string['accidents_by_category']    = 'Accidents by category';
+//////$string['accidents_by_category']    = 'Accidents by category'; /* BM commented-out */
+$string['accidents_by_category']    = 'Accidents by Categories of Agents or Factors'; /* BM added */
 $string['incidents_by_category']    = 'Incidents by category';
 $string['incidents_by_subcategory'] = 'Incidents by Subcategory';
 
