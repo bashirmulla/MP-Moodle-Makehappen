@@ -40,6 +40,8 @@ class email_notification_on_high_h_s_report extends moodleform {
 
         $mform->_maxFileSize = 90000000;
 
+        $dropdown = get_new_dropdown_data(1);
+
         $mform->_formname = "email_notification_on_high_h_s_report";
 
         $record = "";
@@ -70,131 +72,47 @@ class email_notification_on_high_h_s_report extends moodleform {
         $mform->addElement('html', html_writer:: end_tag('div'));
         //end row
         //start row
-        $mform->addElement('html', html_writer:: start_tag('div',array('class'=>'form-row form-group-ele')));
+       
+        foreach($dropdown['kind_of_occurrence'] as $key=>$value){
 
-        $mform->addElement('html', html_writer:: tag('label','Act of Physical Violence',array('class'=>'col-md-4 col-form-label')));
+            //start row
+            $mform->addElement('html', html_writer:: start_tag('div',array('class'=>'form-row form-group-ele')));
 
-        $input_act_of_physical_violence_status_attr = array('type'=>'checkbox','name'=>'act_of_physical_violence_status','value'=>1,'class'=>'position-static');
-        if ($record->act_of_physical_violence_status==1){
-            $input_act_of_physical_violence_status_attr['checked'] = 'checked' ;
+            $mform->addElement('html', html_writer:: tag('label',$value,array('class'=>'col-md-4 col-form-label')));
+            $input_attr = array('type'=>'checkbox','name'=>'check_'.$key,'value'=>1, 'class'=>'position-static');
+            
+            $mform->addElement('html', html_writer:: start_tag('div',array('class'=>'col-md-2 form-check')));
+            $mform->addElement('html', html_writer:: empty_tag('input',$input_attr));
+            $mform->addElement('html', html_writer:: end_tag('div'));
+            $mform->addElement('html', html_writer:: start_tag('div',array('class'=>'col-lg-6')));
+            $mform->addElement('html', html_writer:: empty_tag('input',array('type'=>'text','name'=>'c_'.$key,'class'=>'form-control','value'=>0,'style'=>'text-align:center;')));
+            $mform->addElement('html', html_writer:: end_tag('div'));
+
+            $mform->addElement('html', html_writer:: end_tag('div'));
+            $mform->addElement('html', "\n");
+            //end row
+        
         }
-        $mform->addElement('html', html_writer:: start_tag('div',array('class'=>'col-md-2 form-check')));
-        $mform->addElement('html', html_writer:: empty_tag('input',$input_act_of_physical_violence_status_attr));
-        $mform->addElement('html', html_writer:: end_tag('div'));
-        $mform->addElement('html', html_writer:: start_tag('div',array('class'=>'col-lg-6')));
-        $mform->addElement('html', html_writer:: empty_tag('input',array('type'=>'text','name'=>'act_of_physical_violence','class'=>'form-control','value'=>$record->act_of_physical_violence,'style'=>'text-align:center;')));
-        $mform->addElement('html', html_writer:: end_tag('div'));
+       
 
-        $mform->addElement('html', html_writer:: end_tag('div'));
-        //end row
+        foreach($dropdown['agent_involved'] as $key=>$value){
+           //start row
+           $mform->addElement('html', html_writer:: start_tag('div',array('class'=>'form-row form-group-ele')));
 
-        //start row
-        $mform->addElement('html', html_writer:: start_tag('div',array('class'=>'form-row form-group-ele')));
+           $mform->addElement('html', html_writer:: tag('label',$value,array('class'=>'col-md-4 col-form-label')));
+           $input_attr = array('type'=>'checkbox','name'=>'check_'.$key,'value'=>1, 'class'=>'position-static');
+           
+           $mform->addElement('html', html_writer:: start_tag('div',array('class'=>'col-md-2 form-check')));
+           $mform->addElement('html', html_writer:: empty_tag('input',$input_attr));
+           $mform->addElement('html', html_writer:: end_tag('div'));
+           $mform->addElement('html', html_writer:: start_tag('div',array('class'=>'col-lg-6')));
+           $mform->addElement('html', html_writer:: empty_tag('input',array('type'=>'text','name'=>'c_'.$key,'class'=>'form-control','value'=>0,'style'=>'text-align:center;')));
+           $mform->addElement('html', html_writer:: end_tag('div'));
 
-        $mform->addElement('html', html_writer:: tag('label','Cuts and Lacerations',array('class'=>'col-md-4 col-form-label')));
-        $input_cuts_and_lacerations_status_attr = array('type'=>'checkbox','name'=>'cuts_and_lacerations_status','value'=>1,'class'=>'position-static');
-        if ($record->cuts_and_lacerations_status==1){
-            $input_cuts_and_lacerations_status_attr['checked'] = 'checked' ;
-        }
-        $mform->addElement('html', html_writer:: start_tag('div',array('class'=>'col-md-2 form-check')));
-        $mform->addElement('html', html_writer:: empty_tag('input',$input_cuts_and_lacerations_status_attr));
-        $mform->addElement('html', html_writer:: end_tag('div'));
-        $mform->addElement('html', html_writer:: start_tag('div',array('class'=>'col-lg-6')));
-        $mform->addElement('html', html_writer:: empty_tag('input',array('type'=>'text','name'=>'cuts_and_lacerations','class'=>'form-control','value'=>$record->cuts_and_lacerations,'style'=>'text-align:center;')));
-        $mform->addElement('html', html_writer:: end_tag('div'));
-
-        $mform->addElement('html', html_writer:: end_tag('div'));
-        //end row
-
-        //start row
-        $mform->addElement('html', html_writer:: start_tag('div',array('class'=>'form-row form-group-ele')));
-
-        $mform->addElement('html', html_writer:: tag('label','Falls from a Height',array('class'=>'col-md-4 col-form-label')));
-        $input_falls_from_height_status_attr = array('type'=>'checkbox','name'=>'falls_from_height_status','value'=>1, 'class'=>'position-static');
-        if ($record->falls_from_height_status==1){
-            $input_falls_from_height_status_attr['checked'] = 'checked' ;
-        }
-        $mform->addElement('html', html_writer:: start_tag('div',array('class'=>'col-md-2 form-check')));
-        $mform->addElement('html', html_writer:: empty_tag('input',$input_falls_from_height_status_attr));
-        $mform->addElement('html', html_writer:: end_tag('div'));
-        $mform->addElement('html', html_writer:: start_tag('div',array('class'=>'col-lg-6')));
-        $mform->addElement('html', html_writer:: empty_tag('input',array('type'=>'text','name'=>'falls_from_height','class'=>'form-control','value'=>$record->falls_from_height,'style'=>'text-align:center;')));
-        $mform->addElement('html', html_writer:: end_tag('div'));
-
-        $mform->addElement('html', html_writer:: end_tag('div'));
-        //end row
-
-        //start row
-        $mform->addElement('html', html_writer:: start_tag('div',array('class'=>'form-row form-group-ele')));
-
-        $mform->addElement('html', html_writer:: tag('label','Manual Handling',array('class'=>'col-md-4 col-form-label')));
-        $input_manual_handling_status_attr = array('type'=>'checkbox','name'=>'manual_handling_status','value'=>1, 'class'=>'position-static');
-        if ($record->manual_handling_status==1){
-            $input_manual_handling_status_attr['checked'] = 'checked' ;
-        }
-        $mform->addElement('html', html_writer:: start_tag('div',array('class'=>'col-md-2 form-check')));
-        $mform->addElement('html', html_writer:: empty_tag('input',$input_manual_handling_status_attr));
-        $mform->addElement('html', html_writer:: end_tag('div'));
-        $mform->addElement('html', html_writer:: start_tag('div',array('class'=>'col-lg-6')));
-        $mform->addElement('html', html_writer:: empty_tag('input',array('type'=>'text','name'=>'manual_handling','class'=>'form-control','value'=>$record->manual_handling,'style'=>'text-align:center;')));
-        $mform->addElement('html', html_writer:: end_tag('div'));
-
-        $mform->addElement('html', html_writer:: end_tag('div'));
-        //end row
-
-        //start row
-        $mform->addElement('html', html_writer:: start_tag('div',array('class'=>'form-row form-group-ele')));
-
-        $mform->addElement('html', html_writer:: tag('label','Needlestick Injuries',array('class'=>'col-md-4 col-form-label')));
-        $input_needlestick_injuries_status_attr = array('type'=>'checkbox','name'=>'needlestick_injuries_status','value'=>1, 'class'=>'position-static');
-        if ($record->needlestick_injuries_status==1){
-            $input_needlestick_injuries_status_attr['checked'] = 'checked' ;
-        }
-        $mform->addElement('html', html_writer:: start_tag('div',array('class'=>'col-md-2 form-check')));
-        $mform->addElement('html', html_writer:: empty_tag('input',$input_needlestick_injuries_status_attr));
-        $mform->addElement('html', html_writer:: end_tag('div'));
-        $mform->addElement('html', html_writer:: start_tag('div',array('class'=>'col-lg-6')));
-        $mform->addElement('html', html_writer:: empty_tag('input',array('type'=>'text','name'=>'needlestick_injuries','class'=>'form-control','value'=>$record->needlestick_injuries,'style'=>'text-align:center;')));
-        $mform->addElement('html', html_writer:: end_tag('div'));
-
-        $mform->addElement('html', html_writer:: end_tag('div'));
-        //end row
-
-        //start row
-        $mform->addElement('html', html_writer:: start_tag('div',array('class'=>'form-row form-group-ele')));
-
-        $mform->addElement('html', html_writer:: tag('label','Slips, Trips and Falls on same level',array('class'=>'col-md-4 col-form-label')));
-        $input_slips_trips_and_falls_on_same_level_status_attr = array('type'=>'checkbox','name'=>'slips_trips_and_falls_on_same_level_status','value'=>1, 'class'=>'position-static');
-        if ($record->slips_trips_and_falls_on_same_level_status==1){
-            $input_slips_trips_and_falls_on_same_level_status_attr['checked'] = 'checked' ;
-        }
-        $mform->addElement('html', html_writer:: start_tag('div',array('class'=>'col-md-2 form-check')));
-        $mform->addElement('html', html_writer:: empty_tag('input',$input_slips_trips_and_falls_on_same_level_status_attr));
-        $mform->addElement('html', html_writer:: end_tag('div'));
-        $mform->addElement('html', html_writer:: start_tag('div',array('class'=>'col-lg-6')));
-        $mform->addElement('html', html_writer:: empty_tag('input',array('type'=>'text','name'=>'slips_trips_and_falls_on_same_level','class'=>'form-control','value'=>$record->slips_trips_and_falls_on_same_level,'style'=>'text-align:center;')));
-        $mform->addElement('html', html_writer:: end_tag('div'));
-
-        $mform->addElement('html', html_writer:: end_tag('div'));
-        //end row
-
-        //start row
-        $mform->addElement('html', html_writer:: start_tag('div',array('class'=>'form-row form-group-ele')));
-
-        $mform->addElement('html', html_writer:: tag('label','Struck by an object',array('class'=>'col-md-4 col-form-label')));
-        $input_struck_by_an_object_status_attr = array('type'=>'checkbox','name'=>'struck_by_an_object_status','value'=>1, 'class'=>'position-static');
-        if ($record->struck_by_an_object_status==1){
-            $input_struck_by_an_object_status_attr['checked'] = 'checked' ;
-        }
-        $mform->addElement('html', html_writer:: start_tag('div',array('class'=>'col-md-2 form-check')));
-        $mform->addElement('html', html_writer:: empty_tag('input',$input_struck_by_an_object_status_attr));
-        $mform->addElement('html', html_writer:: end_tag('div'));
-        $mform->addElement('html', html_writer:: start_tag('div',array('class'=>'col-lg-6')));
-        $mform->addElement('html', html_writer:: empty_tag('input',array('type'=>'text','name'=>'struck_by_an_object','class'=>'form-control','value'=>$record->struck_by_an_object,'style'=>'text-align:center;')));
-        $mform->addElement('html', html_writer:: end_tag('div'));
-
-        $mform->addElement('html', html_writer:: end_tag('div'));
-        //end row
+           $mform->addElement('html', html_writer:: end_tag('div'));
+           $mform->addElement('html', "\n");
+           //end row
+         } 
 
         //start row
         $mform->addElement('html', html_writer:: start_tag('div',array('class'=>'form-row')));
