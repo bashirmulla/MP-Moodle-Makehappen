@@ -37,7 +37,7 @@ foreach($target_year_data as $rec) {
 //        echo '<pre>';
 //        print_r($key2);
 //        print_r($rec2);
-        if (strcasecmp($key2,"Fatalities")==0) {
+        if (strcasecmp($key2,"Report Only")==0) {
             $Q1_fat_target = $Q2_fat_target = $Q3_fat_target = $Q4_fat_target = 0;
             $k = 0;
             $fat_tar_jan=$fat_tar_feb=$fat_tar_mar=$fat_tar_apr=$fat_tar_may=$fat_tar_jun=$fat_tar_jul=$fat_tar_aug=$fat_tar_sep=$fat_tar_oct=$fat_tar_nov=$fat_tar_dec=0;
@@ -59,7 +59,7 @@ foreach($target_year_data as $rec) {
                 }
             }
         }
-        else if (strcasecmp($key2,"Specific Injuries")==0) {
+        else if (strcasecmp($key2,"Accident Injury")==0) {
             $Q1_spe_target = 0;
             $Q2_spe_target = 0;
             $Q3_spe_target = 0;
@@ -85,7 +85,7 @@ foreach($target_year_data as $rec) {
                 }
             }
         }
-        else if (strcasecmp($key2,"Over 7 day injury")==0) {
+        else if (strcasecmp($key2,"Serious Injury")==0) {
             $Q1_7day_target = 0;
             $Q2_7day_target = 0;
             $Q3_7day_target = 0;
@@ -111,7 +111,7 @@ foreach($target_year_data as $rec) {
                 }
             }
         }
-        else if (strcasecmp($key2,"Occupational Diseases")==0) {
+        else if (strcasecmp($key2,"Others")==0) {
             $Q1_occu_target = 0;
             $Q2_occu_target = 0;
             $Q3_occu_target = 0;
@@ -137,7 +137,7 @@ foreach($target_year_data as $rec) {
                 }
             }
         }
-        else if (strcasecmp($key2,"Dangerous Occurrences")==0) {
+        else if (strcasecmp($key2,"Employees")==0) {
             $Q1_dan_target = 0;
             $Q2_dan_target = 0;
             $Q3_dan_target = 0;
@@ -163,7 +163,7 @@ foreach($target_year_data as $rec) {
                 }
             }
         }
-        else if (strcasecmp($key2,"Non fatal accidents to non workers")==0) {
+        else if (strcasecmp($key2,"Sub-Contractor(s)")==0) {
             $Q1_nonf_target = 0;
             $Q2_nonf_target = 0;
             $Q3_nonf_target = 0;
@@ -189,7 +189,7 @@ foreach($target_year_data as $rec) {
                 }
             }
         }
-        else if (strcasecmp($key2,"Gas Incident")==0) {
+        else if (strcasecmp($key2,"Client Employee(s)")==0) {
             $Q1_gas_target = 0;
             $Q2_gas_target = 0;
             $Q3_gas_target = 0;
@@ -215,7 +215,7 @@ foreach($target_year_data as $rec) {
                 }
             }
         }
-        else if (strcasecmp($key2,"Total RIDDOR Report")==0) {
+        else if (strcasecmp($key2,"Member(s) of the public")==0) {
             $Q1_ridd_target = 0;
             $Q2_ridd_target = 0;
             $Q3_ridd_target = 0;
@@ -545,7 +545,7 @@ if(!empty($actual_riddor_event_data)){
 //        print_r($data);
         $month = $data->month;
         $total = $data->total;
-        if ($data->ridder_event == 16) {//Fatalities
+        if ($data->ridder_event == 16) {//Report Only
             if ($month >= 1 && $month <= 3) {
                 $Q1_fat_actual = ($Q1_fat_actual + $total);
                 if ($month == 1) $fat_act_jan=$total;else if ($month == 2) $fat_act_feb=$total;else if ($month == 3) $fat_act_mar=$total;
@@ -560,7 +560,7 @@ if(!empty($actual_riddor_event_data)){
                 if ($month == 10) $fat_act_oct=$total;else if ($month == 11) $fat_act_nov=$total;else if ($month == 12) $fat_act_dec=$total;
             }
         }
-        else if ($data->ridder_event == 17) {//Specific Injuries
+        else if ($data->ridder_event == 17) {//Accident Injury
             if ($month >= 1 && $month <= 3) {
                 $Q1_spe_actual = ($Q1_spe_actual + $total);
                 if ($month == 1) $spe_act_jan=$total;else if ($month == 2) $spe_act_feb=$total;else if ($month == 3) $spe_act_mar=$total;
@@ -591,7 +591,7 @@ if(!empty($actual_riddor_event_data)){
             }
 
         }
-        else if ($data->ridder_event == 19) {//Non Fatal Accidents to non workers
+        else if ($data->ridder_event == 19) {//Sub-Contractor(s)
             if ($month >= 1 && $month <= 3) {
                 $Q1_nonf_actual = ($Q1_nonf_actual + $total);
                 if ($month == 1) $nonf_act_jan=$total;else if ($month == 2) $nonf_act_feb=$total;else if ($month == 3) $nonf_act_mar=$total;
@@ -636,7 +636,7 @@ if(!empty($actual_riddor_event_data)){
                 if ($month == 10) $dan_act_oct=$total;else if ($month == 11) $dan_act_nov=$total;else if ($month == 12) $dan_act_dec=$total;
             }
         }
-        else if ($data->ridder_event == 22) {//Gas Incidents
+        else if ($data->ridder_event == 22) {//Client Employee(s)s
             if ($month >= 1 && $month <= 3) {
                 $Q1_gas_actual = ($Q1_gas_actual + $total);
                 if ($month == 1) $gas_act_jan=$total;else if ($month == 2) $gas_act_feb=$total;else if ($month == 3) $gas_act_mar=$total;
@@ -660,7 +660,7 @@ $sql = " SELECT FROM_UNIXTIME(accident_date,'%c') as rowid, COUNT(id) as total, 
 FROM mdl_accident_report WHERE FROM_UNIXTIME(accident_date,'%Y')=".$filterData['year']." AND s_mgt_rpt_2508_completed =1 GROUP by  FROM_UNIXTIME(accident_date,'%m') ";
 $actual_total_RIDDOR_report_data = $DB->get_records_sql($sql);
 if(!empty($actual_total_RIDDOR_report_data)){
-    foreach ($actual_total_RIDDOR_report_data as $data) {//Total RIDDOR Report
+    foreach ($actual_total_RIDDOR_report_data as $data) {//Member(s) of the public
         $month = $data->month;
         $total = $data->total;
 
@@ -2261,7 +2261,7 @@ elseif (($Q1_numa_actual+$Q2_numa_actual+$Q3_numa_actual+$Q4_numa_actual)>($Q1_s
         <td class="column34 style9"></td>
     </tr>
     <tr class="row5">
-        <td class="column0 style41 s border-left border-top">Fatalities</td>
+        <td class="column0 style41 s border-left border-top">Report Only</td>
         <td class="column1 style10 n border-top"><?=$fat_tar_jan?></td>
         <td class="column2 style12 n border-top <?=$fat_act_jan_cell_color?>"><?=$fat_act_jan?></td>
         <td class="column3 style15 n border-top"><?=$fat_tar_feb?></td>
@@ -2298,7 +2298,7 @@ elseif (($Q1_numa_actual+$Q2_numa_actual+$Q3_numa_actual+$Q4_numa_actual)>($Q1_s
         <td class="column34 style12 f border-top border-right <?=$YTD_fat_actual_cell_color?>"><?=($Q1_fat_actual+$Q2_fat_actual+$Q3_fat_actual+$Q4_fat_actual)?></td>
     </tr>
     <tr class="row6">
-        <td class="column0 style42 s border-left">Specific Injuries</td>
+        <td class="column0 style42 s border-left">Accident Injury</td>
         <td class="column1 style16 n"><?=$spe_tar_jan?></td>
         <td class="column2 style18 n <?=$spe_act_jan_cell_color?>"><?=$spe_act_jan?></td>
         <td class="column3 style21 n"><?=$spe_tar_feb?></td>
@@ -2335,7 +2335,7 @@ elseif (($Q1_numa_actual+$Q2_numa_actual+$Q3_numa_actual+$Q4_numa_actual)>($Q1_s
         <td class="column34 style18 f border-right <?=$YTD_spe_actual_cell_color?>"><?=($Q1_spe_actual+$Q2_spe_actual+$Q3_spe_actual+$Q4_spe_actual)?></td>
     </tr>
     <tr class="row7">
-        <td class="column0 style42 s border-left">Over 7 day injury</td>
+        <td class="column0 style42 s border-left">Serious Injury</td>
         <td class="column1 style16 n"><?=$day7_tar_jan?></td>
         <td class="column2 style18 n <?=$day7_act_jan_cell_color?>"><?=$day7_act_jan?></td>
         <td class="column3 style21 n"><?=$day7_tar_feb?></td>
@@ -2372,7 +2372,7 @@ elseif (($Q1_numa_actual+$Q2_numa_actual+$Q3_numa_actual+$Q4_numa_actual)>($Q1_s
         <td class="column34 style18 f border-right <?=$YTD_7day_actual_cell_color?>"><?=($Q1_7day_actual+$Q2_7day_actual+$Q3_7day_actual+$Q4_7day_actual)?></td>
     </tr>
     <tr class="row8">
-        <td class="column0 style42 s border-left">Occupational Diseases</td>
+        <td class="column0 style42 s border-left">Others</td>
         <td class="column1 style16 n"><?=$occu_tar_jan?></td>
         <td class="column2 style18 n <?=$occu_act_jan_cell_color?>"><?=$occu_act_jan?></td>
         <td class="column3 style21 n"><?=$occu_tar_feb?></td>
@@ -2409,7 +2409,7 @@ elseif (($Q1_numa_actual+$Q2_numa_actual+$Q3_numa_actual+$Q4_numa_actual)>($Q1_s
         <td class="column34 style18 f border-right <?=$YTD_occu_actual_cell_color?>"><?=($Q1_occu_actual+$Q2_occu_actual+$Q3_occu_actual+$Q4_occu_actual)?></td>
     </tr>
     <tr class="row9">
-        <td class="column0 style42 s border-left">Dangerous Occurrences</td>
+        <td class="column0 style42 s border-left">Employees</td>
         <td class="column1 style16 n"><?=$dan_tar_jan?></td>
         <td class="column2 style18 n <?=$dan_act_jan_cell_color?>"><?=$dan_act_jan?></td>
         <td class="column3 style21 n"><?=$dan_tar_feb?></td>
@@ -2446,7 +2446,7 @@ elseif (($Q1_numa_actual+$Q2_numa_actual+$Q3_numa_actual+$Q4_numa_actual)>($Q1_s
         <td class="column34 style18 f border-right <?=$YTD_dan_actual_cell_color?>"><?=($Q1_dan_actual+$Q2_dan_actual+$Q3_dan_actual+$Q4_dan_actual)?></td>
     </tr>
     <tr class="row10">
-        <td class="column0 style42 s border-left">Non fatal accidents to non workers</td>
+        <td class="column0 style42 s border-left">Sub-Contractor(s)</td>
         <td class="column1 style16 n"><?=$nonf_tar_jan?></td>
         <td class="column2 style18 n <?=$nonf_act_jan_cell_color?>"><?=$nonf_act_jan?></td>
         <td class="column3 style21 n"><?=$nonf_tar_feb?></td>
@@ -2483,7 +2483,7 @@ elseif (($Q1_numa_actual+$Q2_numa_actual+$Q3_numa_actual+$Q4_numa_actual)>($Q1_s
         <td class="column34 style18 f border-right <?=$YTD_nonf_actual_cell_color?>"><?=($Q1_nonf_actual+$Q2_nonf_actual+$Q3_nonf_actual+$Q4_nonf_actual)?></td>
     </tr>
     <tr class="row11">
-        <td class="column0 style42 s border-left">Gas Incident</td>
+        <td class="column0 style42 s border-left">Client Employee(s)</td>
         <td class="column1 style16 n"><?=$gas_tar_jan?></td>
         <td class="column2 style18 n <?=$gas_act_jan_cell_color?>"><?=$gas_act_jan?></td>
         <td class="column3 style21 n"><?=$gas_tar_feb?></td>
@@ -2520,7 +2520,7 @@ elseif (($Q1_numa_actual+$Q2_numa_actual+$Q3_numa_actual+$Q4_numa_actual)>($Q1_s
         <td class="column34 style18 f border-right <?=$YTD_gas_actual_cell_color?>"><?=($Q1_gas_actual+$Q2_gas_actual+$Q3_gas_actual+$Q4_gas_actual)?></td>
     </tr>
     <tr class="row12">
-        <td class="column0 style85 s border-left border-bottom">Total RIDDOR Report</td>
+        <td class="column0 style85 s border-left border-bottom">Member(s) of the public</td>
         <td class="column1 style81 n border-bottom"><?=$ridd_tar_jan?></td>
         <td class="column2 style83 n border-bottom <?=$ridd_act_jan_cell_color?>"><?=$ridd_act_jan?></td>
         <td class="column3 style82 n border-bottom"><?=$ridd_tar_feb?></td>
