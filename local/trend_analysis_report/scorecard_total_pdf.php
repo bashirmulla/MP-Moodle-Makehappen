@@ -1,5 +1,5 @@
      <?php
-ini_smjet('memory_limit', '2048M');
+ini_set('memory_limit', '2048M');
 ini_set('max_execution_time', 0);
 ini_set('upload_max_filesize', "512M");
 ini_set('post_max_size', "1024M");
@@ -8,8 +8,9 @@ global $USER, $CFG,$DB,$SESSION;
 define('AJAX_SCRIPT', true);
 
 require_once(__DIR__ . '/../../config.php');
-require_once($CFG->dirroot.'/local/accident_report/locallib.php');  // Include our function library.
+require_once($CFG->dirroot.'/local/mp_report/locallib.php');  // Include our function library.
 require_once($CFG->libdir.'/pdflib.php');
+
 require_login();
 if (isset($SESSION->pdf_html_data)) {
     $pdf_html = $SESSION->pdf_html_data;

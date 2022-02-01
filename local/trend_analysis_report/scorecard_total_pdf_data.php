@@ -1,5 +1,4 @@
 <?php
-
 // green 9fe8b6 amber #FFBF00 red c75151
 $Q1_fat_actual_cell_color = $Q2_fat_actual_cell_color = $Q3_fat_actual_cell_color = $Q4_fat_actual_cell_color = $YTD_fat_actual_cell_color = '';
 $fat_act_jan_cell_color = $fat_act_feb_cell_color = $fat_act_mar_cell_color = $fat_act_apr_cell_color = $fat_act_may_cell_color = $fat_act_jun_cell_color = $fat_act_jul_cell_color = $fat_act_aug_cell_color = $fat_act_sep_cell_color = $fat_act_oct_cell_color = $fat_act_nov_cell_color = $fat_act_dec_cell_color = '';
@@ -1458,7 +1457,7 @@ ob_start();
             <td class="column34 style9"></td>
         </tr>
         <tr class="row5">
-            <td class="column0 style41 s">Fatalities</td>
+            <td class="column0 style41 s">Report Only</td>
             <td class="column1 style10 n"><?=$fat_tar_jan?></td>
             <td class="column2 style12 n" <?=$fat_act_jan_cell_color?>><?=$fat_act_jan?></td>
             <td class="column3 style15 n"><?=$fat_tar_feb?></td>
@@ -1495,7 +1494,7 @@ ob_start();
             <td class="column34 style94 f" <?=$YTD_fat_actual_cell_color?>><?=($Q1_fat_actual+$Q2_fat_actual+$Q3_fat_actual+$Q4_fat_actual)?></td>
         </tr>
         <tr class="row6">
-            <td class="column0 style42 s">Specific Injuries</td>
+            <td class="column0 style42 s">Accident Injury</td>
             <td class="column1 style16 n"><?=$spe_tar_jan?></td>
             <td class="column2 style18 n" <?=$spe_act_jan_cell_color?>><?=$spe_act_jan?></td>
             <td class="column3 style21 n"><?=$spe_tar_feb?></td>
@@ -1532,7 +1531,7 @@ ob_start();
             <td class="column34 style95 f" <?=$YTD_spe_actual_cell_color?>><?=($Q1_spe_actual+$Q2_spe_actual+$Q3_spe_actual+$Q4_spe_actual)?></td>
         </tr>
         <tr class="row7">
-            <td class="column0 style42 s">Over 7 day injury</td>
+            <td class="column0 style42 s">Serious Injury</td>
             <td class="column1 style16 n"><?=$day7_tar_jan?></td>
             <td class="column2 style18 n" <?=$day7_act_jan_cell_color?>><?=$day7_act_jan?></td>
             <td class="column3 style21 n"><?=$day7_tar_feb?></td>
@@ -1569,7 +1568,7 @@ ob_start();
             <td class="column34 style95 f" <?=$YTD_7day_actual_cell_color?>><?=($Q1_7day_actual+$Q2_7day_actual+$Q3_7day_actual+$Q4_7day_actual)?></td>
         </tr>
         <tr class="row8">
-            <td class="column0 style42 s">Occupational Diseases</td>
+            <td class="column0 style42 s">Others</td>
             <td class="column1 style16 n"><?=$occu_tar_jan?></td>
             <td class="column2 style18 n" <?=$occu_act_jan_cell_color?>><?=$occu_act_jan?></td>
             <td class="column3 style21 n"><?=$occu_tar_feb?></td>
@@ -1606,7 +1605,7 @@ ob_start();
             <td class="column34 style95 f" <?=$YTD_occu_actual_cell_color?>><?=($Q1_occu_actual+$Q2_occu_actual+$Q3_occu_actual+$Q4_occu_actual)?></td>
         </tr>
         <tr class="row9">
-            <td class="column0 style42 s">Dangerous Occurrences</td>
+            <td class="column0 style42 s">Employees</td>
             <td class="column1 style16 n"><?=$dan_tar_jan?></td>
             <td class="column2 style18 n" <?=$dan_act_jan_cell_color?>><?=$dan_act_jan?></td>
             <td class="column3 style21 n"><?=$dan_tar_feb?></td>
@@ -1643,7 +1642,7 @@ ob_start();
             <td class="column34 style95 f" <?=$YTD_dan_actual_cell_color?>><?=($Q1_dan_actual+$Q2_dan_actual+$Q3_dan_actual+$Q4_dan_actual)?></td>
         </tr>
         <tr class="row10">
-            <td class="column0 style42 s">Non fatal accidents to non workers</td>
+            <td class="column0 style42 s">Sub-Contractor(s)</td>
             <td class="column1 style16 n"><?=$nonf_tar_jan?></td>
             <td class="column2 style18 n" <?=$nonf_act_jan_cell_color?>><?=$nonf_act_jan?></td>
             <td class="column3 style21 n"><?=$nonf_tar_feb?></td>
@@ -1680,7 +1679,7 @@ ob_start();
             <td class="column34 style95 f" <?=$YTD_nonf_actual_cell_color?>><?=($Q1_nonf_actual+$Q2_nonf_actual+$Q3_nonf_actual+$Q4_nonf_actual)?></td>
         </tr>
         <tr class="row11">
-            <td class="column0 style42 s">Gas Incident</td>
+            <td class="column0 style42 s">Client Employee(s)</td>
             <td class="column1 style16 n"><?=$gas_tar_jan?></td>
             <td class="column2 style18 n" <?=$gas_act_jan_cell_color?>><?=$gas_act_jan?></td>
             <td class="column3 style21 n"><?=$gas_tar_feb?></td>
@@ -1717,7 +1716,7 @@ ob_start();
             <td class="column34 style95 f" <?=$YTD_gas_actual_cell_color?>><?=($Q1_gas_actual+$Q2_gas_actual+$Q3_gas_actual+$Q4_gas_actual)?></td>
         </tr>
         <tr class="row12">
-            <td class="column0 style85 s">Total RIDDOR Report</td>
+            <td class="column0 style85 s">Member(s) of the public</td>
             <td class="column1 style81 n"><?=$ridd_tar_jan?></td>
             <td class="column2 style83 n" <?=$ridd_act_jan_cell_color?>><?=$ridd_act_jan?></td>
             <td class="column3 style82 n"><?=$ridd_tar_feb?></td>
