@@ -34,7 +34,7 @@ define('PREFERRED_RENDERER_TARGET', RENDERER_TARGET_GENERAL);
 
 global $USER, $CFG,$DB;
 
-$tableName  = get_string('accident_table','local_trend_analysis_report');
+$tableName  = "new_accident_report";
 
 $query_con_str =" 1=1 ";
 $filterData = get_requests();
@@ -54,7 +54,7 @@ $formStr   = $fromDateArr['year'].'-'.$fromDateArr['month'].'-'.$fromDateArr['da
 $date_to   = strtotime($toStr);
 $date_from = strtotime($formStr);
 
-$query_con_str .= " AND (accident_date BETWEEN $date_from AND $date_to) ";
+$query_con_str .= " AND (b_date BETWEEN $date_from AND $date_to) ";
 
 if ($filterData['report_number']){
     $params['id']   = $filterData['report_number'];
@@ -63,49 +63,6 @@ if ($filterData['report_number']){
 if ($filterData['manager']){
     $params['user_manager']  = $filterData['manager'];
     $query_con_str          .= " AND user_manager=? ";
-}
-if ($filterData['submitter']){
-    $params['user_id']  = $filterData['submitter'];
-    $query_con_str     .= " AND user_id=?";
-}
-if ($filterData['contract']){
-    $params['user_contract']  = $filterData['category'];
-    $query_con_str           .= " AND user_contract=? ";
-}
-if ($filterData['status']){
-    if ($filterData['status']=="New") $query_con_str .= " AND (s_mgt_rpt_ant_closed_off IS NULL OR s_mgt_rpt_ant_closed_off='') ";
-    else if ($filterData['status']=="Open") $query_con_str .= " AND s_mgt_rpt_ant_closed_off='0' ";
-    else if ($filterData['status']=="Closed") $query_con_str .= " AND s_mgt_rpt_ant_closed_off='1' ";
-    else '';
-}
-if ($filterData['category']){
-    $params['accident_category']  = $filterData['category'];
-    $query_con_str .= " AND accident_category=? ";
-}
-if ($filterData['riddor_reportable']){
-    if ($filterData['s_mgt_rpt_2508_completed']=="Yes") $query_con_str .= " AND s_mgt_rpt_2508_completed='1' ";
-    else $query_con_str .= " AND s_mgt_rpt_2508_completed='2' ";
-}
-if ($filterData['riddor_event_classification']){
-
-    $params['s_mgt_rpt_riddor_event_clf']  = $filterData['riddor_event_classification'];
-    $query_con_str               .= " AND s_mgt_rpt_riddor_event_clf=? ";
-}
-if ($filterData['riddor_subcategory']){
-    $params['RIDDOR_subcategory']  = $filterData['riddor_subcategory'];
-    $query_con_str .= " AND RIDDOR_subcategory=? ";
-}
-if ($filterData['medical_treatment_over_firsaccident_treatmentt_aid']){
-    $params['accident_treatment']  = $filterData['medical_treatment_over_first_aid'];
-    $query_con_str .= " AND accident_treatment=? ";
-}
-if ($filterData['lost_days']){
-    $params['lost_time']  = $filterData['lost_days'];
-    $query_con_str .= " AND lost_time=? ";
-}
-if ($filterData['minor_injuries']){
-    $params['minor_injuries']  = $filterData['minor_injuries'];
-    $query_con_str       .= " AND minor_injuries=? ";
 }
 
 if(is_manager() || is_admin()) $submitter_to_manager = 'Yes';
@@ -118,7 +75,7 @@ $query_con_str .= " AND submitter_to_manager='$submitter_to_manager' ";
 //die;
 $_SESSION["accident_report_csv"]["where"]  = serialize($query_con_str);
 $_SESSION["accident_report_csv"]["params"] = serialize($params);
-$sql = " SELECT * FROM mdl_accident_report WHERE $query_con_str ";
+$sql = " SELECT * FROM mdl_new_accident_report WHERE $query_con_str ";
 
 //echo $sql;
 //die;
@@ -144,9 +101,19 @@ $table->align = array( 'left','left','left','left','left','left','left','left','
 $count=0;
 $managerList  = get_all_manager_list();
 $contract_list = get_dropdown_data(1,'contract');
-$accident_category_list = get_dropdown_data(1,'category');
-$riddor_classification_list = get_dropdown_data(1,'riddor_classification');
-$riddor_subcategory_list = get_dropdown_data(1,'RIDDOR_subcategory');
+
+
+$result2  = $DB->get_records('new_accident_manager_report');
+$dropdown = get_new_dropdown_data(1);
+
+$acc_manager = array();
+
+if(!empty($result2)){
+    foreach($result2 as $item){
+        $acc_manager[$item->new_accident_id] = $item;
+    }
+}
+
 //echo "<pre>";
 //print_r($contract_list['contract'][87]);
 //die;
@@ -155,21 +122,24 @@ foreach($result as $rec) {
     $submitter = $submitterObj->firstname.' '.$submitterObj->lastname;
     $manager = $managerList[$rec->user_manager];
 
-    $status = '';
-    if (($rec->s_mgt_rpt_ant_closed_off==NULL) || ($rec->s_mgt_rpt_ant_closed_off=='')) $status="New";
-    else if ($rec->s_mgt_rpt_ant_closed_off=='0') $status = "Open";
-    else if ($rec->s_mgt_rpt_ant_closed_off=='1') $status = "Closed";
+    //$report_url = new moodle_url($CFG->wwwroot.'/local/accident_report/index.php?cmd=acc_edit&id='.$rec->id);
+    // $link = "<a target='new' href='".$report_url."'>View</a>";
+    $editDeleteLink = "";
+    if(isset($acc_manager[$rec->id])) {
+        $editDeleteLink = "<a href='index.php?cmd=accident_event&id=$rec->id' style='color:#5769cf'>Statement</a> | ";
+    }
+    $editDeleteLink .= "<a href='index.php?cmd=new_acc_edit&id=$rec->id' style='color:#5769cf'>View</a>";
+    $reporter = get_userInfo(array("id" => $rec->user_id));
+    
+    if($rec->status=='Pending')        $status = '<b style="color:#c3ad13">Pending</b>';
+    elseif($rec->status=='Confirmed')  $status = '<b style="color:#3aad6d">Confirmed</b>';
+    elseif($rec->status=='Approved')   $status = '<b style="color:#2441e7">Approved</b>';
 
-    $riddor_reportable = '';
-    if ($rec->s_mgt_rpt_2508_completed=='1')      $riddor_reportable ='Yes';
-    else if ($rec->s_mgt_rpt_2508_completed=='2') $riddor_reportable ='No';
-    else if ($rec->s_mgt_rpt_2508_completed=='3') $riddor_reportable ='N/A';
-    else                                          $riddor_reportable ='';
-
-    $report_url = new moodle_url($CFG->wwwroot.'/local/accident_report/index.php?cmd=acc_edit&id='.$rec->id);
-    $link = "<a target='new' href='".$report_url."'>View</a>";
-
-    $table->data[] = new html_table_row(array( date("d/m/Y",$rec->accident_date),$rec->id,$manager,$submitter,$status,$contract_list['contract'][$rec->user_contract],$accident_category_list['category'][$rec->accident_category],$riddor_reportable,$riddor_classification_list['riddor_classification'][$rec->s_mgt_rpt_riddor_event_clf],$riddor_subcategory_list['RIDDOR_subcategory'][$rec->riddor_subcategory],$rec->accident_treatment,$rec->minor_injuries,$rec->lost_time,$rec->lost_time_days,$link));
+    $table->data[] = new html_table_row(array( ++$count,$rec->a_surname,$rec->a_forename,date("d/m/Y",$rec->b_date),
+                            $acc_manager[$rec->id]->incident_description,$rec->f_action_taken,
+                            $acc_manager[$rec->id]->results_investigation,
+                            $dropdown['recommended_actions'][$acc_manager[$rec->id]->recommended_actions],
+                            $status,$editDeleteLink));
 }
 $html .= html_writer::table($table);
 $html .= html_writer:: end_tag('div');
