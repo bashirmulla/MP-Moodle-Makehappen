@@ -35,7 +35,7 @@ $dir          = optional_param('dir', 'ASC', PARAM_ALPHA);
 echo $OUTPUT->header(get_string('mycertificates_heading', 'local_'.$pluginname));
 echo '<div class="alert alert-info alert-block fade in " role="alert">
     <button type="button" class="close" data-dismiss="alert">×</button>
-    <h5 class="alert-heading">Guidance of update a certificate:</h5>Please send any new or renewed certificates to <strong>trainingcerts@makehappen.com</strong> to be added to the system
+    <h5 class="alert-heading">Guidance of update a certificate:</h5>Please send any new or renewed certificates to <strong>trainingcerts@secureituk.com</strong> to be added to the system
 </div>';
 
 echo html_writer:: start_tag('fieldset',array('class'=>'mform fieldset'));
