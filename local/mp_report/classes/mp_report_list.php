@@ -195,10 +195,21 @@ class incident_page extends moodleform {
 class home_page extends moodleform {
 
 
-    public function definition() {
+   public function definition() {
 
+        global $DB,$USER;
         $mform              = $this->_form;
         $manage_manager_div = "";
+        $arr = array();
+
+        if(!is_admin() && !is_manager()){
+            $arr = array("user_id" => $USER->id);
+        }
+
+        $accidents = $DB->get_records('new_accident_report',$arr);
+        $incidents = $DB->get_records('incident_report',$arr);
+
+        //$accident_register = $DB->get_records('new_accident_manager_report');
 
         if(is_admin() || is_complieance() || is_senior_manager()){
             $manage_manager_div ='<div class="col-sm-6 col-md-6 col-lg-4 col-lg-5th-1">
@@ -206,48 +217,49 @@ class home_page extends moodleform {
 						<div class="overlay">
 							<div class="icon ccn_icon_2 color-white"><span data-ccn="icon3" class="flaticon-add-contact"></span></div>
 							<div class="details">
-								<h5 class="color-white">Manage Managers</h5><p class="color-white">Over 0 manager</p>
+								<h5 class="color-white">Manage Managers</h5><p class="color-white">0 Manager/s</p>
 							</div>
 						</div>
 					</a>
 				</div>';
         }
 
-        $html = '<div class="row justify-content-center" style="text-align: center !important;">
-                
+        $html = '
+            <h3> Accident Reports</h3><hr>
+            <div class="row" style="text-align: left !important;">
                 <div class="col-sm-6 col-md-6 col-lg-4 col-lg-5th-1">
-					<a href="/local/mp_report/index.php?cmd=accpage" data-ccn-c="color3" data-ccn-co="bg" class="icon_hvr_img_box ccn-color-cat-boxes" style="background:rgba(0, 97, 255, 0.6);">
-						<div class="overlay">
-							<div class="icon ccn_icon_2 color-white"><span data-ccn="icon3" class="ccn-flaticon-add-1"></span></div>
-							<div class="details">
-								<h5 class="color-white">Accident Report</h5><p class="color-white">Over 1 reports</p>
-							</div>
-						</div>
-					</a>
-				</div>
+                    <a href="/local/mp_report/index.php?cmd=register" data-ccn-c="color4" data-ccn-co="bg" class="icon_hvr_img_box ccn-color-cat-boxes" style="background:rgb(8 37 183 / 60%)">
+                        <div class="overlay">
+                            <div class="icon ccn_icon_2 color-white"><span data-ccn="icon4" class="flaticon-checklist"></span></div>
+                            <div class="details">
+                                <h5 class="color-white">Accident Register</h5><p class="color-white">'.count($accidents).' Accident/s</p>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+            
+            <h3> Incident Reports</h3><hr>
+
+            <div class="row" style="text-align: left !important;">
                 <div class="col-sm-6 col-md-6 col-lg-4 col-lg-5th-1">
 					<a href="/local/mp_report/index.php?cmd=incpage" data-ccn-c="color4" data-ccn-co="bg" class="icon_hvr_img_box ccn-color-cat-boxes" style="background:rgba(241, 67, 45, 0.6);">
 						<div class="overlay">
 							<div class="icon ccn_icon_2 color-white"><span data-ccn="icon4" class="flaticon-checklist"></span></div>
 							<div class="details">
-								<h5 class="color-white">Incident Report</h5><p class="color-white">Over 0 incidents</p>
+								<h5 class="color-white">Incident Report</h5><p class="color-white">'.count($incidents).' Incident/s</p>
 							</div>
 						</div>
 					</a>
 				</div>
 				
 				'.$manage_manager_div.'
-                
-             
           </div>';
 
       $mform->addElement('html',$html);
 
 
     }
-
-
-
 
 
 }
