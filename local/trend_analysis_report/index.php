@@ -102,7 +102,7 @@ if(is_admin() || is_complieance() || is_senior_manager()) {
 				</div>
           </div>';
 
-    echo $html2 = '<h3> Makehappen Scorecard</h3><hr>
+    echo $html2 = '<h3> SecureIT Scorecard</h3><hr>
                  <div class="row" style="text-align: left !important;">
                 
                 <div class="col-sm-6 col-md-6 col-lg-4 col-lg-5th-1">
