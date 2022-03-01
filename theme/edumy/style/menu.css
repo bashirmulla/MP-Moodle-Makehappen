@@ -59,7 +59,7 @@
   color: #0a0a0a;
 }
 .mobile-menu .header.stylehome1 a:not(.mobileBrand):not(.ccn-btn-backtocourse) {
-  color: #ffffff;
+  color: #ffffff;;
   height: 50px;
   display: grid;
   left: auto;
@@ -728,8 +728,9 @@ li.mm-listitem {
 @media only screen and (max-width:1199.98px) {
   .mobile-menu .header.stylehome1.dashbord_pages:before {
     background-image: -moz-linear-gradient(0deg, [[setting:color_gradient_end]] 0%, [[setting:color_gradient_start]] 100%);
-    background-image: -webkit-linear-gradient(0deg, [[setting:color_gradient_end]] 0%, [[setting:color_gradient_start]] 100%);
+    /*background-image: -webkit-linear-gradient(0deg, [[setting:color_gradient_end]] 0%, [[setting:color_gradient_start]] 100%);*/ /*BM commented-out*/
     background-image: -ms-linear-gradient(0deg, [[setting:color_gradient_end]] 0%, [[setting:color_gradient_start]] 100%);
+    background-color: #fff !important; /*BM added*/
   }
   .ccnDarkMode.ccn_context_dashboard .mobile-menu .header.stylehome1.dashbord_pages:before {
     background-image: none;
