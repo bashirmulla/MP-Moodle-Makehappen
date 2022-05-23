@@ -24,7 +24,7 @@
 
 defined('MOODLE_INTERNAL') || die;
 
-$string['modulename'] = 'Book';
+$string['modulename'] = 'Toolbox Talks'; /*BM and SMH changed from Book */
 $string['modulename_help'] = 'The book module enables a teacher to create a multi-page resource in a book-like format, with chapters and subchapters. Books can contain media files as well as text and are useful for displaying lengthy passages of information which can be broken down into sections.
 
 A book may be used
